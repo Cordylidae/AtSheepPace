@@ -1,0 +1,17 @@
+{
+    "name": "AtSheepPace",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cc43fe48e33e5c340b092b7dcc4724ac",
+        "GUID:457b4823f621f374494beef2759b11cf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
