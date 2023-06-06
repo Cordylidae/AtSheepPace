@@ -57,14 +57,13 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Sheep,
-            AnimalType.Wolf, AnimalType.Sheep,
-            AnimalType.Wolf, AnimalType.Sheep,
-            AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Sheep,
             AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf, 
+            AnimalType.Wolf,  AnimalType.Sheep, 
+            AnimalType.Sheep, AnimalType.Sheep
 
         };
 
@@ -74,6 +73,8 @@ public class LevelGeneration : MonoBehaviour
             if (elements[i] == AnimalType.Sheep) { j++; }
             baseElements.Add(new BaseElement(elements[i], j));
         }
+
+        baseElements[0].isOpen = false;
     }
 
     void SetRounds()
@@ -138,12 +139,13 @@ public class BaseElement
 {
     public readonly string animalType;
     public readonly int number;
-    bool isOpen = true;
+    public  bool isOpen;
 
-    public BaseElement(string type, int num)
+    public BaseElement(string type, int num, bool open = true)
     {
         animalType = type;
         number = num;
+        isOpen = open;
     }
 }
 

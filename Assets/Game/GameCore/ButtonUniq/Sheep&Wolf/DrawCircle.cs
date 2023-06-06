@@ -15,7 +15,7 @@ public class DrawCircle : MonoBehaviour
     [SerializeField] private Transform badRange;
 
 
-    private Color myColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+    private Color myColor = new Color(1.0f, 1.0f, 1.0f, 0.0f); 
     private Tween tween;
 
     public Action radiusZero;
@@ -31,7 +31,7 @@ public class DrawCircle : MonoBehaviour
         {
             return radius / 10.0f;
         }
-        set
+        private set
         {
             radius = value; DrawPolygon(vertex, Radius, this.transform.position, widthCircle, widthCircle);
 

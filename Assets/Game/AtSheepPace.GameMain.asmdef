@@ -2,9 +2,10 @@
     "name": "AtSheepPace.GameMain",
     "rootNamespace": "",
     "references": [
-        "Unity.TextMeshPro",
         "Zenject",
-        "DOTween"
+        "AtSheepPace.External",
+        "DOTweenPlug",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

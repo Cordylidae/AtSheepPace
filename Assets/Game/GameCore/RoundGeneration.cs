@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using UnityEngine.UIElements;
-using DG.Tweening;
+using Codice.Client.Common;
+using System.Threading.Tasks;
 using PlasticGui;
 
 public class RoundGeneration : MonoBehaviour
@@ -27,13 +27,17 @@ public class RoundGeneration : MonoBehaviour
         lastClickTime = true;
     }
 
-    public void PreStartRound()
+    public async void PreStartRound()
     {
         SetUpAnimalRuleVaribles();
 
         BuildUpAnimalDicionary();
+        
+        await ShowElements();
 
-        ShowElements();
+        StartDrawCircleElements(roundControl.indexOfCurrentButtons);
+        currentRound.checkEmptyBaseKey(currentRound.elementsDictionary.First().Key);
+
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -41,8 +45,9 @@ public class RoundGeneration : MonoBehaviour
         roundControl = new RoundControl();
 
         // ### NEED setup round controll from Constructor and set its public varibles to private 
-        roundControl.indexOfFirstSheep = roundControl.indexOfCurrentSheep = currentRound.elementsDictionary.First().Key.number;
-        
+        roundControl.indexOfCurrentButtons = currentRound.elementsDictionary.First().Key.number;
+        roundControl.currentOpenElements = new List<BaseElement>();
+
         roundControl.fearBar = fearBarView.fearBar;
     }
 
@@ -67,23 +72,22 @@ public class RoundGeneration : MonoBehaviour
                             //0.0f, 0.0f,
                             index * (-0.5f / currentRound.elementsDictionary.Count));
 
+            roundControl.currentOpenElements.Add(baseElement);
 
             BaseButtonView animalView = animal.GetComponent<BaseButtonView>();
+            animalView.AnimalUniqIndex.Index = baseElement.number;
+            animalView.isOpen = baseElement.isOpen;
 
             switch (animalView.AnimalType.buttonType)
             {
                 case AnimalType.Sheep:
                     {
                         SheepView sheepView = (SheepView)animalView;
-
-                        sheepView.AnimalUniqIndex.Index = baseElement.number;
                     }
                     break;
                 case AnimalType.Wolf:
                     {
                         WolfView wolfView = (WolfView)animalView;
-
-                        wolfView.AnimalUniqIndex.Index = baseElement.number;
                     }
                     break;
             }
@@ -94,10 +98,11 @@ public class RoundGeneration : MonoBehaviour
             animalView.BaseTapHandel.isTap += () => {
                 if (lastClickTime)
                 {
-                    if (roundControl.IsTappedButtonDestroy(baseElement.animalType))
+                    if (roundControl.IsTappedButtonDestroy(baseElement.animalType, baseElement.number))
                     {
                         DestroyBaseObject();
                     }
+
                     lastClickTime = false;
                 }
             };
@@ -109,14 +114,28 @@ public class RoundGeneration : MonoBehaviour
                 DestroyBaseObject();
             };
 
+            // event on is open
+            currentRound.zeroElementsOfBaseKey += () =>
+            {
+                baseElement.isOpen = true;
+                animalView.isOpen = baseElement.isOpen;
+                UpdateRoundControlCurrentIndex();
+            };
+
             void DestroyBaseObject()
             {
+                roundControl.currentOpenElements.Remove(baseElement);
+
                 currentRound.elementsDictionary.Remove(baseElement);
                 animalsElements.Remove(baseObject);
                 currentRound.checkEmptyDictionary();
 
-                StartCoroutine(DestroyWithAnimBase(animal, baseObject));
+                UpdateRoundControlCurrentIndex();
+
+                DestroyWithAnimBase(animal, baseObject);
             }
+
+
 
             //List<AdditionalElement> aA = element.Value;  other addition buttons
 
@@ -124,6 +143,21 @@ public class RoundGeneration : MonoBehaviour
         }
     }
 
+    private void UpdateRoundControlCurrentIndex()
+    {
+        Debug.Log("Kuku");
+    }
+
+    private void StartDrawCircleElements(int indexOfStart)
+    {
+        foreach (GameObject baseObject in animalsElements)
+        {
+            BaseButtonView animalView = baseObject.GetComponentInChildren<BaseButtonView>();
+
+            if (animalView.isOpen && animalView.AnimalUniqIndex.Index == indexOfStart) animalView.DrawCircle.StartDrawing(2.7f);
+            else if (animalView.AnimalUniqIndex.Index > indexOfStart) break;
+        }
+    }
     private GameObject SetAnimalEntities(string animalType)
     {
         GameObject entity = null;
@@ -185,55 +219,62 @@ public class RoundGeneration : MonoBehaviour
         return entity;
     }
 
-    private void ShowElements()
+    private async Task ShowElements()
     {
-
         System.Random random = new System.Random();
 
         List<int> randIndex = new List<int>();
 
-        for (int i =0; i < animalsElements.Count;i++ )
-        {
-            randIndex.Add(i);
-        }
-        randIndex = randIndex.OrderBy(a=>random.Next()).ToList();
+        IAnimalType[] animalsOfBaseObject;
+        List<Task> tasks = new List<Task>();
+
+        int length = 0;
+        float time = 0;
+
 
         for (int i = 0; i < animalsElements.Count; i++)
         {
-            IAnimalType[] animalsOfBaseObject = animalsElements[randIndex[i]].GetComponentsInChildren<IAnimalType>(true);
-            int length = animalsOfBaseObject.Length;
+            randIndex.Add(i);
+        }
+        randIndex = randIndex.OrderBy(a => random.Next()).ToList();
+
+        for (int i = 0; i < animalsElements.Count; i++)
+        {
+            animalsOfBaseObject = animalsElements[randIndex[i]].GetComponentsInChildren<IAnimalType>(true);
+            length = animalsOfBaseObject.Length;
 
             for (int j = 0; j < length; j++) {
-                StartCoroutine(
-                    CreateWithAnim(animalsOfBaseObject[length - 1 - j].gameObject,
-                    0.25f + (float)(i)*0.63f + (float)(j) * 0.75f));
+                time = 0.25f + (float)(i) * 0.45f + (float)(j) * 0.75f;
+                tasks.Add(CreateWithAnim(animalsOfBaseObject[length - 1 - j].gameObject, time));
             }
         }
+
+        await Task.WhenAll(tasks);
     }
 
-    IEnumerator CreateWithAnim(GameObject go, float time)
+    private async Task CreateWithAnim(GameObject go, float time)
     {
         Animation anim = go.GetComponent<Animation>();
 
-        yield return new WaitForSeconds(time);
+        await Task.Delay((int)(time * 1000));
 
         go.SetActive(true);
         anim.Play("OpenShot");
 
-        go.GetComponentInChildren<DrawCircle>().StartDrawing(2.7f);
+        //go.GetComponentInChildren<DrawCircle>().StartDrawing(2.7f);
     }
 
-    IEnumerator DestroyWithAnimBase(GameObject go, GameObject baseObject)
+    private async Task DestroyWithAnimBase(GameObject go, GameObject baseObject)
     {
         go.GetComponentInChildren<DrawCircle>().StopDrawing();
 
         Animation anim = go.GetComponent<Animation>();
         anim.Play("CloseShot");
 
-        yield return new WaitForSeconds(anim["CloseShot"].length);
+        await Task.Delay((int)(anim["CloseShot"].length * 1000));
 
-        Destroy(go);
-        Destroy(baseObject);
+        if (go != null) Destroy(go);
+        if (baseObject != null) Destroy(baseObject);
     }
 
     IEnumerator DestroyWithAnim(GameObject go)
@@ -258,23 +299,32 @@ public class RoundControl
         public const string CorrectDestroy = "CorrectDestroy";
     };
 
-    public int indexOfFirstSheep;
-    public int indexOfCurrentSheep;
+    public int indexOfCurrentButtons;
+    public List<BaseElement> currentOpenElements;
 
     public FearBar fearBar; 
 
-    private string CheckElementsRule(string animalType)
+    private string OnButtonTap(string animalType, int index)
     {
         switch (animalType)
         {
             case AnimalType.Sheep:
                 {
-                    fearBar.SheepGood();
-                    return CorrectTapState.CorrectDestroy;
+                    if (index == indexOfCurrentButtons)
+                    {
+                        fearBar.SheepGood();
+                        return CorrectTapState.CorrectDestroy;
+                    }
+                    else
+                    {
+                        fearBar.SheepBad();
+                        return CorrectTapState.UncorrectUndestroy;
+                    }
                 }
             case AnimalType.Wolf:
                 {
                     fearBar.WolfBad();
+                    
                     return CorrectTapState.UncorrectDestroy;
                 }
         }
@@ -289,19 +339,21 @@ public class RoundControl
             case AnimalType.Sheep:
                 {
                     fearBar.SheepBad();
+
                     return;
                 }
             case AnimalType.Wolf:
                 {
                     fearBar.WolfGood();
+                    
                     return;
                 }
         }
     }
 
-    public bool IsTappedButtonDestroy(string animalType)
+    public bool IsTappedButtonDestroy(string animalType, int index)
     {
-        switch (CheckElementsRule(animalType))
+        switch (OnButtonTap(animalType, index))
         {
             case CorrectTapState.UncorrectUndestroy: return false;
             case CorrectTapState.UncorrectDestroy: return true;
@@ -313,11 +365,10 @@ public class RoundControl
     }
 }
 
-
-
 public class Round
 {
     public Action zeroElements;
+    public Action zeroElementsOfBaseKey;
 
     public readonly Dictionary<BaseElement, List<AdditionalElement>> elementsDictionary;
 
@@ -335,10 +386,9 @@ public class Round
     {
     }
 
-
-    void CheckCorrectTap()
+    public void checkEmptyBaseKey(BaseElement key)
     {
-
+        if (elementsDictionary[key].Count == 0) zeroElementsOfBaseKey?.Invoke();
     }
 
     public void checkEmptyDictionary()
