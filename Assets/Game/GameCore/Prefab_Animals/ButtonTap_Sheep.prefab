@@ -419,6 +419,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 747413473234863155, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1692296456, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
     - target: {fileID: 4899742267933137822, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
       propertyPath: buttonType
       value: Sheep
@@ -539,6 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimalType: {fileID: 8907684339867659654}
   BaseTapHandel: {fileID: 3708790393388941214}
+  AnimalOpenView: {fileID: 8584525380825688055}
   AnimalUniqIndex: {fileID: 1792946121661519457}
   DrawCircle: {fileID: 3874088949049301115}
 --- !u!4 &4757403464787998643 stripped
@@ -546,6 +551,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8819353368832410027, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
   m_PrefabInstance: {fileID: 4062548231710586392}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8584525380825688055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5711494850616005103, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+  m_PrefabInstance: {fileID: 4062548231710586392}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d403a252c0b4cc546a629c12f08ddf21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8907684339867659654 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4899742267933137822, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}

@@ -57,7 +57,7 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
-            AnimalType.Sheep, AnimalType.Sheep,
+            AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
