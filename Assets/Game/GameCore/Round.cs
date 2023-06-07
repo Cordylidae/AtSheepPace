@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoundControl
 {
-    private class CorrectTapState
+    public class CorrectTapState
     {
         public const string UncorrectUndestroy = "UncorrectUndestroy";
         public const string UncorrectDestroy = "UncorrectDestroy";
@@ -18,7 +18,7 @@ public class RoundControl
 
     public FearBar fearBar;
 
-    private string OnButtonTap(string animalType, int index)
+    public string OnButtonTap(string animalType, int index)
     {
         switch (animalType)
         {
@@ -46,7 +46,7 @@ public class RoundControl
         throw new NotImplementedException();
     }
 
-    public void GoneButtonRadius(string animalType)
+    public string GoneButtonRadius(string animalType)
     {
         switch (animalType)
         {
@@ -54,25 +54,14 @@ public class RoundControl
                 {
                     fearBar.SheepBad();
 
-                    return;
+                    return CorrectTapState.UncorrectDestroy;
                 }
             case AnimalType.Wolf:
                 {
                     fearBar.WolfGood();
 
-                    return;
+                    return CorrectTapState.CorrectDestroy;
                 }
-        }
-    }
-
-    public bool IsTappedButtonDestroy(string animalType, int index)
-    {
-        switch (OnButtonTap(animalType, index))
-        {
-            case CorrectTapState.UncorrectUndestroy: return false;
-            case CorrectTapState.UncorrectDestroy: return true;
-            case CorrectTapState.CorrectUndestroy: return false;
-            case CorrectTapState.CorrectDestroy: return true;
         }
 
         throw new NotImplementedException();
@@ -82,7 +71,6 @@ public class RoundControl
 public class Round
 {
     public Action zeroElements;
-    public Action zeroElementsOfBaseKey;
 
     public readonly Dictionary<BaseElement, List<AdditionalElement>> elementsDictionary;
 
@@ -96,9 +84,10 @@ public class Round
         }
     }
 
-    public void checkEmptyBaseKey(BaseElement key)
+    public bool checkEmptyBaseKey(BaseElement key)
     {
-        if (elementsDictionary[key].Count == 0) zeroElementsOfBaseKey?.Invoke();
+        if (elementsDictionary[key].Count == 0) return true;
+        return false;
     }
 
     public void checkEmptyDictionary()

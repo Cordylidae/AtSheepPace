@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -75,6 +76,7 @@ public class LevelGeneration : MonoBehaviour
         }
 
         baseElements[0].isOpen = false;
+        baseElements[2].number = 1;
     }
 
     void SetRounds()
@@ -138,8 +140,10 @@ public class LevelGeneration : MonoBehaviour
 public class BaseElement
 {
     public readonly string animalType;
-    public readonly int number;
-    public  bool isOpen;
+    public //readonly 
+        int number;
+
+    public bool isOpen;
 
     public BaseElement(string type, int num, bool open = true)
     {

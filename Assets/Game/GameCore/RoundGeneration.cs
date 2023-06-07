@@ -6,6 +6,7 @@ using System.Linq;
 using Codice.Client.Common;
 using System.Threading.Tasks;
 using PlasticGui;
+using System.Xml.Linq;
 
 public class RoundGeneration : MonoBehaviour
 {
@@ -36,8 +37,6 @@ public class RoundGeneration : MonoBehaviour
         await ShowElements();
 
         StartRoundControlElements(roundControl.indexOfCurrentButtons);
-        currentRound.checkEmptyBaseKey(currentRound.elementsDictionary.First().Key);
-
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -47,7 +46,19 @@ public class RoundGeneration : MonoBehaviour
         // ### NEED setup round controll from Constructor and set its public varibles to private 
         roundControl.indexOfCurrentButtons = currentRound.elementsDictionary.First().Key.number;
         roundControl.currentIndexElements = new List<BaseElement>();
+        
         AddAllIndex(roundControl.indexOfCurrentButtons);
+
+        //currentRound.zeroElementsOfBaseKey += (key) =>
+        //{
+        //    key.isOpen = true;
+
+        //    BaseButtonView animalView = animalsElements[key].GetComponentInChildren<BaseButtonView>();
+        //    animalView.SetOpen();
+
+        //    //UpdateRoundControlCurrentIndex();
+        //    StartBaseElementDrawCircle(key.number, animalView.DrawCircle);
+        //};
 
         roundControl.fearBar = fearBarView.fearBar;
     }
@@ -102,29 +113,46 @@ public class RoundGeneration : MonoBehaviour
             animalView.BaseTapHandel.isTap += () => {
                 if (lastClickTime)
                 {
-                    if (roundControl.IsTappedButtonDestroy(baseElement.animalType, baseElement.number))
-                    {
-                        DestroyBaseObject();
-                    }
-
-                    lastClickTime = false;
+                    checkTheCorrectTapState(roundControl.OnButtonTap(baseElement.animalType, baseElement.number));
                 }
+                lastClickTime = false;
             };
 
             animalView.DrawCircle.radiusZero += () =>
             {
-                roundControl.GoneButtonRadius(baseElement.animalType);
-
-                DestroyBaseObject();
+                checkTheCorrectTapState(roundControl.GoneButtonRadius(baseElement.animalType));
             };
 
             // event on is open
-            //currentRound.zeroElementsOfBaseKey += () =>
-            //{
-            //    baseElement.isOpen = true;
-            //    animalView.isOpen = baseElement.isOpen;
-            //    UpdateRoundControlCurrentIndex();
-            //};
+            /// .....
+
+            void checkTheCorrectTapState(string state)
+            {
+                switch (state)
+                {
+                    case RoundControl.CorrectTapState.UncorrectDestroy:
+                        {
+                            //shake it
+                            DestroyBaseObject();
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.CorrectDestroy:
+                        {
+                            Debug.Log("sd " + baseObject.name);
+                            DestroyBaseObject();
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.UncorrectUndestroy:
+                        {
+                            //shake it
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.CorrectUndestroy:
+                        {
+                        }
+                        break;
+                }
+            }
 
             void DestroyBaseObject()
             {
@@ -138,8 +166,6 @@ public class RoundGeneration : MonoBehaviour
 
                 DestroyWithAnimBase(animal, baseObject);
             }
-
-
 
             //List<AdditionalElement> aA = element.Value;  other addition buttons
 
@@ -165,15 +191,11 @@ public class RoundGeneration : MonoBehaviour
     {
         foreach (KeyValuePair<BaseElement, List<AdditionalElement>> element in currentRound.elementsDictionary)
         {
-            //GameObject baseObject = animalsElements[element.Key];
-            //BaseButtonView animalView = baseObject.GetComponentInChildren<BaseButtonView>();
-
             if (!roundControl.currentIndexElements.Contains(element.Key) && element.Key.number == indexOfStart) { 
                 roundControl.currentIndexElements.Add(element.Key);
             }
             else if (element.Key.number > indexOfStart) break;
         }
-        Debug.Log(roundControl.currentIndexElements.Count);
     }
 
     void StartDrawCircleOpenIndex()
@@ -186,6 +208,16 @@ public class RoundGeneration : MonoBehaviour
             if (key.isOpen)
             {
                 animalView.DrawCircle.StartDrawing(2.7f);
+            }
+            else
+            {
+                if (currentRound.checkEmptyBaseKey(currentRound.elementsDictionary.First().Key))
+                {
+                    key.isOpen = true;
+                    animalView.SetOpen();
+
+                    animalView.DrawCircle.StartDrawing(2.7f);
+                }
             }
         }
     }

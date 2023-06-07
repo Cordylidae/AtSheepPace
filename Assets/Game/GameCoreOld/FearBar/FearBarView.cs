@@ -22,6 +22,8 @@ public class FearBarView : MonoBehaviour
 
     void ChangeProgress()
     {
+        Debug.Log(fearBar._currentProgress);
+        Debug.Log(fearBar.ProportionOfProgress);
         arrow.DOLocalMove(new Vector3(bar.rect.width * fearBar.ProportionOfProgress, arrow.localPosition.y, arrow.localPosition.z), 1, true);
     }
 
@@ -37,10 +39,10 @@ public class FearBar
 {
     private float fullSizeProgress = 120.0f;
     private float currentProgress = 0.0f;
-    private float _currentProgress
+    public float _currentProgress
     {
         get => currentProgress;
-        set
+        private set
         {
             if (value < 0.0f)
             {
