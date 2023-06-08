@@ -18,7 +18,8 @@ public class LevelGeneration : MonoBehaviour
 
     SpawnHardProperties hardProperties = new SpawnHardProperties();
 
-    List<BaseElement> baseElements = new List<BaseElement>();
+    List<GamburgerElement> gamburgerElements = new List<GamburgerElement>();
+
     List<Round> rounds = new List<Round>();
 
     [SerializeField] private RoundGeneration roundGeneration;
@@ -68,26 +69,60 @@ public class LevelGeneration : MonoBehaviour
 
         };
 
-        // Initialize baseElements
-        for (int i = 0, j = 0; i < elements.Count; i++)
+        List<int> closeElementIndex = new List<int>
         {
-            if (elements[i] == AnimalType.Sheep) { j++; }
-            baseElements.Add(new BaseElement(elements[i], j));
-        }
+            0, 5, 6, 7
+        };
 
-        baseElements[0].isOpen = false;
-        baseElements[2].number = 1;
+        GamburgerElement gamburgerElement;
+
+        // Initialize baseElements
+        for (int i = 0, j = 0, z = 0; i < elements.Count; i++)
+        {
+            if (elements[i] == AnimalType.Sheep) { j++;}
+            gamburgerElement = new GamburgerElement(new BaseElement(elements[i], j));
+
+            if (closeElementIndex[z] == i)
+            {
+                gamburgerElement.key.IsOpen = false;
+
+                gamburgerElement.value = SetAdditionalElements();
+                z = z + 1 < closeElementIndex.Count ? z+1 : z;
+            }
+
+            gamburgerElements.Add(gamburgerElement);
+        }
+    }
+
+    List<AdditionalElement> SetAdditionalElements()
+    {
+        // Genereate sequence
+        List<string> elements = new List<string>
+        {
+            AnimalType.Deer, AnimalType.Deer//, AnimalType.Deer
+        };
+
+        List<AdditionalElement> additionalElements = new List<AdditionalElement>();
+
+        // Initialize additionalElements
+        for (int i = 0; i < elements.Count; i++)
+        {
+            additionalElements.Add(new AdditionalElement(elements[i]));
+        }
+        additionalElements.Last().IsOpen = true;
+
+        return additionalElements;
     }
 
     void SetRounds()
     {
         rounds = new List<Round>
         {
-            new Round(baseElements.GetRange(0,4)),
-            new Round(baseElements.GetRange(4,2)),
-            new Round(baseElements.GetRange(6,2)),
-            new Round(baseElements.GetRange(8,4)),
-            new Round(baseElements.GetRange(12,2))
+            new Round(gamburgerElements.GetRange(0,4)),
+            new Round(gamburgerElements.GetRange(4,2)),
+            new Round(gamburgerElements.GetRange(6,2)),
+            new Round(gamburgerElements.GetRange(8,4)),
+            new Round(gamburgerElements.GetRange(12,2))
         };
 
         foreach (Round round in rounds)
@@ -134,34 +169,5 @@ public class LevelGeneration : MonoBehaviour
 
         if (rounds.Count == 0) EndLevel(); // finish level
         else ShowRound();
-    }
-}
-
-public class BaseElement
-{
-    public readonly string animalType;
-    public //readonly 
-        int number;
-
-    public bool isOpen;
-
-    public BaseElement(string type, int num, bool open = true)
-    {
-        animalType = type;
-        number = num;
-        isOpen = open;
-    }
-}
-
-public class AdditionalElement
-{
-    public readonly string animalType;
-    int number;
-    bool isOpen = true;
-
-    public AdditionalElement(string type, int num)
-    {
-        animalType = type;
-        number = num;
     }
 }

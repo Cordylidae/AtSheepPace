@@ -74,13 +74,13 @@ public class Round
 
     public readonly Dictionary<BaseElement, List<AdditionalElement>> elementsDictionary;
 
-    public Round(List<BaseElement> _baseElements)
+    public Round(List<GamburgerElement> _gamburgerElement)
     {
         elementsDictionary = new Dictionary<BaseElement, List<AdditionalElement>>();
 
-        foreach (BaseElement baseElement in _baseElements)
+        foreach (GamburgerElement element in _gamburgerElement)
         {
-            elementsDictionary.Add(baseElement, new List<AdditionalElement>());
+            elementsDictionary.Add(element.key, element.value);
         }
     }
 

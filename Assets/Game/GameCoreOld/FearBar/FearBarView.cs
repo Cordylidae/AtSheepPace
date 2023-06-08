@@ -22,8 +22,6 @@ public class FearBarView : MonoBehaviour
 
     void ChangeProgress()
     {
-        Debug.Log(fearBar._currentProgress);
-        Debug.Log(fearBar.ProportionOfProgress);
         arrow.DOLocalMove(new Vector3(bar.rect.width * fearBar.ProportionOfProgress, arrow.localPosition.y, arrow.localPosition.z), 1, true);
     }
 

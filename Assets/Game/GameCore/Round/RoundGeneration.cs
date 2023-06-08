@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Linq;
-using Codice.Client.Common;
 using System.Threading.Tasks;
-using PlasticGui;
-using System.Xml.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 public class RoundGeneration : MonoBehaviour
 {
@@ -36,7 +33,7 @@ public class RoundGeneration : MonoBehaviour
         
         await ShowElements();
 
-        StartRoundControlElements(roundControl.indexOfCurrentButtons);
+        StartRoundControlElements();
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -48,17 +45,6 @@ public class RoundGeneration : MonoBehaviour
         roundControl.currentIndexElements = new List<BaseElement>();
         
         AddAllIndex(roundControl.indexOfCurrentButtons);
-
-        //currentRound.zeroElementsOfBaseKey += (key) =>
-        //{
-        //    key.isOpen = true;
-
-        //    BaseButtonView animalView = animalsElements[key].GetComponentInChildren<BaseButtonView>();
-        //    animalView.SetOpen();
-
-        //    //UpdateRoundControlCurrentIndex();
-        //    StartBaseElementDrawCircle(key.number, animalView.DrawCircle);
-        //};
 
         roundControl.fearBar = fearBarView.fearBar;
     }
@@ -82,16 +68,23 @@ public class RoundGeneration : MonoBehaviour
                             UnityEngine.Random.RandomRange(-450, 450) / 1080.0f * 6.0f,
                             UnityEngine.Random.RandomRange(-520, 520) / 1920.0f * 10.0f,
                             //0.0f, 0.0f,
-                            index * (-0.5f / currentRound.elementsDictionary.Count));
+                            index * (-4.0f / currentRound.elementsDictionary.Count));
 
             
             BaseButtonView animalView = animal.GetComponent<BaseButtonView>();
             animalView.AnimalUniqIndex.Index = baseElement.number;
 
-            if (baseElement.isOpen)
+            // event on is open
+            baseElement.IOpen += () =>
             {
-                animalView.SetOpen();
-            }else animalView.SetClose();
+                if (baseElement.IsOpen)
+                {
+                    animalView.SetOpen();
+                }
+                else animalView.SetClose();
+            };
+
+            baseElement.IOpen?.Invoke();
 
             switch (animalView.AnimalType.buttonType)
             {
@@ -113,20 +106,17 @@ public class RoundGeneration : MonoBehaviour
             animalView.BaseTapHandel.isTap += () => {
                 if (lastClickTime)
                 {
-                    checkTheCorrectTapState(roundControl.OnButtonTap(baseElement.animalType, baseElement.number));
+                    checkTheCorrectBaseTapState(roundControl.OnButtonTap(baseElement.animalType, baseElement.number));
                 }
                 lastClickTime = false;
             };
 
             animalView.DrawCircle.radiusZero += () =>
             {
-                checkTheCorrectTapState(roundControl.GoneButtonRadius(baseElement.animalType));
+                checkTheCorrectBaseTapState(roundControl.GoneButtonRadius(baseElement.animalType));
             };
 
-            // event on is open
-            /// .....
-
-            void checkTheCorrectTapState(string state)
+            void checkTheCorrectBaseTapState(string state)
             {
                 switch (state)
                 {
@@ -138,7 +128,6 @@ public class RoundGeneration : MonoBehaviour
                         break;
                     case RoundControl.CorrectTapState.CorrectDestroy:
                         {
-                            Debug.Log("sd " + baseObject.name);
                             DestroyBaseObject();
                         }
                         break;
@@ -154,6 +143,13 @@ public class RoundGeneration : MonoBehaviour
                 }
             }
 
+            void OpenBaseElement()
+            {
+                baseElement.IsOpen = true;
+
+                animalView.DrawCircle.StartDrawing(2.7f);
+            }
+
             void DestroyBaseObject()
             {
                 roundControl.currentIndexElements.Remove(baseElement);
@@ -167,7 +163,73 @@ public class RoundGeneration : MonoBehaviour
                 DestroyWithAnimBase(animal, baseObject);
             }
 
-            //List<AdditionalElement> aA = element.Value;  other addition buttons
+    
+            for (int i = 0; i < element.Value.Count; i++)
+            {
+                AdditionalElement A_Element = element.Value[i];
+
+                GameObject A_Animal = SetAnimalEntities(element.Value[i].animalType);
+                A_Animal.transform.SetParent(baseObject.transform);
+
+                A_Animal.transform.localPosition = new Vector3(
+                               animal.transform.localPosition.x + UnityEngine.Random.RandomRange(-4.5f, 4.5f) / 1080.0f * 6.0f,
+                               animal.transform.localPosition.y + UnityEngine.Random.RandomRange(-5.2f, 5.2f) / 1920.0f * 10.0f,
+                               //0.0f, 0.0f,
+                               animal.transform.localPosition.z + (i+1) * ((-3.9f / currentRound.elementsDictionary.Count) / element.Value.Count));
+
+                DeerView A_AnimalView = A_Animal.GetComponent<DeerView>();
+                A_AnimalView.AnimalNumberIndex.Index = UnityEngine.Random.RandomRange(2, 4);
+
+                // event on is open
+                A_Element.IOpen += () =>
+                {
+                    if (A_Element.IsOpen)
+                    {
+                        A_AnimalView.SetOpen();
+                    }
+                    else A_AnimalView.SetClose();
+                };
+
+                A_Element.IOpen?.Invoke();
+
+                //switch (A_AnimalView.AnimalType.buttonType)
+                //{
+                //    case AnimalType.Sheep:
+                //        {
+                //            SheepView sheepView = (SheepView)animalView;
+                //        }
+                //        break;
+                //    case AnimalType.Wolf:
+                //        {
+                //            WolfView wolfView = (WolfView)animalView;
+                //        }
+                //        break;
+                //}
+
+                A_AnimalView.BaseTapHandel.isTap += () => {
+                    if (lastClickTime)
+                    {
+                        //checkTheCorrectBaseTapState(roundControl.OnButtonTap(A_Element.animalType, baseElement.number));
+                        
+                        A_AnimalView.AnimalNumberIndex.Index--;
+                        if (A_AnimalView.AnimalNumberIndex.Index == 0) DestroyAdditionObject(A_Element, A_Animal);
+                    }
+                    lastClickTime = false;
+                };
+            }
+
+            async void DestroyAdditionObject(AdditionalElement A_Element, GameObject A_Animal)
+            {
+                currentRound.elementsDictionary[baseElement].Remove(A_Element);
+                currentRound.elementsDictionary[baseElement].Last().IsOpen = true;
+
+                UpdateRoundControlCurrentIndex();
+
+                await DestroyWithAnimAddition(A_Animal);
+
+                if(currentRound.checkEmptyBaseKey(baseElement)) OpenBaseElement();
+            }
+
 
             index--;
         }
@@ -175,15 +237,17 @@ public class RoundGeneration : MonoBehaviour
 
     private void UpdateRoundControlCurrentIndex()
     {
-        if (roundControl.currentIndexElements.Count == 0) { 
-            roundControl.indexOfCurrentButtons++;
-            StartRoundControlElements(roundControl.indexOfCurrentButtons);
+        if (roundControl.currentIndexElements.Count == 0) {
+            do {
+                roundControl.indexOfCurrentButtons++;
+                AddAllIndex(roundControl.indexOfCurrentButtons);
+            } while (roundControl.currentIndexElements.Count == 0 && currentRound.elementsDictionary.Count != 0);
+            StartRoundControlElements();
         }
     }
 
-    private void StartRoundControlElements(int indexOfStart)
+    private void StartRoundControlElements()
     {
-        AddAllIndex(indexOfStart);
         StartDrawCircleOpenIndex();
     }
 
@@ -205,16 +269,15 @@ public class RoundGeneration : MonoBehaviour
             GameObject baseObject = animalsElements[key];
             BaseButtonView animalView = baseObject.GetComponentInChildren<BaseButtonView>();
 
-            if (key.isOpen)
+            if (key.IsOpen)
             {
                 animalView.DrawCircle.StartDrawing(2.7f);
             }
             else
             {
-                if (currentRound.checkEmptyBaseKey(currentRound.elementsDictionary.First().Key))
+                if (currentRound.checkEmptyBaseKey(key))
                 {
-                    key.isOpen = true;
-                    animalView.SetOpen();
+                    key.IsOpen = true;
 
                     animalView.DrawCircle.StartDrawing(2.7f);
                 }
@@ -261,9 +324,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Boar:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[2],
+                        animalsEntities.animal[3],
                         new Vector3(0.0f, 0.0f, 0.0f),
-                        animalsEntities.animal[2].transform.rotation);
+                        animalsEntities.animal[3].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Boar;
                 }
@@ -271,9 +334,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Hedgehog:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[3],
+                        animalsEntities.animal[4],
                         new Vector3(0.0f, 0.0f, 0.0f),
-                        animalsEntities.animal[3].transform.rotation);
+                        animalsEntities.animal[4].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Hedgehog;
                 }
@@ -308,8 +371,8 @@ public class RoundGeneration : MonoBehaviour
             length = animalsOfBaseObject.Length;
 
             for (int j = 0; j < length; j++) {
-                time = 0.25f + (float)(i) * 0.45f + (float)(j) * 0.75f;
-                tasks.Add(CreateWithAnim(animalsOfBaseObject[length - 1 - j].gameObject, time));
+                time = 0.25f + (float)(i) * 0.45f + (float)(j) * (0.44f / length);
+                tasks.Add(CreateWithAnim(animalsOfBaseObject[j].gameObject, time));
             }
         }
 
@@ -339,13 +402,13 @@ public class RoundGeneration : MonoBehaviour
         if (baseObject != null) Destroy(baseObject);
     }
 
-    IEnumerator DestroyWithAnim(GameObject go)
+    private async Task DestroyWithAnimAddition(GameObject go)
     {
         Animation anim = go.GetComponent<Animation>();
         anim.Play("CloseShot");
 
-        yield return new WaitForSeconds(anim["CloseShot"].length);
+        await Task.Delay((int)(anim["CloseShot"].length * 1000));
 
-        Destroy(go);
+        if (go != null) Destroy(go);
     }
 }

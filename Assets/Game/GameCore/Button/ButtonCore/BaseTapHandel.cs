@@ -30,6 +30,7 @@ public class BaseTapHandel : MonoBehaviour
         pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (GetComponent<CircleCollider2D>().OverlapPoint(pos))
         {
+            Debug.Log(this.transform.parent.name);
             isTap.Invoke();
         }
     }
