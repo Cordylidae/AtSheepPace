@@ -258,12 +258,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8819353368664034766}
-  - component: {fileID: 8819353368664034767}
   - component: {fileID: 8819353368664034761}
   - component: {fileID: 799766211609233798}
+  - component: {fileID: 2764622949287109652}
   m_Layer: 0
   m_Name: TapCircleArea
-  m_TagString: Untagged
+  m_TagString: AnimalButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,22 +283,6 @@ Transform:
   m_Father: {fileID: 8819353368832410027}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &8819353368664034767
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8819353368664034765}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!212 &8819353368664034761
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -363,6 +347,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158a86ee0795439488841db9b513c6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &2764622949287109652
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8819353368664034765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.6
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8819353368832410026
 GameObject:
   m_ObjectHideFlags: 0

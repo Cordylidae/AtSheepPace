@@ -169,6 +169,7 @@ public class RoundGeneration : MonoBehaviour
                 AdditionalElement A_Element = element.Value[i];
 
                 GameObject A_Animal = SetAnimalEntities(element.Value[i].animalType);
+                A_Animal.name += $" Index : {i}";
                 A_Animal.transform.SetParent(baseObject.transform);
 
                 A_Animal.transform.localPosition = new Vector3(
@@ -221,13 +222,13 @@ public class RoundGeneration : MonoBehaviour
             async void DestroyAdditionObject(AdditionalElement A_Element, GameObject A_Animal)
             {
                 currentRound.elementsDictionary[baseElement].Remove(A_Element);
-                currentRound.elementsDictionary[baseElement].Last().IsOpen = true;
+
+                if (currentRound.checkEmptyBaseKey(baseElement)) OpenBaseElement();
+                else currentRound.elementsDictionary[baseElement].Last().IsOpen = true;
 
                 UpdateRoundControlCurrentIndex();
 
                 await DestroyWithAnimAddition(A_Animal);
-
-                if(currentRound.checkEmptyBaseKey(baseElement)) OpenBaseElement();
             }
 
 

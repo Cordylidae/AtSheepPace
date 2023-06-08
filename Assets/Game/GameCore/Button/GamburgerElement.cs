@@ -22,7 +22,7 @@ public abstract class Element
     public bool IsOpen
     {
         get { return isOpen; }
-        set { IOpen?.Invoke(); isOpen = value; }
+        set { isOpen = value; IOpen?.Invoke(); }
     }
 
     public Element(string type, bool open = true)
