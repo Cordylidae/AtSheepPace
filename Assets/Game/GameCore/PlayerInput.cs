@@ -1,8 +1,4 @@
-using PlasticPipe.PlasticProtocol.Server.Stubs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -13,7 +9,7 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
 #if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == Touch.Ended)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             
             ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
