@@ -19,6 +19,7 @@ public abstract class Element
 
     public Action IOpen;
     protected bool isOpen;
+    public void ResetSubscriptions() => IOpen = null;
     public bool IsOpen
     {
         get { return isOpen; }

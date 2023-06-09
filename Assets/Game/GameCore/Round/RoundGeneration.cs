@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using System;
+using System.Xml.Linq;
 
 public class RoundGeneration : MonoBehaviour
 {
@@ -123,6 +124,8 @@ public class RoundGeneration : MonoBehaviour
                     case RoundControl.CorrectTapState.UncorrectDestroy:
                         {
                             //shake it
+
+                            ResetBaseSubscriptions(baseElement, animalView);
                             DestroyBaseObject();
                         }
                         break;
@@ -160,9 +163,10 @@ public class RoundGeneration : MonoBehaviour
 
                 UpdateRoundControlCurrentIndex();
 
+                baseElement.ResetSubscriptions();
+
                 DestroyWithAnimBase(animal, baseObject);
             }
-
     
             for (int i = 0; i < element.Value.Count; i++)
             {
@@ -181,7 +185,7 @@ public class RoundGeneration : MonoBehaviour
                 DeerView A_AnimalView = A_Animal.GetComponent<DeerView>();
                 A_AnimalView.AnimalNumberIndex.Index = UnityEngine.Random.RandomRange(2, 4);
 
-                // event on is open
+               
                 A_Element.IOpen += () =>
                 {
                     if (A_Element.IsOpen)
@@ -213,7 +217,11 @@ public class RoundGeneration : MonoBehaviour
                         //checkTheCorrectBaseTapState(roundControl.OnButtonTap(A_Element.animalType, baseElement.number));
                         
                         A_AnimalView.AnimalNumberIndex.Index--;
-                        if (A_AnimalView.AnimalNumberIndex.Index == 0) DestroyAdditionObject(A_Element, A_Animal);
+                        if (A_AnimalView.AnimalNumberIndex.Index == 0)
+                        {
+                            ResetBaseSubscriptions(A_Element, A_AnimalView);
+                            DestroyAdditionObject(A_Element, A_Animal);
+                        }
                     }
                     lastClickTime = false;
                 };
@@ -231,6 +239,11 @@ public class RoundGeneration : MonoBehaviour
                 await DestroyWithAnimAddition(A_Animal);
             }
 
+            void ResetBaseSubscriptions(Element element, ButtonView view)
+            {
+                view.BaseTapHandel.ResetSubscriptions();
+                element.ResetSubscriptions();
+            }
 
             index--;
         }

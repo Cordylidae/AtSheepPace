@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class BaseTapHandel : MonoBehaviour
 {
-    public event Action isTap;
+
+    public Action isTap;
+    public void ResetSubscriptions() => isTap = null;
 
     public void Tapped()
     {
