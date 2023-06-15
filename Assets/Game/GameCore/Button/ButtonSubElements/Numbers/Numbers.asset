@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c03dc9d2eced749a9a31d9a147bec0, type: 3}
+  m_Script: {fileID: 11500000, guid: 76468202cb58c3e4fb4a912844e20e37, type: 3}
   m_Name: Numbers
   m_EditorClassIdentifier: 
-  numbers:
+  sprites:
   - {fileID: 287016451, guid: 1b465770b0b4e8e47a69fcd3e71d9c2f, type: 3}
   - {fileID: 1421085711, guid: 1b465770b0b4e8e47a69fcd3e71d9c2f, type: 3}
   - {fileID: 488090588, guid: 1b465770b0b4e8e47a69fcd3e71d9c2f, type: 3}

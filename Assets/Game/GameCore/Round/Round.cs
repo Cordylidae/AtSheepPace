@@ -46,6 +46,31 @@ public class RoundControl
         throw new NotImplementedException();
     }
 
+    public string OnButtonTap(string animalType, SignState signState)
+    {
+        switch (animalType)
+        {
+            case AnimalType.Deer:
+                {
+                    switch (signState)
+                    {
+                        case SignState.True:
+                            {
+                                return CorrectTapState.CorrectUndestroy;
+                            }
+                        case SignState.False:
+                            {
+                                return CorrectTapState.UncorrectDestroy;
+                            }
+                    }
+
+                    throw new NotImplementedException();
+                }
+        }
+
+        throw new NotImplementedException();
+    }
+
     public string GoneButtonRadius(string animalType)
     {
         switch (animalType)

@@ -1,21 +1,25 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 using Zenject;
 
 public class AsyncSceneLoader : MonoBehaviour
 {
     public AsyncOperation scene;
+    bool isChanged = true;
 
     public void LoadAsync(string nameOfScene)
     {
-        StartCoroutine(LoadScene(nameOfScene));
+        LoadScene(nameOfScene);
     }
 
-    IEnumerator LoadScene(string sceneName)
+    async void LoadScene(string sceneName)
     {
-        yield return null;
+        if (!isChanged) return;
+        else isChanged = false;
+
+        await Task.Yield();
 
         scene = SceneManager.LoadSceneAsync(sceneName);
 
@@ -30,12 +34,12 @@ public class AsyncSceneLoader : MonoBehaviour
                 scene.allowSceneActivation = true;
             }
 
-            yield return null;
+            await Task.Yield();
         }
+
+        isChanged = true;
     }
 }
-
-
 
 public struct GameSceneName
 {

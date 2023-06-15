@@ -50,6 +50,23 @@ public class RoundGeneration : MonoBehaviour
         roundControl.fearBar = fearBarView.fearBar;
     }
 
+    public class GamburgerAnimalGroup
+    {
+        public GamburgerElement gamburgerElement;
+        public GameObject baseObject;
+
+        public GameObject baseAnimal;
+        public BaseButtonView baseButtonView;
+
+        public List<GameObject> additionAnimals;
+
+        public GamburgerAnimalGroup(GamburgerElement element)
+        {
+            gamburgerElement = element;
+            additionAnimals = new List<GameObject>();
+        }
+    }
+
     private void BuildUpAnimalDicionary()
     {
         int index = currentRound.elementsDictionary.Count;
@@ -107,67 +124,22 @@ public class RoundGeneration : MonoBehaviour
             animalView.BaseTapHandel.isTap += () => {
                 if (lastClickTime)
                 {
-                    checkTheCorrectBaseTapState(roundControl.OnButtonTap(baseElement.animalType, baseElement.number));
+                    checkTheCorrectTapState(roundControl.OnButtonTap(baseElement.animalType, baseElement.number));
                 }
                 lastClickTime = false;
             };
 
             animalView.DrawCircle.radiusZero += () =>
             {
-                checkTheCorrectBaseTapState(roundControl.GoneButtonRadius(baseElement.animalType));
+                checkTheCorrectTapState(roundControl.GoneButtonRadius(baseElement.animalType));
             };
-
-            void checkTheCorrectBaseTapState(string state)
-            {
-                switch (state)
-                {
-                    case RoundControl.CorrectTapState.UncorrectDestroy:
-                        {
-                            //shake it
-
-                            ResetBaseSubscriptions(baseElement, animalView);
-                            DestroyBaseObject();
-                        }
-                        break;
-                    case RoundControl.CorrectTapState.CorrectDestroy:
-                        {
-                            DestroyBaseObject();
-                        }
-                        break;
-                    case RoundControl.CorrectTapState.UncorrectUndestroy:
-                        {
-                            //shake it
-                        }
-                        break;
-                    case RoundControl.CorrectTapState.CorrectUndestroy:
-                        {
-                        }
-                        break;
-                }
-            }
 
             void OpenBaseElement()
             {
                 baseElement.IsOpen = true;
-
                 animalView.DrawCircle.StartDrawing(2.7f);
             }
 
-            void DestroyBaseObject()
-            {
-                roundControl.currentIndexElements.Remove(baseElement);
-
-                currentRound.elementsDictionary.Remove(baseElement);
-                animalsElements.Remove(baseElement);
-                currentRound.checkEmptyDictionary();
-
-                UpdateRoundControlCurrentIndex();
-
-                baseElement.ResetSubscriptions();
-
-                DestroyWithAnimBase(animal, baseObject);
-            }
-    
             for (int i = 0; i < element.Value.Count; i++)
             {
                 AdditionalElement A_Element = element.Value[i];
@@ -197,6 +169,7 @@ public class RoundGeneration : MonoBehaviour
 
                 A_Element.IOpen?.Invoke();
 
+                /*
                 //switch (A_AnimalView.AnimalType.buttonType)
                 //{
                 //    case AnimalType.Sheep:
@@ -210,6 +183,7 @@ public class RoundGeneration : MonoBehaviour
                 //        }
                 //        break;
                 //}
+                */
 
                 A_AnimalView.BaseTapHandel.isTap += () => {
                     if (lastClickTime)
@@ -219,16 +193,59 @@ public class RoundGeneration : MonoBehaviour
                         A_AnimalView.AnimalNumberIndex.Index--;
                         if (A_AnimalView.AnimalNumberIndex.Index == 0)
                         {
-                            ResetBaseSubscriptions(A_Element, A_AnimalView);
-                            DestroyAdditionObject(A_Element, A_Animal);
+                            DestroyAdditionObject(A_Element, A_Animal, A_AnimalView);
                         }
                     }
                     lastClickTime = false;
                 };
             }
 
-            async void DestroyAdditionObject(AdditionalElement A_Element, GameObject A_Animal)
+            void checkTheCorrectTapState(string state)
             {
+                switch (state)
+                {
+                    case RoundControl.CorrectTapState.UncorrectDestroy:
+                        {
+                            //shake it
+                            DestroyBaseObject();
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.CorrectDestroy:
+                        {
+                            DestroyBaseObject();
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.UncorrectUndestroy:
+                        {
+                            //shake it
+                        }
+                        break;
+                    case RoundControl.CorrectTapState.CorrectUndestroy:
+                        {
+                        }
+                        break;
+                }
+            }
+
+            void DestroyBaseObject()
+            {
+                ResetBaseSubscriptions(baseElement, animalView);
+
+                roundControl.currentIndexElements.Remove(baseElement);
+
+                currentRound.elementsDictionary.Remove(baseElement);
+                animalsElements.Remove(baseElement);
+                currentRound.checkEmptyDictionary();
+
+                UpdateRoundControlCurrentIndex();
+
+                DestroyWithAnimBase(animal, baseObject);
+            }
+
+            async void DestroyAdditionObject(AdditionalElement A_Element, GameObject A_Animal, ButtonView A_AnimalView)
+            {
+                ResetBaseSubscriptions(A_Element, A_AnimalView);
+
                 currentRound.elementsDictionary[baseElement].Remove(A_Element);
 
                 if (currentRound.checkEmptyBaseKey(baseElement)) OpenBaseElement();
@@ -236,17 +253,17 @@ public class RoundGeneration : MonoBehaviour
 
                 UpdateRoundControlCurrentIndex();
 
-                await DestroyWithAnimAddition(A_Animal);
-            }
-
-            void ResetBaseSubscriptions(Element element, ButtonView view)
-            {
-                view.BaseTapHandel.ResetSubscriptions();
-                element.ResetSubscriptions();
+                await DestroyWithAnim(A_Animal);
             }
 
             index--;
         }
+    }
+
+    void ResetBaseSubscriptions(Element element, ButtonView view)
+    {
+        view.BaseTapHandel.ResetSubscriptions();
+        element.ResetSubscriptions();
     }
 
     private void UpdateRoundControlCurrentIndex()
@@ -406,17 +423,13 @@ public class RoundGeneration : MonoBehaviour
     private async Task DestroyWithAnimBase(GameObject go, GameObject baseObject)
     {
         go.GetComponentInChildren<DrawCircle>().StopDrawing();
+        
+        await DestroyWithAnim(go);
 
-        Animation anim = go.GetComponent<Animation>();
-        anim.Play("CloseShot");
-
-        await Task.Delay((int)(anim["CloseShot"].length * 1000));
-
-        if (go != null) Destroy(go);
         if (baseObject != null) Destroy(baseObject);
     }
 
-    private async Task DestroyWithAnimAddition(GameObject go)
+    private async Task DestroyWithAnim(GameObject go)
     {
         Animation anim = go.GetComponent<Animation>();
         anim.Play("CloseShot");

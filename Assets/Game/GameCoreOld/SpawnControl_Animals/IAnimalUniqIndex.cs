@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IAnimalUniqIndex : MonoBehaviour
 {
-    [SerializeField] private Numbers numbers;
+    [SerializeField] private SubElements numbers;
 
     [SerializeField] private int index = 0;
 
@@ -38,7 +38,7 @@ public class IAnimalUniqIndex : MonoBehaviour
             numeric[1].gameObject.SetActive(false);
             numeric[2].gameObject.SetActive(false);
 
-            numeric[0].sprite = numbers.numbers[index];
+            numeric[0].sprite = numbers.sprites[index];
             //numeric[0].SetNativeSize();
 
         }
@@ -48,8 +48,8 @@ public class IAnimalUniqIndex : MonoBehaviour
             numeric[1].gameObject.SetActive(true);
             numeric[2].gameObject.SetActive(true);
 
-            numeric[1].sprite = numbers.numbers[index / 10];
-            numeric[2].sprite = numbers.numbers[index % 10];
+            numeric[1].sprite = numbers.sprites[index / 10];
+            numeric[2].sprite = numbers.sprites[index % 10];
 
             //numeric[1].SetNativeSize();
             //numeric[2].SetNativeSize();
