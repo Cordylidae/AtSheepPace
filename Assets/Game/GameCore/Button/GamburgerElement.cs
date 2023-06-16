@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-             
+
 public class GamburgerElement
 {
-    public BaseElement key;
-    public List<AdditionalElement> value;
+    public BaseElement baseE;
+    public List<AdditionalElement> additionE;
 
     public GamburgerElement(BaseElement baseElement)
     {
-        key = baseElement;
-        value = new List<AdditionalElement>();
+        baseE = baseElement;
+        additionE = new List<AdditionalElement>();
     }
 }
 

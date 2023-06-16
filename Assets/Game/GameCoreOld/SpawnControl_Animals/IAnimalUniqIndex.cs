@@ -40,7 +40,6 @@ public class IAnimalUniqIndex : MonoBehaviour
 
             numeric[0].sprite = numbers.sprites[index];
             //numeric[0].SetNativeSize();
-
         }
         if (index >= 10 && index <= 99)
         {

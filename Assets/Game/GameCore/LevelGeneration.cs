@@ -84,9 +84,9 @@ public class LevelGeneration : MonoBehaviour
 
             if (closeElementIndex[z] == i)
             {
-                gamburgerElement.key.IsOpen = false;
+                gamburgerElement.baseE.IsOpen = false;
 
-                gamburgerElement.value = SetAdditionalElements();
+                gamburgerElement.additionE = SetAdditionalElements();
                 z = z + 1 < closeElementIndex.Count ? z+1 : z;
             }
 
@@ -109,7 +109,7 @@ public class LevelGeneration : MonoBehaviour
         {
             additionalElements.Add(new AdditionalElement(elements[i]));
         }
-        additionalElements.Last().IsOpen = true;
+        if(additionalElements.Count != 0) additionalElements.Last().IsOpen = true;
 
         return additionalElements;
     }
