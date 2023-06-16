@@ -1,9 +1,6 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FearBarView : MonoBehaviour
 {
@@ -67,12 +64,12 @@ public class FearBar
 
     public void SheepGood()
     {
-        _currentProgress -= 7.0f;
+        _currentProgress -= 3.0f;
     }
 
     public void SheepBad()
     {
-        _currentProgress += 15.0f;
+        _currentProgress += 5.0f;
     }
 
     public void WolfGood()
@@ -82,6 +79,18 @@ public class FearBar
 
     public void WolfBad()
     {
-        _currentProgress += 48.0f;
+        _currentProgress += 28.0f;
+    }
+
+    public void DeerGood(string dayTime)
+    {
+        if(dayTime == Rule.DayTime.Sun) _currentProgress -= 18.0f;
+        else _currentProgress -= 12.0f;
+    }
+
+    public void DeerBad(string dayTime)
+    {
+        if (dayTime == Rule.DayTime.Sun) _currentProgress += 25.0f;
+        else _currentProgress += 17.0f;
     }
 };

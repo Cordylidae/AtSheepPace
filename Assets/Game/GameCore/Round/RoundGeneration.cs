@@ -42,12 +42,7 @@ public class RoundGeneration : MonoBehaviour
 
     private void SetUpAnimalRuleVaribles()
     {
-        roundControl = new RoundControl();
-
-        // ### NEED setup round controll from Constructor and set its public varibles to private 
-        roundControl.indexOfCurrentButtons = currentRound.elementsDictionary.First().Key.number;
-        roundControl.currentIndexElements = new List<BaseElement>();
-        roundControl.fearBar = fearBarView.fearBar;
+        roundControl = new RoundControl(currentRound.elementsDictionary.First().Key.number, fearBarView.fearBar);
 
         AddAllIndex(roundControl.indexOfCurrentButtons);
     }
@@ -102,16 +97,42 @@ public class RoundGeneration : MonoBehaviour
 
                 if (deerView != null)
                 {
+                    deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+
                     deerView.BaseTapHandel.isTap += () =>
                     {
                         if (lastClickTime)
                         {
-                            //checkTheCorrectBaseTapState(roundControl.OnButtonTap(A_Element.animalType, baseElement.number));
-                           
-                            deerView.AnimalNumberIndex.Index--;
-                            if (deerView.AnimalNumberIndex.Index == 0)
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
+
+                            switch (correctTap)
                             {
-                                DestroyAdditionObject(animalGroup, ind);
+                                case RoundControl.CorrectTapState.UncorrectDestroy:
+                                    {
+                                        // shake it
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectDestroy:
+                                    {
+
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                    {
+
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectUndestroy:
+                                    {
+                                        deerView.AnimalNumberIndex.Index--;
+                                        if (deerView.AnimalNumberIndex.Index == 0)
+                                        {
+                                            fearBarView.fearBar.DeerGood(roundControl.rule.dayTime);
+                                            DestroyAdditionObject(animalGroup, ind);
+                                        }
+                                    }
+                                    break;
                             }
                         }
                         lastClickTime = false;
@@ -306,7 +327,7 @@ public class RoundGeneration : MonoBehaviour
 
     async void DestroyAdditionObject(GamburgerAnimalGroup animalGroup, int index)
     {
-        Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
+        //Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
 
         PairAnimalView pair = animalGroup.additionObjects[index];
         AdditionalElement A_Element = animalGroup.gamburgerElement.additionE[index];
@@ -315,7 +336,7 @@ public class RoundGeneration : MonoBehaviour
         animalGroup.gamburgerElement.additionE.Remove(A_Element);
         animalGroup.additionObjects.Remove(pair);
 
-        Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
+        //Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
 
         if (animalGroup.checkEmptyBaseKey()) animalGroup.OpenBaseElement();
         else animalGroup.gamburgerElement.additionE.Last().IsOpen = true;

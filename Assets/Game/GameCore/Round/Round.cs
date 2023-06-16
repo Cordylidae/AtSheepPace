@@ -3,6 +3,18 @@ using System;
 using UnityEngine;
 
 // ### NEED Add Animal Rules Class
+
+public class Rule
+{
+    public class DayTime
+    {
+        public const string Sun = "Sun";
+        public const string Moon = "Moon";
+    }
+
+    public string dayTime { set; get; }
+};
+
 public class RoundControl
 {
     public class CorrectTapState
@@ -14,10 +26,21 @@ public class RoundControl
         public const string CorrectDestroy = "CorrectDestroy";
     };
 
+    public Rule rule = new Rule();
+
     public int indexOfCurrentButtons;
     public List<BaseElement> currentIndexElements;
 
     public FearBar fearBar;
+
+    public RoundControl(int firstIndex, FearBar fBar, string dayTime = Rule.DayTime.Sun)
+    {
+        indexOfCurrentButtons = firstIndex;
+        fearBar = fBar;
+        currentIndexElements = new List<BaseElement>();
+
+        rule.dayTime = dayTime;
+    }
 
     public string OnButtonTap(string animalType, int index)
     {
@@ -39,39 +62,12 @@ public class RoundControl
             case AnimalType.Wolf:
                 {
                     fearBar.WolfBad();
-
                     return CorrectTapState.UncorrectDestroy;
                 }
         }
 
         throw new NotImplementedException();
     }
-
-    public string OnButtonTap(string animalType, SignState signState)
-    {
-        switch (animalType)
-        {
-            case AnimalType.Deer:
-                {
-                    switch (signState)
-                    {
-                        case SignState.True:
-                            {
-                                return CorrectTapState.CorrectUndestroy;
-                            }
-                        case SignState.False:
-                            {
-                                return CorrectTapState.UncorrectDestroy;
-                            }
-                    }
-
-                    throw new NotImplementedException();
-                }
-        }
-
-        throw new NotImplementedException();
-    }
-
     public string GoneButtonRadius(string animalType)
     {
         switch (animalType)
@@ -87,6 +83,46 @@ public class RoundControl
                     fearBar.WolfGood();
 
                     return CorrectTapState.CorrectDestroy;
+                }
+        }
+
+        throw new NotImplementedException();
+    }
+    public string OnButtonTap(string animalType, SignState signState)
+    {
+        switch (animalType)
+        {
+            case AnimalType.Deer:
+                {
+                    switch (signState)
+                    {
+                        case SignState.True:
+                            {
+                                if (rule.dayTime == Rule.DayTime.Sun)
+                                {
+                                    return CorrectTapState.CorrectUndestroy;
+                                }
+                                else
+                                {
+                                    fearBar.DeerBad(rule.dayTime);
+                                    return CorrectTapState.UncorrectDestroy;
+                                }
+                            }
+                        case SignState.False:
+                            {
+                                if (rule.dayTime == Rule.DayTime.Moon)
+                                {
+                                    return CorrectTapState.CorrectUndestroy;
+                                }
+                                else
+                                {
+                                    fearBar.DeerBad(rule.dayTime);
+                                    return CorrectTapState.UncorrectDestroy;
+                                }
+                            }
+                    }
+
+                    throw new NotImplementedException();
                 }
         }
 
@@ -214,7 +250,7 @@ public class GamburgerAnimalGroup
             case AnimalType.Deer:
                 {
                     DeerView deerView = buttonView as DeerView;
-                    deerView.AnimalNumberIndex.Index = i + 1;// UnityEngine.Random.RandomRange(2, 4);
+                    deerView.AnimalNumberIndex.Index =  UnityEngine.Random.RandomRange(2, 5); // i + 1;//
 
                     return deerView;
                 }

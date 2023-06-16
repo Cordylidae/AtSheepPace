@@ -25,6 +25,14 @@ public class IAnimalSign : MonoBehaviour
         }
     }
 
+    public void SetRandomSign()
+    {
+        int rand = UnityEngine.Random.RandomRange(0, 100);
+
+        if (rand < 50) Sign = SignState.True;
+        else Sign = SignState.False;
+    }
+
     private void ChangeSign()
     {
         switch (sign)
