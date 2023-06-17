@@ -242,7 +242,25 @@ public class GamburgerAnimalGroup
             case AnimalType.Deer:
                 {
                     DeerView deerView = buttonView as DeerView;
-                    deerView.AnimalNumberIndex.Index =  UnityEngine.Random.RandomRange(2, 5); // i + 1;//
+                    int randCount = UnityEngine.Random.RandomRange(0, 100);
+
+                    if (randCount < 25)
+                    {
+                        deerView.AnimalNumberIndex.Index = 1;
+                    }
+                    else if (randCount >= 25 && randCount < 58)
+                    {
+                        deerView.AnimalNumberIndex.Index = 2;
+                    }
+                    else if (randCount >= 58 && randCount < 90)
+                    {
+                        deerView.AnimalNumberIndex.Index = 3;
+                    }
+                    else 
+                    {
+                        deerView.AnimalNumberIndex.Index = 4;
+                    }
+                     // i + 1;//
 
                     return deerView;
                 }

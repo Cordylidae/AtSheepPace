@@ -51,10 +51,10 @@ public class LevelGeneration : MonoBehaviour
     // Set count of Wolves and Sheeps and set their sequence 
     void SetBaseElementsList()
     {
-        int allCount = hardProperties.CountOfBaseElements;
+        //int allCount = hardProperties.CountOfBaseElements;
 
-        int allSheep = 8; //#### NEED Initialise
-        int allWolves = allCount - allSheep;
+        //int allSheep = 8; //#### NEED Initialise
+        //int allWolves = allCount - allSheep;
 
         // Genereate sequence
         List<string> elements = new List<string>
@@ -65,13 +65,19 @@ public class LevelGeneration : MonoBehaviour
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf, 
             AnimalType.Wolf,  AnimalType.Sheep, 
+            AnimalType.Sheep, AnimalType.Sheep,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Wolf,  AnimalType.Sheep,
             AnimalType.Sheep, AnimalType.Sheep
-
         };
 
         List<int> closeElementIndex = new List<int>
         {
-            0, 5, 6, 7
+            0, 2, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, 21, 23, 24, 25,
         };
 
         GamburgerElement gamburgerElement;
@@ -99,13 +105,15 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
-            AnimalType.Deer, AnimalType.Deer//, AnimalType.Deer
+            AnimalType.Deer, AnimalType.Deer, AnimalType.Deer, AnimalType.Deer
         };
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
 
+        int randCount = UnityEngine.Random.RandomRange(1, elements.Count);
+
         // Initialize additionalElements
-        for (int i = 0; i < elements.Count; i++)
+        for (int i = 0; i < randCount; i++)
         {
             additionalElements.Add(new AdditionalElement(elements[i]));
         }

@@ -39,6 +39,7 @@ public class RoundGeneration : MonoBehaviour
     private void StartRoundControlElements()
     {
         StartDrawCircleOpenIndex();
+        StartShakeOpenDeer();
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -108,7 +109,6 @@ public class RoundGeneration : MonoBehaviour
                     {
                         if (lastClickTime)
                         {
-                            roundControl.rule.DecriseTimeCount();
                             string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
 
                             switch (correctTap)
@@ -144,6 +144,8 @@ public class RoundGeneration : MonoBehaviour
                                     }
                                     break;
                             }
+
+                            roundControl.rule.DecriseTimeCount();
                         }
                         lastClickTime = false;
                     };
@@ -196,6 +198,7 @@ public class RoundGeneration : MonoBehaviour
                 AddAllIndex(roundControl.indexOfCurrentButtons);
             } while (roundControl.currentIndexElements.Count == 0 && currentRound.elementsDictionary.Count != 0);
             StartDrawCircleOpenIndex();
+            StartShakeOpenDeer();
         }
     }
 
@@ -222,8 +225,25 @@ public class RoundGeneration : MonoBehaviour
             {
                 if (animalsGroupDictionary[key].checkEmptyBaseKey())
                 {
-                   animalsGroupDictionary[key].OpenBaseElement();
+                    animalsGroupDictionary[key].OpenBaseElement();
                 }
+            }
+        }
+    }
+
+    void StartShakeOpenDeer()
+    {
+        foreach (var element in animalsGroupDictionary)
+        {
+            if (animalsGroupDictionary[element.Key].checkEmptyBaseKey()) continue;
+            var additionalE = animalsGroupDictionary[element.Key].additionObjects.Last();
+
+
+            DeerView deerView = additionalE.view as DeerView;
+
+            if (deerView != null)
+            {
+                if (!deerView.DeerSwapSign.CanStart) { deerView.DeerSwapSign.CanStart = true; }
             }
         }
     }

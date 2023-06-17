@@ -645,6 +645,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1702748166, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702748166, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Animations.Array.data[3]
+      value: 
+      objectReference: {fileID: 7400000, guid: 4f70f0e7ee334084799cd598fbab2b85, type: 2}
     - target: {fileID: 747413473234863155, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -784,6 +792,19 @@ MonoBehaviour:
   AnimalOpenView: {fileID: 8584525380825688055}
   AnimalNumberIndex: {fileID: 6385966563410201384}
   AnimalSign: {fileID: 388484030600806986}
+  DeerSwapSign: {fileID: 6576062302129403796}
+--- !u!114 &6576062302129403796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4757403464787998642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c90b36e92646342a3eee82f5cd701e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8584525380825688055 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5711494850616005103, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
