@@ -84,13 +84,13 @@ public class FearBar
 
     public void DeerGood(string dayTime)
     {
-        if(dayTime == Rule.DayTime.Sun) _currentProgress -= 18.0f;
+        if(dayTime == RuleDayTime.Time.Sun) _currentProgress -= 18.0f;
         else _currentProgress -= 12.0f;
     }
 
     public void DeerBad(string dayTime)
     {
-        if (dayTime == Rule.DayTime.Sun) _currentProgress += 25.0f;
+        if (dayTime == RuleDayTime.Time.Sun) _currentProgress += 25.0f;
         else _currentProgress += 17.0f;
     }
 };

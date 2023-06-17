@@ -4,17 +4,6 @@ using UnityEngine;
 
 // ### NEED Add Animal Rules Class
 
-public class Rule
-{
-    public class DayTime
-    {
-        public const string Sun = "Sun";
-        public const string Moon = "Moon";
-    }
-
-    public string dayTime { set; get; }
-};
-
 public class RoundControl
 {
     public class CorrectTapState
@@ -26,20 +15,23 @@ public class RoundControl
         public const string CorrectDestroy = "CorrectDestroy";
     };
 
-    public Rule rule = new Rule();
+    public RuleDayTime rule;
 
     public int indexOfCurrentButtons;
     public List<BaseElement> currentIndexElements;
 
     public FearBar fearBar;
+    public Sun_Moon_View sun_moon_View;
 
-    public RoundControl(int firstIndex, FearBar fBar, string dayTime = Rule.DayTime.Sun)
+    public RoundControl(int firstIndex, FearBar fBar, Sun_Moon_View smView)
     {
         indexOfCurrentButtons = firstIndex;
         fearBar = fBar;
         currentIndexElements = new List<BaseElement>();
 
-        rule.dayTime = dayTime;
+        sun_moon_View = smView;
+
+        rule = smView.ruleDay;
     }
 
     public string OnButtonTap(string animalType, int index)
@@ -98,7 +90,7 @@ public class RoundControl
                     {
                         case SignState.True:
                             {
-                                if (rule.dayTime == Rule.DayTime.Sun)
+                                if (rule.dayTime == RuleDayTime.Time.Sun)
                                 {
                                     return CorrectTapState.CorrectUndestroy;
                                 }
@@ -110,7 +102,7 @@ public class RoundControl
                             }
                         case SignState.False:
                             {
-                                if (rule.dayTime == Rule.DayTime.Moon)
+                                if (rule.dayTime == RuleDayTime.Time.Moon)
                                 {
                                     return CorrectTapState.CorrectUndestroy;
                                 }

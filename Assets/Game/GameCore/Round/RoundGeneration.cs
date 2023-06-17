@@ -1,13 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 
 public class RoundGeneration : MonoBehaviour
 {
     [SerializeField] private AnimalEntities animalsEntities;
+
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private Sun_Moon_View sun_moon_View;
 
     // ### NEED Initialaize like INJECT
     [SerializeField] private FearBarView fearBarView;
@@ -42,7 +43,10 @@ public class RoundGeneration : MonoBehaviour
 
     private void SetUpAnimalRuleVaribles()
     {
-        roundControl = new RoundControl(currentRound.elementsDictionary.First().Key.number, fearBarView.fearBar);
+        roundControl = new RoundControl(
+            currentRound.elementsDictionary.First().Key.number, 
+            fearBarView.fearBar,
+            sun_moon_View);
 
         AddAllIndex(roundControl.indexOfCurrentButtons);
     }
@@ -73,6 +77,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     if (lastClickTime)
                     {
+                        roundControl.rule.DecriseTimeCount();
                         checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
                     }
                     lastClickTime = false;
@@ -99,10 +104,11 @@ public class RoundGeneration : MonoBehaviour
                 {
                     deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
 
-                    deerView.BaseTapHandel.isTap += () =>
+                    deerView.BaseTapHandel.isTap += async () =>
                     {
                         if (lastClickTime)
                         {
+                            roundControl.rule.DecriseTimeCount();
                             string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
 
                             switch (correctTap)
@@ -110,6 +116,8 @@ public class RoundGeneration : MonoBehaviour
                                 case RoundControl.CorrectTapState.UncorrectDestroy:
                                     {
                                         // shake it
+                                        ResetBaseSubscriptions(additionalE, deerView);
+                                        await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
                                         DestroyAdditionObject(animalGroup, ind);
                                     }
                                     break;
@@ -128,6 +136,8 @@ public class RoundGeneration : MonoBehaviour
                                         deerView.AnimalNumberIndex.Index--;
                                         if (deerView.AnimalNumberIndex.Index == 0)
                                         {
+                                            ResetBaseSubscriptions(additionalE, deerView);
+
                                             fearBarView.fearBar.DeerGood(roundControl.rule.dayTime);
                                             DestroyAdditionObject(animalGroup, ind);
                                         }
@@ -141,24 +151,30 @@ public class RoundGeneration : MonoBehaviour
                 else Debug.Log("Incorrect Dynamic Cast");
             }
 
-            void checkTheCorrectTapState(string state)
+            async void checkTheCorrectTapState(string state)
             {
                 switch (state)
                 {
                     case RoundControl.CorrectTapState.UncorrectDestroy:
                         {
-                            //shake it
+                            baseView.DrawCircle.ResetSubscriptions();
+                            ResetBaseSubscriptions(animalGroup.gamburgerElement.baseE, animalGroup.baseObject.view);
+
+                            await ShakeWithAnim(animalGroup.baseObject.animal);
                             DestroyBaseObject(animalGroup);
                         }
                         break;
                     case RoundControl.CorrectTapState.CorrectDestroy:
                         {
+                            baseView.DrawCircle.ResetSubscriptions();
+                            ResetBaseSubscriptions(animalGroup.gamburgerElement.baseE, animalGroup.baseObject.view);
+                            
                             DestroyBaseObject(animalGroup);
                         }
                         break;
                     case RoundControl.CorrectTapState.UncorrectUndestroy:
                         {
-                            //shake it
+                            await ShakeWithAnim(animalGroup.baseObject.animal);
                         }
                         break;
                     case RoundControl.CorrectTapState.CorrectUndestroy:
@@ -313,8 +329,6 @@ public class RoundGeneration : MonoBehaviour
 
     void DestroyBaseObject(GamburgerAnimalGroup animalGroup)
     {
-        ResetBaseSubscriptions(animalGroup.gamburgerElement.baseE, animalGroup.baseObject.view);
-
         roundControl.currentIndexElements.Remove(animalGroup.gamburgerElement.baseE);
         currentRound.elementsDictionary.Remove(animalGroup.gamburgerElement.baseE);
         animalsGroupDictionary.Remove(animalGroup.gamburgerElement.baseE);
@@ -332,18 +346,17 @@ public class RoundGeneration : MonoBehaviour
         PairAnimalView pair = animalGroup.additionObjects[index];
         AdditionalElement A_Element = animalGroup.gamburgerElement.additionE[index];
 
-        ResetBaseSubscriptions(A_Element, pair.view);
         animalGroup.gamburgerElement.additionE.Remove(A_Element);
         animalGroup.additionObjects.Remove(pair);
 
         //Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
 
+        await DestroyWithAnim(pair.animal);
+
         if (animalGroup.checkEmptyBaseKey()) animalGroup.OpenBaseElement();
         else animalGroup.gamburgerElement.additionE.Last().IsOpen = true;
 
         UpdateRoundControlCurrentIndex();
-
-        await DestroyWithAnim(pair.animal);
     }
 
     void ResetBaseSubscriptions(Element element, ButtonView view)
@@ -380,6 +393,14 @@ public class RoundGeneration : MonoBehaviour
 
         if (go != null) Destroy(go);
     }
-    
+
+    private async Task ShakeWithAnim(GameObject go)
+    {
+        Animation anim = go.GetComponent<Animation>();
+        anim.Play("ShakeShot");
+
+        await Task.Delay((int)(anim["ShakeShot"].length * 1000));
+    }
+
     #endregion
 }

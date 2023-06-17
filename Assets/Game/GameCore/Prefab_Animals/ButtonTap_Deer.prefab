@@ -191,12 +191,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404722919887947227}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4757403464787998643}
+  m_Father: {fileID: 8923832810463753777}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1588812864590703654
@@ -231,7 +231,7 @@ Transform:
   - {fileID: 2982619256775423334}
   - {fileID: 5219676522164479224}
   - {fileID: 569370253509214606}
-  m_Father: {fileID: 4757403464787998643}
+  m_Father: {fileID: 8923832810463753777}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6385966563410201384
@@ -620,7 +620,7 @@ Transform:
   - {fileID: 6405028459886950028}
   - {fileID: 6573634343174312237}
   - {fileID: 38336174413307495}
-  m_Father: {fileID: 4757403464787998643}
+  m_Father: {fileID: 8923832810463753777}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &388484030600806986
@@ -649,6 +649,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -490088963, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
+    - target: {fileID: 747413473234863155, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 747413473234863155, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 747413473234863155, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4899742267933137822, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
       propertyPath: buttonType
       value: Deer
@@ -772,11 +784,6 @@ MonoBehaviour:
   AnimalOpenView: {fileID: 8584525380825688055}
   AnimalNumberIndex: {fileID: 6385966563410201384}
   AnimalSign: {fileID: 388484030600806986}
---- !u!4 &4757403464787998643 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8819353368832410027, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
-  m_PrefabInstance: {fileID: 4062548231710586392}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8584525380825688055 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5711494850616005103, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
@@ -799,3 +806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fdf787d5bb4c854b8022b45cc6b3cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8923832810463753777 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4879299171609919529, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
+  m_PrefabInstance: {fileID: 4062548231710586392}
+  m_PrefabAsset: {fileID: 0}

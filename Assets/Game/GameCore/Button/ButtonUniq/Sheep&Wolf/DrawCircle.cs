@@ -19,6 +19,7 @@ public class DrawCircle : MonoBehaviour
     private Tween tween;
 
     public Action radiusZero;
+    public void ResetSubscriptions() => radiusZero = null;
 
     // ## Need to make its gloanbal
     private float globalScale = 0.8f;
