@@ -4,41 +4,47 @@ using UnityEngine;
 
 public class DeerSwapSign : MonoBehaviour
 {
-    private IAnimalSign animalSign;
+    [SerializeField] private IAnimalSign animalSign;
 
-    private float timer = 2.4f;
+    private float timer = 1.25f;
 
     [NonSerialized] public bool IsOpen = false;
     [NonSerialized] public bool CanStart = false;
+    [NonSerialized] public bool OnceSwap = true;
 
     void Awake()
     {
-        animalSign = GetComponentInChildren<IAnimalSign>();  
     }
 
     void Update()
     {
-        timer -= Time.deltaTime;
+        if (IsOpen && CanStart) timer -= Time.deltaTime;
         if (timer < 0.0f)
         {
-            if (IsOpen && CanStart) NextSignByTime();
-            ResetTimer();
+            if (OnceSwap)
+            {
+                OnceSwap = false;
+                NextSignByTime();
+            }
         }
     }
 
     public void ResetTimer()
     {
-        timer = 1.35f;
+        timer = 0.95f;
     }
 
     private async Task NextSignByTime()
     {
-        Debug.Log("im there");
-
         Animation anim = this.GetComponent<Animation>();
+
         anim.Play("ChangeShot");
 
         await Task.Delay((int)(anim["ChangeShot"].length * 1000));
-        animalSign.SetRandomSign(); 
+
+        animalSign.SetRandomSign();
+        
+        ResetTimer();
+        OnceSwap = true;
     }
 }

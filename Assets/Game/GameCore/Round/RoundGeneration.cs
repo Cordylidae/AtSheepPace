@@ -117,7 +117,9 @@ public class RoundGeneration : MonoBehaviour
                                     {
                                         // shake it
                                         ResetBaseSubscriptions(additionalE, deerView);
+
                                         await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+
                                         DestroyAdditionObject(animalGroup, ind);
                                     }
                                     break;
@@ -198,8 +200,9 @@ public class RoundGeneration : MonoBehaviour
                 AddAllIndex(roundControl.indexOfCurrentButtons);
             } while (roundControl.currentIndexElements.Count == 0 && currentRound.elementsDictionary.Count != 0);
             StartDrawCircleOpenIndex();
-            StartShakeOpenDeer();
         }
+
+        StartShakeOpenDeer();
     }
 
     void AddAllIndex(int indexOfStart)
@@ -238,12 +241,11 @@ public class RoundGeneration : MonoBehaviour
             if (animalsGroupDictionary[element.Key].checkEmptyBaseKey()) continue;
             var additionalE = animalsGroupDictionary[element.Key].additionObjects.Last();
 
-
             DeerView deerView = additionalE.view as DeerView;
 
             if (deerView != null)
             {
-                if (!deerView.DeerSwapSign.CanStart) { deerView.DeerSwapSign.CanStart = true; }
+                if (!deerView.DeerSwapSign.CanStart && deerView.AnimalOpenView.IsOpen) { deerView.DeerSwapSign.CanStart = true; }
             }
         }
     }
@@ -354,27 +356,31 @@ public class RoundGeneration : MonoBehaviour
         animalsGroupDictionary.Remove(animalGroup.gamburgerElement.baseE);
         currentRound.checkEmptyDictionary();
 
-        UpdateRoundControlCurrentIndex();
-
         DestroyWithAnimBase(animalGroup.baseObject.animal, animalGroup.baseParentObject);
+
+        UpdateRoundControlCurrentIndex();
     }
 
     async void DestroyAdditionObject(GamburgerAnimalGroup animalGroup, int index)
     {
-        //Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
-
         PairAnimalView pair = animalGroup.additionObjects[index];
         AdditionalElement A_Element = animalGroup.gamburgerElement.additionE[index];
 
+        animalsGroupDictionary[animalGroup.gamburgerElement.baseE].gamburgerElement.additionE.Remove(A_Element);
         animalGroup.gamburgerElement.additionE.Remove(A_Element);
         animalGroup.additionObjects.Remove(pair);
-
-        //Debug.Log($"{index}, {animalGroup.additionObjects.Count}");
 
         await DestroyWithAnim(pair.animal);
 
         if (animalGroup.checkEmptyBaseKey()) animalGroup.OpenBaseElement();
-        else animalGroup.gamburgerElement.additionE.Last().IsOpen = true;
+        else
+        {
+            animalGroup.gamburgerElement.additionE.Last().IsOpen = true;
+
+            Debug.Log(animalGroup.additionObjects.Last().animal.name);
+        }
+
+        await Task.Delay(100);
 
         UpdateRoundControlCurrentIndex();
     }

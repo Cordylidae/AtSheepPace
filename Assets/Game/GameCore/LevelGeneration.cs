@@ -77,7 +77,7 @@ public class LevelGeneration : MonoBehaviour
 
         List<int> closeElementIndex = new List<int>
         {
-            0, 2, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, 21, 23, 24, 25,
+            0, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, 21, 23, 24, 25,
         };
 
         GamburgerElement gamburgerElement;
@@ -110,7 +110,7 @@ public class LevelGeneration : MonoBehaviour
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
 
-        int randCount = UnityEngine.Random.RandomRange(1, elements.Count);
+        int randCount = 2;// UnityEngine.Random.RandomRange(1, elements.Count);
 
         // Initialize additionalElements
         for (int i = 0; i < randCount; i++)

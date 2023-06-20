@@ -805,6 +805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c90b36e92646342a3eee82f5cd701e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animalSign: {fileID: 388484030600806986}
+  IsOpen: 0
+  CanStart: 0
+  once: 1
 --- !u!114 &8584525380825688055 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5711494850616005103, guid: d98bbb3d8204a554c9b2472b9e687e7f, type: 3}
