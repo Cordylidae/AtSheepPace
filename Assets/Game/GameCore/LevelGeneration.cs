@@ -105,12 +105,12 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
-            AnimalType.Deer, AnimalType.Deer, AnimalType.Deer, AnimalType.Deer
+            AnimalType.Deer, AnimalType.Hedgehog, AnimalType.Boar
         };
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
 
-        int randCount = 2;// UnityEngine.Random.RandomRange(1, elements.Count);
+        int randCount = 3;// UnityEngine.Random.RandomRange(1, elements.Count);
 
         // Initialize additionalElements
         for (int i = 0; i < randCount; i++)

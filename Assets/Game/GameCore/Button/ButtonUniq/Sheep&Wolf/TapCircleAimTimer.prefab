@@ -254,8 +254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 333377382732457422}
-  vertex: 100
-  radius: 16
+  vertex: 50
+  radius: 10
   widthCircle: 0.05
   goodRange: {fileID: 2539747153057067083}
   badRange: {fileID: 7765188529840082718}

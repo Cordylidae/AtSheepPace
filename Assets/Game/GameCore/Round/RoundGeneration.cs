@@ -38,8 +38,8 @@ public class RoundGeneration : MonoBehaviour
 
     private void StartRoundControlElements()
     {
-        StartDrawCircleOpenIndex();
-        StartShakeOpenDeer();
+        StartOpenBaseElementsByIndex();
+        StartOpenAdditionalElements();
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -97,62 +97,170 @@ public class RoundGeneration : MonoBehaviour
                     currentRound.elementsDictionary.Count, i);
 
                 AdditionalElement additionalE = animalGroup.gamburgerElement.additionE[i];
-                DeerView deerView = animalGroup.additionObjects[i].view as DeerView;
 
                 int ind = i;
 
-                if (deerView != null)
+                if (additionalE.animalType == AnimalType.Deer)
                 {
-                    deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+                    DeerView deerView = animalGroup.additionObjects[i].view as DeerView;
 
-                    deerView.BaseTapHandel.isTap += async () =>
+                    if (deerView != null)
                     {
-                        if (lastClickTime)
+                        deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+
+                        deerView.BaseTapHandel.isTap += async () =>
                         {
-                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
-
-                            switch (correctTap)
+                            if (lastClickTime)
                             {
-                                case RoundControl.CorrectTapState.UncorrectDestroy:
-                                    {
-                                        // shake it
-                                        ResetBaseSubscriptions(additionalE, deerView);
+                                string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
 
-                                        await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
-
-                                        DestroyAdditionObject(animalGroup, ind);
-                                    }
-                                    break;
-                                case RoundControl.CorrectTapState.CorrectDestroy:
-                                    {
-
-                                    }
-                                    break;
-                                case RoundControl.CorrectTapState.UncorrectUndestroy:
-                                    {
-
-                                    }
-                                    break;
-                                case RoundControl.CorrectTapState.CorrectUndestroy:
-                                    {
-                                        deerView.AnimalNumberIndex.Index--;
-                                        if (deerView.AnimalNumberIndex.Index == 0)
+                                switch (correctTap)
+                                {
+                                    case RoundControl.CorrectTapState.UncorrectDestroy:
                                         {
+                                            // shake it
                                             ResetBaseSubscriptions(additionalE, deerView);
 
-                                            fearBarView.fearBar.DeerGood(roundControl.rule.dayTime);
+                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+
                                             DestroyAdditionObject(animalGroup, ind);
                                         }
-                                    }
-                                    break;
-                            }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectDestroy:
+                                        {
 
-                            roundControl.rule.DecriseTimeCount();
-                        }
-                        lastClickTime = false;
-                    };
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectUndestroy:
+                                        {
+                                            deerView.AnimalNumberIndex.Index--;
+                                            if (deerView.AnimalNumberIndex.Index == 0)
+                                            {
+                                                ResetBaseSubscriptions(additionalE, deerView);
+
+                                                fearBarView.fearBar.DeerGood(roundControl.rule.dayTime);
+                                                DestroyAdditionObject(animalGroup, ind);
+                                            }
+                                        }
+                                        break;
+                                }
+
+                                roundControl.rule.DecriseTimeCount();
+                            }
+                            lastClickTime = false;
+                        };
+                    }
+                    else Debug.Log("Incorrect Dynamic Cast Deer");
                 }
-                else Debug.Log("Incorrect Dynamic Cast");
+                if (additionalE.animalType == AnimalType.Boar)
+                {
+                    BoarView boarView = animalGroup.additionObjects[i].view as BoarView;
+
+                    if (boarView != null)
+                    {
+                        //deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+
+                        boarView.BaseTapHandel.isTap += async () =>
+                        {
+                            if (lastClickTime)
+                            {
+                                string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+
+                                switch (correctTap)
+                                {
+                                    case RoundControl.CorrectTapState.UncorrectDestroy:
+                                        {
+                                            // shake it
+                                            ResetBaseSubscriptions(additionalE, boarView);
+
+                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+
+                                            DestroyAdditionObject(animalGroup, ind);
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectDestroy:
+                                        {
+                                            ResetBaseSubscriptions(additionalE, boarView);
+
+                                            DestroyAdditionObject(animalGroup, ind);
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectUndestroy:
+                                        {
+                 
+                                        }
+                                        break;
+                                }
+
+                                roundControl.rule.DecriseTimeCount();
+                            }
+                            lastClickTime = false;
+                        };
+                    }
+                    else Debug.Log("Incorrect Dynamic Cast Boar");
+                }
+                if (additionalE.animalType == AnimalType.Hedgehog)
+                {
+                    HedgehogView hedgehogView = animalGroup.additionObjects[i].view as HedgehogView;
+
+                    if (hedgehogView != null)
+                    {
+                        hedgehogView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+
+                        hedgehogView.BaseTapHandel.isTap += async () =>
+                        {
+                            if (lastClickTime)
+                            {
+                                string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+
+                                switch (correctTap)
+                                {
+                                    case RoundControl.CorrectTapState.UncorrectDestroy:
+                                        {
+                                            // shake it
+                                            ResetBaseSubscriptions(additionalE, hedgehogView);
+
+                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+
+                                            DestroyAdditionObject(animalGroup, ind);
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectDestroy:
+                                        {
+                                            ResetBaseSubscriptions(additionalE, hedgehogView);
+
+                                            DestroyAdditionObject(animalGroup, ind);
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoundControl.CorrectTapState.CorrectUndestroy:
+                                        {
+
+                                        }
+                                        break;
+                                }
+
+                                roundControl.rule.DecriseTimeCount();
+                            }
+                            lastClickTime = false;
+                        };
+                    }
+                    else Debug.Log("Incorrect Dynamic Cast Hedgehog");
+                }
             }
 
             async void checkTheCorrectTapState(string state)
@@ -199,10 +307,10 @@ public class RoundGeneration : MonoBehaviour
                 roundControl.indexOfCurrentButtons++;
                 AddAllIndex(roundControl.indexOfCurrentButtons);
             } while (roundControl.currentIndexElements.Count == 0 && currentRound.elementsDictionary.Count != 0);
-            StartDrawCircleOpenIndex();
+            StartOpenBaseElementsByIndex();
         }
 
-        StartShakeOpenDeer();
+        StartOpenAdditionalElements();
     }
 
     void AddAllIndex(int indexOfStart)
@@ -216,7 +324,7 @@ public class RoundGeneration : MonoBehaviour
         }
     }
 
-    void StartDrawCircleOpenIndex()
+    void StartOpenBaseElementsByIndex()
     {
         foreach (BaseElement key in roundControl.currentIndexElements)
         {
@@ -234,18 +342,36 @@ public class RoundGeneration : MonoBehaviour
         }
     }
 
-    void StartShakeOpenDeer()
+    void StartOpenAdditionalElements()
     {
         foreach (var element in animalsGroupDictionary)
         {
             if (animalsGroupDictionary[element.Key].checkEmptyBaseKey()) continue;
+
+            string animalType = animalsGroupDictionary[element.Key].gamburgerElement.additionE.Last().animalType;
             var additionalE = animalsGroupDictionary[element.Key].additionObjects.Last();
 
-            DeerView deerView = additionalE.view as DeerView;
-
-            if (deerView != null)
+            if (animalType == AnimalType.Deer)
             {
-                if (!deerView.DeerSwapSign.CanStart && deerView.AnimalOpenView.IsOpen) { deerView.DeerSwapSign.CanStart = true; }
+                DeerView deerView = additionalE.view as DeerView;
+
+                if (deerView != null)
+                {
+                    if (!deerView.DeerSwapSign.CanStart && deerView.AnimalOpenView.IsOpen) { deerView.DeerSwapSign.CanStart = true; }
+                }
+                continue;
+            }
+            if (animalType == AnimalType.Boar)
+            {
+                BoarView boarView = additionalE.view as BoarView;
+
+                continue;
+            }
+            if (animalType == AnimalType.Hedgehog)
+            {
+                HedgehogView hedgehogView = additionalE.view as HedgehogView;
+
+                continue;
             }
         }
     }
@@ -376,8 +502,6 @@ public class RoundGeneration : MonoBehaviour
         else
         {
             animalGroup.gamburgerElement.additionE.Last().IsOpen = true;
-
-            Debug.Log(animalGroup.additionObjects.Last().animal.name);
         }
 
         await Task.Delay(100);

@@ -120,6 +120,37 @@ public class RoundControl
 
         throw new NotImplementedException();
     }
+
+    public string OnButtonTap(string animalType)
+    {
+        switch (animalType)
+        {
+            case AnimalType.Boar:
+                {
+                    if (rule.dayTime == RuleDayTime.Time.Sun)
+                    {
+                        return CorrectTapState.UncorrectDestroy;
+                    }
+                    else
+                    {
+                        return CorrectTapState.CorrectDestroy;
+                    }
+                }
+            case AnimalType.Hedgehog:
+                {
+                    if (rule.dayTime == RuleDayTime.Time.Sun)
+                    {
+                        return CorrectTapState.CorrectDestroy;
+                    }
+                    else
+                    {
+                        return CorrectTapState.UncorrectDestroy;
+                    }
+                }
+        }
+
+        throw new NotImplementedException();
+    }
 }
 
 public class Round
@@ -237,13 +268,14 @@ public class GamburgerAnimalGroup
     {
         ButtonView buttonView = go.GetComponent<ButtonView>();
 
+        int randCount = UnityEngine.Random.RandomRange(0, 100);
+
         switch (buttonView.AnimalType.buttonType)
         {
             case AnimalType.Deer:
                 {
                     DeerView deerView = buttonView as DeerView;
-                    int randCount = UnityEngine.Random.RandomRange(0, 100);
-
+                   
                     if (randCount < 25)
                     {
                         deerView.AnimalNumberIndex.Index = 1;
@@ -260,9 +292,54 @@ public class GamburgerAnimalGroup
                     {
                         deerView.AnimalNumberIndex.Index = 4;
                     }
-                     // i + 1;//
 
                     return deerView;
+                }
+            case AnimalType.Boar:
+                {
+                    BoarView boarView = buttonView as BoarView;
+
+                    if (randCount < 25)
+                    {
+                        boarView.AnimalNumberIndex.Index = 1;
+                    }
+                    else if (randCount >= 25 && randCount < 58)
+                    {
+                        boarView.AnimalNumberIndex.Index = 2;
+                    }
+                    else if (randCount >= 58 && randCount < 90)
+                    {
+                        boarView.AnimalNumberIndex.Index = 3;
+                    }
+                    else
+                    {
+                        boarView.AnimalNumberIndex.Index = 4;
+                    }
+
+                    return boarView;
+                }
+            case AnimalType.Hedgehog:
+                {
+                    HedgehogView hedgehogView = buttonView as HedgehogView;
+
+                    //if (randCount < 25)
+                    //{
+                    //    hedgehogView.AnimalNumberIndex.Index = 1;
+                    //}
+                    //else if (randCount >= 25 && randCount < 58)
+                    //{
+                    //    hedgehogView.AnimalNumberIndex.Index = 2;
+                    //}
+                    //else if (randCount >= 58 && randCount < 90)
+                    //{
+                    //    hedgehogView.AnimalNumberIndex.Index = 3;
+                    //}
+                    //else
+                    //{
+                    //    hedgehogView.AnimalNumberIndex.Index = 4;
+                    //}
+
+                    return hedgehogView;
                 }
         }
 
@@ -280,7 +357,7 @@ public class GamburgerAnimalGroup
         BaseButtonView view = baseObject.view as BaseButtonView;
 
         gamburgerElement.baseE.IsOpen = true;
-        view.DrawCircle.StartDrawing(2.7f);
+        view.DrawCircle.StartDrawing(1.85f);
     }
 
     private void SetIOpenEvent(Element element, ButtonView view)
