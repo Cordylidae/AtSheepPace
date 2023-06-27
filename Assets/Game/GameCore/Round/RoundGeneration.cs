@@ -33,13 +33,14 @@ public class RoundGeneration : MonoBehaviour
         
         await ShowElements();
 
+        Debug.Log("dfsdaf");
+
         StartRoundControlElements();
     }
 
     private void StartRoundControlElements()
     {
-        StartOpenBaseElementsByIndex();
-        StartOpenAdditionalElements();
+        UpdateRoundControlCurrentIndex();
     }
 
     private void SetUpAnimalRuleVaribles()
@@ -48,8 +49,6 @@ public class RoundGeneration : MonoBehaviour
             currentRound.elementsDictionary.First().Key.number, 
             fearBarView.fearBar,
             sun_moon_View);
-
-        AddAllIndex(roundControl.indexOfCurrentButtons);
     }
 
     private void BuildUpAnimalDicionary()
@@ -304,12 +303,13 @@ public class RoundGeneration : MonoBehaviour
     {
         if (roundControl.currentIndexElements.Count == 0) {
             do {
-                roundControl.indexOfCurrentButtons++;
                 AddAllIndex(roundControl.indexOfCurrentButtons);
+                if (roundControl.currentIndexElements.Count == 0) roundControl.indexOfCurrentButtons++;
             } while (roundControl.currentIndexElements.Count == 0 && currentRound.elementsDictionary.Count != 0);
-            StartOpenBaseElementsByIndex();
+            
         }
 
+        StartOpenBaseElementsByIndex();
         StartOpenAdditionalElements();
     }
 
@@ -317,7 +317,9 @@ public class RoundGeneration : MonoBehaviour
     {
         foreach (KeyValuePair<BaseElement, GamburgerElement> element in currentRound.elementsDictionary)
         {
-            if (!roundControl.currentIndexElements.Contains(element.Key) && element.Key.number == indexOfStart) { 
+            if (roundControl.currentIndexElements.Contains(element.Key)) continue;
+
+            if (element.Key.number == indexOfStart) {
                 roundControl.currentIndexElements.Add(element.Key);
             }
             else if (element.Key.number > indexOfStart) break;
@@ -326,6 +328,8 @@ public class RoundGeneration : MonoBehaviour
 
     void StartOpenBaseElementsByIndex()
     {
+        Debug.Log("i'  here");
+
         foreach (BaseElement key in roundControl.currentIndexElements)
         {
             if (key.IsOpen)
@@ -480,11 +484,11 @@ public class RoundGeneration : MonoBehaviour
         roundControl.currentIndexElements.Remove(animalGroup.gamburgerElement.baseE);
         currentRound.elementsDictionary.Remove(animalGroup.gamburgerElement.baseE);
         animalsGroupDictionary.Remove(animalGroup.gamburgerElement.baseE);
-        currentRound.checkEmptyDictionary();
-
+        
         DestroyWithAnimBase(animalGroup.baseObject.animal, animalGroup.baseParentObject);
 
         UpdateRoundControlCurrentIndex();
+        currentRound.checkEmptyDictionary();
     }
 
     async void DestroyAdditionObject(GamburgerAnimalGroup animalGroup, int index)
@@ -498,13 +502,11 @@ public class RoundGeneration : MonoBehaviour
 
         await DestroyWithAnim(pair.animal);
 
-        if (animalGroup.checkEmptyBaseKey()) animalGroup.OpenBaseElement();
+        if (animalGroup.checkEmptyBaseKey()) animalGroup.gamburgerElement.baseE.IsOpen = true;
         else
         {
             animalGroup.gamburgerElement.additionE.Last().IsOpen = true;
         }
-
-        await Task.Delay(100);
 
         UpdateRoundControlCurrentIndex();
     }
