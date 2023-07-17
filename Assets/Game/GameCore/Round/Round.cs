@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.Linq;
+using Codice.Client.Common.GameUI;
 
 // ### NEED Add Animal Rules Class
 
@@ -248,12 +250,13 @@ public class GamburgerAnimalGroup
 
     public void SetAdditionObject(GameObject gameObject, int countBaseElement, int i)
     {
+
         gameObject.name += $" Index : {i}";
         gameObject.transform.SetParent(baseParentObject.transform);
 
         gameObject.transform.localPosition = new Vector3(
-                       baseObject.animal.transform.localPosition.x + UnityEngine.Random.RandomRange(-4.5f, 4.5f) / 1080.0f * 6.0f,
-                       baseObject.animal.transform.localPosition.y + UnityEngine.Random.RandomRange(-5.2f, 5.2f) / 1920.0f * 10.0f,
+                       baseObject.animal.transform.localPosition.x ,//+ UnityEngine.Random.RandomRange(-4.5f, 4.5f) / 1080.0f * 6.0f,
+                       baseObject.animal.transform.localPosition.y ,//+ UnityEngine.Random.RandomRange(-5.2f, 5.2f) / 1920.0f * 10.0f,
                        //0.0f, 0.0f,
                        baseObject.animal.transform.localPosition.z + (i + 1) * (-3.9f / countBaseElement / gamburgerElement.additionE.Count));
 

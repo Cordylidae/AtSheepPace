@@ -33,8 +33,6 @@ public class RoundGeneration : MonoBehaviour
         
         await ShowElements();
 
-        Debug.Log("dfsdaf");
-
         StartRoundControlElements();
     }
 
@@ -328,8 +326,6 @@ public class RoundGeneration : MonoBehaviour
 
     void StartOpenBaseElementsByIndex()
     {
-        Debug.Log("i'  here");
-
         foreach (BaseElement key in roundControl.currentIndexElements)
         {
             if (key.IsOpen)
@@ -384,6 +380,7 @@ public class RoundGeneration : MonoBehaviour
     private GameObject SetAnimalEntities(string animalType)
     {
         GameObject entity = null;
+        Vector3 startVector = Vector3.zero;
 
         switch (animalType)
         {
@@ -391,7 +388,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     entity = Instantiate(
                         animalsEntities.animal[0],
-                        new Vector3(0.0f, 0.0f, 0.0f),
+                        startVector,
                         animalsEntities.animal[0].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Sheep;
@@ -401,7 +398,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     entity = Instantiate(
                         animalsEntities.animal[1],
-                        new Vector3(0.0f, 0.0f, 0.0f),
+                        startVector,
                         animalsEntities.animal[1].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Wolf;
@@ -411,7 +408,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     entity = Instantiate(
                         animalsEntities.animal[2],
-                        new Vector3(0.0f, 0.0f, 0.0f),
+                        startVector,
                         animalsEntities.animal[2].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Deer;
@@ -421,7 +418,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     entity = Instantiate(
                         animalsEntities.animal[3],
-                        new Vector3(0.0f, 0.0f, 0.0f),
+                        startVector,
                         animalsEntities.animal[3].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Boar;
@@ -431,7 +428,7 @@ public class RoundGeneration : MonoBehaviour
                 {
                     entity = Instantiate(
                         animalsEntities.animal[4],
-                        new Vector3(0.0f, 0.0f, 0.0f),
+                        startVector,
                         animalsEntities.animal[4].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Hedgehog;
@@ -496,7 +493,6 @@ public class RoundGeneration : MonoBehaviour
         PairAnimalView pair = animalGroup.additionObjects[index];
         AdditionalElement A_Element = animalGroup.gamburgerElement.additionE[index];
 
-        animalsGroupDictionary[animalGroup.gamburgerElement.baseE].gamburgerElement.additionE.Remove(A_Element);
         animalGroup.gamburgerElement.additionE.Remove(A_Element);
         animalGroup.additionObjects.Remove(pair);
 
