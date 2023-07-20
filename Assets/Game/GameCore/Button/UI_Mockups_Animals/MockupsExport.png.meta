@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -729,7 +729,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wolf_Alfa
+      name: Wolf_Strong
       rect:
         serializedVersion: 2
         x: 1912
@@ -1003,7 +1003,6 @@ TextureImporter:
       MockupsExport_17: 1505547630
       Honeycomb_Sealed: -1997283270
       MockupsExport_8: 101007283
-      Wolf_Alfa: -927982597
       Empty: 435157963
       MockupsExport_19: -331917922
       Support_Revert: -1117659150
@@ -1024,6 +1023,7 @@ TextureImporter:
       MockupsExport_3: -359800046
       MockupsExport_1: -1277731532
       MockupsExport_15: -459538499
+      Wolf_Strong: -927982597
       Sheep: 1692296456
       Wolf: 331153955
       Arrow_Dotted: 1868711321
