@@ -209,16 +209,18 @@ public class GamburgerAnimalGroup
         baseParentObject.transform.SetParent(transform);
     }
 
-    public void SetBaseObject(GameObject gameObject, int index, int countBaseElement)
+    public void SetBaseObject(GameObject gameObject, Vector3 position)//, int index, int countBaseElement)
     {
         baseObject.animal = gameObject;
         baseObject.animal.transform.SetParent(baseParentObject.transform);
 
-        baseObject.animal.transform.localPosition = new Vector3(
-                            UnityEngine.Random.RandomRange(-450, 450) / 1080.0f * 6.0f,
-                            UnityEngine.Random.RandomRange(-520, 520) / 1920.0f * 10.0f,
-                            //0.0f, 0.0f,
-                            index * (-4.0f / countBaseElement));
+        baseObject.animal.transform.localPosition = position;
+
+        //baseObject.animal.transform.localPosition = new Vector3(
+        //                    UnityEngine.Random.RandomRange(-450, 450) / 1080.0f * 6.0f,
+        //                    UnityEngine.Random.RandomRange(-520, 520) / 1920.0f * 10.0f,
+        //                    //0.0f, 0.0f,
+        //                    index * (-4.0f / countBaseElement));
 
         SetBaseButtonView();
     }

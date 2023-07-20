@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FreeSpaceMassive
 {
-    private List<SquareArea> freeSpace = new List<SquareArea>();
-    private float minBorder = 1.0f;
+    public List<SquareArea> freeSpace = new List<SquareArea>();
+    private float minBorder = 0.8f;
 
     private SquareArea startArea;
     private SquareArea lastArea;
@@ -78,6 +79,7 @@ public class FreeSpaceMassive
 
         SquareArea sq4 = new SquareArea(new Vector2(temp.GlobalDR.x, temp.GlobalTL.y), new Vector2(curr.GlobalDR.x, temp.GlobalDR.y));
         if (CheckMoreMinRadius(sq4)) freeSpace.Add(sq4);
+
     }
 
     public bool AddInFreeSpace(SquareArea localSquareArea)

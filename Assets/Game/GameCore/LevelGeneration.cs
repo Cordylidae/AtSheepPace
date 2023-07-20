@@ -126,8 +126,11 @@ public class LevelGeneration : MonoBehaviour
     {
         rounds = new List<Round>
         {
-            new Round(gamburgerElements.GetRange(0,4)),
-            new Round(gamburgerElements.GetRange(4,2)),
+            new Round(gamburgerElements.GetRange(0,3)),
+            new Round(gamburgerElements.GetRange(3,6)),
+
+            //new Round(gamburgerElements.GetRange(0,4)),
+            //new Round(gamburgerElements.GetRange(4,2)),
             new Round(gamburgerElements.GetRange(6,2)),
             new Round(gamburgerElements.GetRange(8,4)),
             new Round(gamburgerElements.GetRange(12,2))

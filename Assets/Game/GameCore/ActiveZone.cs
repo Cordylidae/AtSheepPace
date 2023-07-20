@@ -1,4 +1,6 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ActiveZone : MonoBehaviour
 {
@@ -12,13 +14,10 @@ public class ActiveZone : MonoBehaviour
     private void Awake()
     {
         active = GetComponent<RectTransform>();
-    }
 
-    void Start()
-    {
         topLeft = active.transform.TransformPoint(
-            active.transform.localPosition.x - active.rect.width / 2, 
-            active.transform.localPosition.y + active.rect.height / 2, 
+            active.transform.localPosition.x - active.rect.width / 2,
+            active.transform.localPosition.y + active.rect.height / 2,
             active.transform.localPosition.z);
 
         downRight = active.transform.TransformPoint(
@@ -29,27 +28,37 @@ public class ActiveZone : MonoBehaviour
         freeSpaceMassive = new FreeSpaceMassive(new SquareArea(topLeft, downRight));
     }
 
-    public void SetBaseObjectPosition(Transform _transform, int index, int countBaseElement)
+    public Vector3 SetBaseObjectPosition(int index, int countBaseElement)
     {
-        Vector2 areaPos = SetArea(_transform, 1.0f);
+        Vector2 areaPos = SetArea(0.8f);
 
-        transform.localPosition = new Vector3(
+        return new Vector3(
             areaPos.x,
             areaPos.y,
             index * (-4.0f / countBaseElement));
     }
 
-    public Vector2 SetArea(Transform _transform, float radius)
+    public Vector2 SetArea(float radius)
     {
-        SquareArea area = new SquareArea(_transform.position, radius);
+        SquareArea area = new SquareArea(Vector2.zero, radius);
 
-        if (freeSpaceMassive.AddInFreeSpace(area)) Debug.Log("All good");
+        if (freeSpaceMassive.AddInFreeSpace(area)) { Debug.Log("All good " + area.topLeft + area.downRight + area.center); }
         else
         {
             freeSpaceMassive.NewLayout();
 
             if (freeSpaceMassive.AddInFreeSpace(area)) Debug.Log("Make new layout and All good");
             else Debug.Log("Something went wrong");
+        }
+
+        foreach (SquareArea square in freeSpaceMassive.freeSpace)
+        {
+            Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+            Debug.DrawLine(square.GlobalTL, new Vector2(square.GlobalDR.x, square.GlobalTL.y), color , 10f);
+            Debug.DrawLine(new Vector2(square.GlobalDR.x, square.GlobalTL.y), square.downRight, color, 10f);
+            Debug.DrawLine(square.downRight, new Vector2(square.GlobalTL.x, square.GlobalDR.y), color, 10f);
+            Debug.DrawLine(new Vector2(square.GlobalTL.x, square.GlobalDR.y), square.topLeft, color, 10f);
         }
 
         return area.center;

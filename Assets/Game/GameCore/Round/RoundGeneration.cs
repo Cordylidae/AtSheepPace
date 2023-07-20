@@ -63,8 +63,11 @@ public class RoundGeneration : MonoBehaviour
 
             animalGroup.SetParentObject(this.transform);
 
-            animalGroup.SetBaseObject(SetAnimalEntities(element.Key.animalType), index, currentRound.elementsDictionary.Count);
-            //activeZone.SetBaseObjectPosition()
+            animalGroup.SetBaseObject(
+                SetAnimalEntities(element.Key.animalType),
+                activeZone.SetBaseObjectPosition(index, currentRound.elementsDictionary.Count)
+                );
+            
             /// <summary> 
             /// Event on click on interective element
             /// </summary>

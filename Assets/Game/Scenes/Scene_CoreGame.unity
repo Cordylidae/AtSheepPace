@@ -3000,6 +3000,7 @@ MonoBehaviour:
   animalsEntities: {fileID: 11400000, guid: 0b84c378ea52d8b48a0795fcbe2eaa19, type: 2}
   sun_moon_View: {fileID: 255307102}
   fearBarView: {fileID: 1923076714}
+  activeZone: {fileID: 575895393}
 --- !u!1 &1337571725
 GameObject:
   m_ObjectHideFlags: 0
