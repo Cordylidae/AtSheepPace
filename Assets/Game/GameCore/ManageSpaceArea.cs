@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class FreeSpaceMassive
 {
     public List<SquareArea> freeSpace = new List<SquareArea>();
-    private float minBorder = 0.8f;
+    private float minBorder = 1.0f;
 
     private SquareArea startArea;
     private SquareArea lastArea;
@@ -17,23 +17,16 @@ public class FreeSpaceMassive
         if (CheckMoreMinRadius(touchArea))
         {
             startArea = touchArea;
-            StartLayout();
+            freeSpace.Add(startArea);
         }
         else throw new Exception();
-    }
-
-    private void StartLayout()
-    {
-        freeSpace.Add(startArea);
-        RandomShuffle();
     }
 
     public void NewLayout()
     {
         freeSpace.Clear();
         
-        StartLayout();
-        if(lastArea != null) AddInFreeSpace(lastArea);
+        if(lastArea != null) CutAinB(lastArea, startArea);
         else throw new Exception();
     }
 
@@ -44,21 +37,21 @@ public class FreeSpaceMassive
 
     private bool CheckMoreMinRadius(SquareArea squerArea)
     {
-        if (minBorder > squerArea.width) return false;
-        if (minBorder > squerArea.height) return false;
+        if (minBorder - 0.1f > squerArea.width) return false;
+        if (minBorder - 0.1f > squerArea.height) return false;
 
         return true;
     }
 
     private bool CanBeAinB(SquareArea temp, SquareArea curr)
     {
-        if (temp.topLeft.x < curr.topLeft.x || temp.topLeft.y > curr.topLeft.y) return false;
-        if (temp.downRight.x > curr.downRight.x || temp.downRight.y < curr.downRight.y) return false;
-
+        if (temp.topLeft.x + 0.05f < curr.topLeft.x || temp.topLeft.y - 0.05f > curr.topLeft.y) return false;
+        if (temp.downRight.x - 0.05f > curr.downRight.x || temp.downRight.y + 0.05f < curr.downRight.y) return false;
+        
         return true;
     }
 
-    private void FillAinB(SquareArea temp, SquareArea curr)
+    private void FillAinB(SquareArea temp, SquareArea curr) // there maybe add sq with boarder < 1.2
     {
         float offsetX = Mathf.Abs(temp.width - curr.width) / 2;
         float offsetY = Mathf.Abs(temp.height - curr.height) / 2;
@@ -68,6 +61,11 @@ public class FreeSpaceMassive
         temp.center.x += UnityEngine.Random.Range(-offsetX, offsetX);
         temp.center.y += UnityEngine.Random.Range(-offsetY, offsetY);
 
+        CutAinB(temp, curr);
+    }
+
+    private void CutAinB(SquareArea temp, SquareArea curr)
+    {
         SquareArea sq1 = new SquareArea(curr.GlobalTL, new Vector2(curr.GlobalDR.x, temp.GlobalTL.y));
         if (CheckMoreMinRadius(sq1)) freeSpace.Add(sq1);
 
@@ -80,6 +78,7 @@ public class FreeSpaceMassive
         SquareArea sq4 = new SquareArea(new Vector2(temp.GlobalDR.x, temp.GlobalTL.y), new Vector2(curr.GlobalDR.x, temp.GlobalDR.y));
         if (CheckMoreMinRadius(sq4)) freeSpace.Add(sq4);
 
+        freeSpace.Remove(curr);
     }
 
     public bool AddInFreeSpace(SquareArea localSquareArea)
@@ -90,9 +89,9 @@ public class FreeSpaceMassive
         {
             if (CanBeAinB(localSquareArea, currentSquare))
             {
+                FillAinB(localSquareArea, currentSquare);
                 lastArea = localSquareArea;
 
-                FillAinB(localSquareArea, currentSquare);
                 RandomShuffle();
 
                 canAdd = true;
@@ -106,10 +105,10 @@ public class FreeSpaceMassive
 
 public class SquareArea
 {
-    public Vector2 center = Vector2.zero;
+    public Vector2 center;
 
-    public Vector2 topLeft = Vector2.zero;
-    public Vector2 downRight = Vector2.zero;
+    public Vector2 topLeft;
+    public Vector2 downRight;
 
     public Vector2 GlobalTL => topLeft + center;
     public Vector2 GlobalDR => downRight + center;
@@ -120,7 +119,7 @@ public class SquareArea
 
     public SquareArea(Vector2 _topLeft, Vector2 _downRight)
     {
-        center = (topLeft + downRight) / 2.0f;
+        center = (_topLeft + _downRight) / 2.0f;
 
         topLeft = _topLeft - center;
         downRight = _downRight - center;
@@ -135,8 +134,8 @@ public class SquareArea
         Vector2 posX = new Vector2(radius, 0);
         Vector2 posY = new Vector2(0, radius);
 
-        topLeft = center - posX + posY;
-        downRight = center + posX - posY;
+        topLeft = -center - posX + posY;
+        downRight = -center + posX - posY;
 
         AfterConstructor();
     }

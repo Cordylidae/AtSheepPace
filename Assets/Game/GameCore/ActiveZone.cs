@@ -30,35 +30,41 @@ public class ActiveZone : MonoBehaviour
 
     public Vector3 SetBaseObjectPosition(int index, int countBaseElement)
     {
-        Vector2 areaPos = SetArea(0.8f);
+        Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+        Vector2 areaPos = SetArea(0.6f, index * (-14.0f / countBaseElement), color);
 
         return new Vector3(
             areaPos.x,
             areaPos.y,
-            index * (-4.0f / countBaseElement));
+            index * (-14.0f / countBaseElement));
     }
 
-    public Vector2 SetArea(float radius)
+    public Vector2 SetArea(float radius, float z, Color color)
     {
         SquareArea area = new SquareArea(Vector2.zero, radius);
 
         if (freeSpaceMassive.AddInFreeSpace(area)) { Debug.Log("All good " + area.topLeft + area.downRight + area.center); }
         else
         {
+            Debug.Log(area.topLeft + " " + area.downRight + " " + area.center);
+
+            foreach (SquareArea square in freeSpaceMassive.freeSpace)
+            {
+                Debug.Log(square.topLeft + " " + square.downRight + " " + square.center);
+            }
+
             freeSpaceMassive.NewLayout();
 
             if (freeSpaceMassive.AddInFreeSpace(area)) Debug.Log("Make new layout and All good");
             else Debug.Log("Something went wrong");
         }
-
+      
         foreach (SquareArea square in freeSpaceMassive.freeSpace)
         {
-            Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-
-            Debug.DrawLine(square.GlobalTL, new Vector2(square.GlobalDR.x, square.GlobalTL.y), color , 10f);
-            Debug.DrawLine(new Vector2(square.GlobalDR.x, square.GlobalTL.y), square.downRight, color, 10f);
-            Debug.DrawLine(square.downRight, new Vector2(square.GlobalTL.x, square.GlobalDR.y), color, 10f);
-            Debug.DrawLine(new Vector2(square.GlobalTL.x, square.GlobalDR.y), square.topLeft, color, 10f);
+            Debug.DrawLine(new Vector3(square.GlobalTL.x, square.GlobalTL.y, z), new Vector3(square.GlobalDR.x, square.GlobalTL.y, z), color , 10f);
+            Debug.DrawLine(new Vector3(square.GlobalDR.x, square.GlobalTL.y, z), new Vector3(square.GlobalDR.x, square.GlobalDR.y, z) , color, 10f);
+            Debug.DrawLine(new Vector3(square.GlobalDR.x, square.GlobalDR.y, z), new Vector3(square.GlobalTL.x, square.GlobalDR.y, z), color, 10f);
+            Debug.DrawLine(new Vector3(square.GlobalTL.x, square.GlobalDR.y, z), new Vector3(square.GlobalTL.x, square.GlobalTL.y, z), color, 10f);
         }
 
         return area.center;
