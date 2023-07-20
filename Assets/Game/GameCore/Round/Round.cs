@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using System.Linq;
-using Codice.Client.Common.GameUI;
 
 // ### NEED Add Animal Rules Class
 

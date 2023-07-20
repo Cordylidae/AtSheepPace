@@ -43,8 +43,8 @@ public class FreeSpaceMassive
 
     private bool CheckMoreMinRadius(SquareArea squerArea)
     {
-        if (MathF.Sqrt(minBorder) > squerArea.width) return false;
-        if (MathF.Sqrt(minBorder) > squerArea.height) return false;
+        if (minBorder > squerArea.width) return false;
+        if (minBorder > squerArea.height) return false;
 
         return true;
     }

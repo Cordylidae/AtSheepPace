@@ -13,6 +13,9 @@ public class RoundGeneration : MonoBehaviour
     // ### NEED Initialaize like INJECT
     [SerializeField] private FearBarView fearBarView;
 
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private ActiveZone activeZone;
+
     Dictionary<BaseElement, GamburgerAnimalGroup> animalsGroupDictionary = new Dictionary<BaseElement, GamburgerAnimalGroup>();
 
     public Round currentRound;
@@ -61,7 +64,7 @@ public class RoundGeneration : MonoBehaviour
             animalGroup.SetParentObject(this.transform);
 
             animalGroup.SetBaseObject(SetAnimalEntities(element.Key.animalType), index, currentRound.elementsDictionary.Count);
-
+            //activeZone.SetBaseObjectPosition()
             /// <summary> 
             /// Event on click on interective element
             /// </summary>
