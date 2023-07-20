@@ -31,12 +31,12 @@ public class ActiveZone : MonoBehaviour
     public Vector3 SetBaseObjectPosition(int index, int countBaseElement)
     {
         Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-        Vector2 areaPos = SetArea(0.6f, index * (-14.0f / countBaseElement), color);
+        Vector2 areaPos = SetArea(0.6f, index * (-4.0f / countBaseElement), color);
 
         return new Vector3(
             areaPos.x,
             areaPos.y,
-            index * (-14.0f / countBaseElement));
+            index * (-4.0f / countBaseElement));
     }
 
     public Vector2 SetArea(float radius, float z, Color color)
