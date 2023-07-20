@@ -23,5 +23,8 @@ public class ActiveZone : MonoBehaviour
             active.transform.localPosition.x + active.rect.width / 2,
             active.transform.localPosition.y - active.rect.height / 2,
             active.transform.localPosition.z);
+
+        Debug.Log(topLeft);
+        Debug.Log(downRight);
     }
 }

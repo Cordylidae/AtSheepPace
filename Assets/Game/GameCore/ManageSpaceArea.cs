@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ManageSpaceArea
-{
-
-}
-
 public class FreeSpaceMassive
 {
     private List<SquareArea> freeSpace = new List<SquareArea>();
@@ -37,7 +32,8 @@ public class FreeSpaceMassive
         freeSpace.Clear();
         
         StartLayout();
-        AddInFreeSpace(lastArea);
+        if(lastArea != null) AddInFreeSpace(lastArea);
+        else throw new Exception();
     }
 
     private void RandomShuffle()
@@ -47,37 +43,40 @@ public class FreeSpaceMassive
 
     private bool CheckMoreMinRadius(SquareArea squerArea)
     {
-        Vector2 vec2 = squerArea.corners[0] - squerArea.corners[1];
-        if (MathF.Sqrt(minBorder) > vec2.sqrMagnitude) return false;
-
-        vec2 = squerArea.corners[0] - squerArea.corners[3];
-        if (MathF.Sqrt(minBorder) > vec2.sqrMagnitude) return false;
+        if (MathF.Sqrt(minBorder) > squerArea.width) return false;
+        if (MathF.Sqrt(minBorder) > squerArea.height) return false;
 
         return true;
     }
 
     private bool CanBeAinB(SquareArea temp, SquareArea curr)
     {
-        if (temp.corners[0].x < curr.corners[0].x || temp.corners[0].y > curr.corners[0].y) return false; // check on left top corner
-        if (temp.corners[1].x > curr.corners[1].x || temp.corners[1].y > curr.corners[1].y) return false; // check on right top corner
-        if (temp.corners[2].x > curr.corners[2].x || temp.corners[2].y < curr.corners[2].y) return false; // check on right down corner
-        if (temp.corners[3].x < curr.corners[3].x || temp.corners[3].y < curr.corners[3].y) return false; // check on left down corner
+        if (temp.topLeft.x < curr.topLeft.x || temp.topLeft.y > curr.topLeft.y) return false;
+        if (temp.downRight.x > curr.downRight.x || temp.downRight.y < curr.downRight.y) return false;
 
         return true;
     }
 
     private void FillAinB(SquareArea temp, SquareArea curr)
     {
-        SquareArea sq1 = new SquareArea(curr.corners[0], new Vector2(curr.corners[1].x, temp.corners[1].y));
-        if(CheckMoreMinRadius(sq1)) freeSpace.Add(sq1);
+        float offsetX = Mathf.Abs(temp.width - curr.width) / 2;
+        float offsetY = Mathf.Abs(temp.height - curr.height) / 2;
 
-        SquareArea sq2 = new SquareArea(new Vector2(curr.corners[0].x, temp.corners[0].y), temp.corners[3]);
+        temp.center = curr.center;
+
+        temp.center.x += UnityEngine.Random.Range(-offsetX, offsetX);
+        temp.center.y += UnityEngine.Random.Range(-offsetY, offsetY);
+
+        SquareArea sq1 = new SquareArea(curr.GlobalTL, new Vector2(curr.GlobalDR.x, temp.GlobalTL.y));
+        if (CheckMoreMinRadius(sq1)) freeSpace.Add(sq1);
+
+        SquareArea sq2 = new SquareArea(new Vector2(curr.GlobalTL.x, temp.GlobalDR.y), curr.GlobalDR);
         if (CheckMoreMinRadius(sq2)) freeSpace.Add(sq2);
 
-        SquareArea sq3 = new SquareArea(temp.corners[1], new Vector2(curr.corners[1].x, temp.corners[2].y));
+        SquareArea sq3 = new SquareArea(new Vector2(curr.GlobalTL.x, temp.GlobalTL.y), new Vector2(temp.GlobalTL.x, temp.GlobalDR.y));
         if (CheckMoreMinRadius(sq3)) freeSpace.Add(sq3);
 
-        SquareArea sq4 = new SquareArea(new Vector2(curr.corners[0].x, temp.corners[3].y), curr.corners[3]);
+        SquareArea sq4 = new SquareArea(new Vector2(temp.GlobalDR.x, temp.GlobalTL.y), new Vector2(curr.GlobalDR.x, temp.GlobalDR.y));
         if (CheckMoreMinRadius(sq4)) freeSpace.Add(sq4);
     }
 
@@ -93,7 +92,7 @@ public class FreeSpaceMassive
 
                 FillAinB(localSquareArea, currentSquare);
                 RandomShuffle();
-                
+
                 canAdd = true;
                 break;
             }
@@ -106,24 +105,25 @@ public class FreeSpaceMassive
 public class SquareArea
 {
     public Vector2 center = Vector2.zero;
-    public Vector2[] corners = new Vector2[4]; // coners in clockwise diraction in local space
 
-    public SquareArea(Vector2 topLeft, Vector2 downRight)
+    public Vector2 topLeft = Vector2.zero;
+    public Vector2 downRight = Vector2.zero;
+
+    public Vector2 GlobalTL => topLeft + center;
+    public Vector2 GlobalDR => downRight + center;
+
+    public float width = 0;
+    public float height = 0;
+
+
+    public SquareArea(Vector2 _topLeft, Vector2 _downRight)
     {
         center = (topLeft + downRight) / 2.0f;
 
-        corners[0] = topLeft;
+        topLeft = _topLeft - center;
+        downRight = _downRight - center;
 
-        corners[1].x = downRight.x;
-        corners[1].y = topLeft.y;
-
-        corners[2] = downRight;
-
-        corners[3].x = topLeft.x;
-        corners[3].y = downRight.y;
-
-        for (int i = 0; i < 4; i++)
-            corners[i] -= center;
+        AfterConstructor();
     }
 
     public SquareArea(Vector2 _center, float radius)
@@ -133,9 +133,15 @@ public class SquareArea
         Vector2 posX = new Vector2(radius, 0);
         Vector2 posY = new Vector2(0, radius);
 
-        corners[0] = center - posX + posY;
-        corners[1] = center + posX + posY;
-        corners[2] = center + posX - posY;
-        corners[3] = center - posX - posY;
+        topLeft = center - posX + posY;
+        downRight = center + posX - posY;
+
+        AfterConstructor();
+    }
+
+    void AfterConstructor()
+    {
+        width = Mathf.Abs(topLeft.x - downRight.x);
+        height = Mathf.Abs(topLeft.y - downRight.y);
     }
 }
