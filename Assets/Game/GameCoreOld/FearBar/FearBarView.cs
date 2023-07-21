@@ -93,4 +93,16 @@ public class FearBar
         if (dayTime == RuleDayTime.Time.Sun) _currentProgress += 25.0f;
         else _currentProgress += 17.0f;
     }
+
+    public void BoarGood(string dayTime)
+    {
+        if (dayTime == RuleDayTime.Time.Moon) _currentProgress -= 24.0f;
+        else _currentProgress -= 6.0f;
+    }
+
+    public void BoarBad(string dayTime)
+    {
+        if (dayTime == RuleDayTime.Time.Sun) _currentProgress += 10.0f;
+        else _currentProgress += 32.0f;
+    }
 };

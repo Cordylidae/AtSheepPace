@@ -32,7 +32,7 @@ public class FreeSpaceMassive
 
     private void RandomShuffle()
     {
-        var shuffledcards = freeSpace.OrderBy(a => Guid.NewGuid()).ToList();
+        freeSpace = freeSpace.OrderBy(a => Guid.NewGuid()).ToList();
     }
 
     private bool CheckMoreMinRadius(SquareArea squerArea)

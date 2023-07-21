@@ -129,7 +129,7 @@ public class RoundControl
 
         throw new NotImplementedException();
     }
-    public string OnButtonTap(string animalType)
+    public string OnButtonTap(string animalType, SubSignCounter answer, int index = 1)
     {
         switch (animalType)
         {
@@ -137,11 +137,29 @@ public class RoundControl
                 {
                     if (rule.dayTime == RuleDayTime.Time.Sun)
                     {
-                        return CorrectTapState.UncorrectDestroy;
+                        if (answer.CountFalse >= index && answer.CountTrue == 0)
+                        {
+                            fearBar.BoarGood(rule.dayTime);
+                            return CorrectTapState.CorrectDestroy;
+                        }
+                        else
+                        {
+                            fearBar.BoarBad(rule.dayTime);
+                            return CorrectTapState.UncorrectDestroy;
+                        }
                     }
                     else
                     {
-                        return CorrectTapState.CorrectDestroy;
+                        if (answer.CountTrue >= index && answer.CountFalse == 0)
+                        {
+                            fearBar.BoarGood(rule.dayTime);
+                            return CorrectTapState.CorrectDestroy;
+                        }
+                        else
+                        {
+                            fearBar.BoarBad(rule.dayTime);
+                            return CorrectTapState.UncorrectDestroy;
+                        }
                     }
                 }
             case AnimalType.Hedgehog:

@@ -128,12 +128,11 @@ public class RoundGeneration : MonoBehaviour
 
                     if (boarView != null)
                     {
-                        //deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
-                        boarView.circleOfSubs.MakeSubs(Random.Range(3, 9));
+                        boarView.circleOfSubs.MakeSubs(boarView.AnimalNumberIndex.Index); // how much right answer
 
                         boarView.BaseTapHandel.isTap += async () =>
                         {
-                            string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, boarView.circleOfSubs.GetAnswer(), boarView.AnimalNumberIndex.Index);
 
                             switch (correctTap)
                             {
@@ -179,7 +178,7 @@ public class RoundGeneration : MonoBehaviour
 
                         hedgehogView.BaseTapHandel.isTap += async () =>
                         {
-                            string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, new SubSignCounter());
 
                             switch (correctTap)
                             {
