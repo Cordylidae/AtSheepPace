@@ -23,6 +23,7 @@ public class LevelGeneration : MonoBehaviour
     List<Round> rounds = new List<Round>();
 
     [SerializeField] private RoundGeneration roundGeneration;
+    [SerializeField] private PlayerInput playerInput;
 
     void Awake()
     {
@@ -138,20 +139,49 @@ public class LevelGeneration : MonoBehaviour
             round.zeroElements += NextRound;
         }
     }
+
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private Sun_Moon_View sun_moon_View;
+
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private FearBarView fearBarView;
+
+    private RoundControl roundControl;
+
+    private void SetUpAnimalRules()
+    {
+        roundControl = new RoundControl(
+            0,
+            fearBarView.fearBar,
+            sun_moon_View);
+
+        roundControl.SubscribeBaseTap(playerInput);
+    }
+
+    private void UpdateAnimalRules(int index)
+    {
+        roundControl.indexOfCurrentButtons = index;
+    }
+
     void Start()
     {
-        Debug.Log("-------Starts level-------");
         StartLevel();
     }
 
     void StartLevel()
     {
+        Debug.Log("-------Starts level-------");
+
+        SetUpAnimalRules();
+
         ShowRound();
     }
 
     void EndLevel()
     {
         Debug.Log("-------Finish level-------");
+
+        roundControl.UnSubscribeBaseTap(playerInput);
     }
 
     void ShowRound()
@@ -159,10 +189,10 @@ public class LevelGeneration : MonoBehaviour
         Debug.Log($"-------Round Start #{rounds.Count}-------");
 
         Round round = rounds.First();
+        UpdateAnimalRules(round.elementsDictionary.First().Key.number);
 
         roundGeneration.currentRound = round;
-
-        roundGeneration.PreStartRound();
+        roundGeneration.PreStartRound(roundControl);
     }
 
     void NextRound()
@@ -170,7 +200,6 @@ public class LevelGeneration : MonoBehaviour
         Debug.Log($"-------Round End #{rounds.Count}-------");
 
         Round round = rounds.First();
-
         round.zeroElements -= NextRound;
 
         rounds.Remove(round);

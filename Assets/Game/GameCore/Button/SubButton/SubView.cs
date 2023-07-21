@@ -19,4 +19,9 @@ public class SubView : TapView
     {
         SubChoose.IsChoose = false;
     }
+
+    private void OnDestroy()
+    {
+        BaseTapHandel.ResetSubscriptions();
+    }
 }

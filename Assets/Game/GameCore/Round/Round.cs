@@ -33,6 +33,26 @@ public class RoundControl
         rule = smView.ruleDay;
     }
 
+    public string GoneButtonRadius(string animalType)
+    {
+        switch (animalType)
+        {
+            case AnimalType.Sheep:
+                {
+                    fearBar.SheepBad();
+
+                    return CorrectTapState.UncorrectDestroy;
+                }
+            case AnimalType.Wolf:
+                {
+                    fearBar.WolfGood();
+
+                    return CorrectTapState.CorrectDestroy;
+                }
+        }
+
+        throw new NotImplementedException();
+    }
     public string OnButtonTap(string animalType, int index)
     {
         switch (animalType)
@@ -54,26 +74,6 @@ public class RoundControl
                 {
                     fearBar.WolfBad();
                     return CorrectTapState.UncorrectDestroy;
-                }
-        }
-
-        throw new NotImplementedException();
-    }
-    public string GoneButtonRadius(string animalType)
-    {
-        switch (animalType)
-        {
-            case AnimalType.Sheep:
-                {
-                    fearBar.SheepBad();
-
-                    return CorrectTapState.UncorrectDestroy;
-                }
-            case AnimalType.Wolf:
-                {
-                    fearBar.WolfGood();
-
-                    return CorrectTapState.CorrectDestroy;
                 }
         }
 
@@ -129,7 +129,6 @@ public class RoundControl
 
         throw new NotImplementedException();
     }
-
     public string OnButtonTap(string animalType)
     {
         switch (animalType)
@@ -159,6 +158,21 @@ public class RoundControl
         }
 
         throw new NotImplementedException();
+    }
+
+    public void SubscribeBaseTap(PlayerInput playerInput)
+    {
+        playerInput.baseTap += BaseTapRule;
+    }
+
+    public void UnSubscribeBaseTap(PlayerInput playerInput)
+    {
+        playerInput.baseTap -= BaseTapRule;
+    }
+
+    private void BaseTapRule()
+    {
+        rule.DecriseTimeCount();
     }
 }
 

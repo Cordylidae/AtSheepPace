@@ -6,12 +6,6 @@ public class CircleOfSubs : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private GameObject SubButton;
 
-    private bool lastClickTime;
-    public void FixedUpdate()
-    {
-        lastClickTime = true;
-    }
-
     public void MakeSubs(int count)
     {
         GameObject subList = new GameObject("SubList");
@@ -36,13 +30,7 @@ public class CircleOfSubs : MonoBehaviour
             {
                 subView.BaseTapHandel.isTap += () =>
                 {
-                    if (lastClickTime)
-                    {
-                        subView.Tapped();
-
-                        //roundControl.rule.DecriseTimeCount();
-                    }
-                    lastClickTime = false;
+                    subView.Tapped();
                 };
 
             }

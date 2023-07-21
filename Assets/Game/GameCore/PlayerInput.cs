@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
@@ -5,25 +6,42 @@ public class PlayerInput : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
 
+    public Action baseTap;
+
+    private float timerClick = 0.1f;
+    private bool lastClickTime = true;
+   
     void Update()
     {
+        CountDownTimer();
 #if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && lastClickTime)
         {
-            
             ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
 
             CheckTapThis();
+            
+            lastClickTime = false;
         }
 
 #elif UNITY_EDITOR || UNITY_WINDOWS || UNITY_MAC
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && lastClickTime)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             CheckTapThis();
+
+            lastClickTime = false;
         }
 #endif
+    }
+    private void CountDownTimer()
+    {
+        if (!lastClickTime) timerClick -= Time.deltaTime;
+        if (timerClick < 0.0f)
+        {
+            lastClickTime = true;
+        }
     }
 
     void CheckTapThis()
@@ -35,9 +53,11 @@ public class PlayerInput : MonoBehaviour
             if (hit.transform.tag == "AnimalButton")
             {
                 Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 100f);
-             
+
                 BaseTapHandel baseTapHandel = hit.transform.GetComponent<BaseTapHandel>();
                 baseTapHandel.Tapped();
+
+                baseTap?.Invoke();
             }
         }
     }

@@ -8,12 +8,6 @@ public class RoundGeneration : MonoBehaviour
     [SerializeField] private AnimalEntities animalsEntities;
 
     // ### NEED Initialaize like INJECT
-    [SerializeField] private Sun_Moon_View sun_moon_View;
-
-    // ### NEED Initialaize like INJECT
-    [SerializeField] private FearBarView fearBarView;
-
-    // ### NEED Initialaize like INJECT
     [SerializeField] private ActiveZone activeZone;
 
     Dictionary<BaseElement, GamburgerAnimalGroup> animalsGroupDictionary = new Dictionary<BaseElement, GamburgerAnimalGroup>();
@@ -21,16 +15,9 @@ public class RoundGeneration : MonoBehaviour
     public Round currentRound;
     private RoundControl roundControl;
 
-    private bool lastClickTime;
-
-    public void FixedUpdate()
+    public async void PreStartRound(RoundControl _roundControl)
     {
-        lastClickTime = true;
-    }
-
-    public async void PreStartRound()
-    {
-        SetUpAnimalRuleVaribles();
+        roundControl = _roundControl;
 
         BuildUpAnimalDicionary();
         
@@ -42,14 +29,6 @@ public class RoundGeneration : MonoBehaviour
     private void StartRoundControlElements()
     {
         UpdateRoundControlCurrentIndex();
-    }
-
-    private void SetUpAnimalRuleVaribles()
-    {
-        roundControl = new RoundControl(
-            currentRound.elementsDictionary.First().Key.number, 
-            fearBarView.fearBar,
-            sun_moon_View);
     }
 
     private void BuildUpAnimalDicionary()
@@ -79,12 +58,7 @@ public class RoundGeneration : MonoBehaviour
             {
                 baseView.BaseTapHandel.isTap += () =>
                 {
-                    if (lastClickTime)
-                    {
-                        roundControl.rule.DecriseTimeCount();
-                        checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
-                    }
-                    lastClickTime = false;
+                   checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
                 };
                 baseView.DrawCircle.radiusZero += () =>
                 {
@@ -112,44 +86,38 @@ public class RoundGeneration : MonoBehaviour
 
                         deerView.BaseTapHandel.isTap += async () =>
                         {
-                            if (lastClickTime)
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign, deerView.AnimalNumberIndex.Index);
+
+                            switch (correctTap)
                             {
-                                string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign, deerView.AnimalNumberIndex.Index);
+                                case RoundControl.CorrectTapState.UncorrectDestroy:
+                                    {
+                                        // shake it
+                                        ResetBaseSubscriptions(additionalE, deerView);
 
-                                switch (correctTap)
-                                {
-                                    case RoundControl.CorrectTapState.UncorrectDestroy:
-                                        {
-                                            // shake it
-                                            ResetBaseSubscriptions(additionalE, deerView);
+                                        await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
 
-                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectDestroy:
+                                    {
+                                        ResetBaseSubscriptions(additionalE, deerView);
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectDestroy:
-                                        {
-                                            ResetBaseSubscriptions(additionalE, deerView);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                    {
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
-                                        {
-
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectUndestroy:
-                                        {
-                                            deerView.AnimalNumberIndex.Index--;
-                                        }
-                                        break;
-                                }
-
-                                roundControl.rule.DecriseTimeCount();
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectUndestroy:
+                                    {
+                                        deerView.AnimalNumberIndex.Index--;
+                                    }
+                                    break;
                             }
-                            lastClickTime = false;
                         };
                     }
                     else Debug.Log("Incorrect Dynamic Cast Deer");
@@ -165,44 +133,38 @@ public class RoundGeneration : MonoBehaviour
 
                         boarView.BaseTapHandel.isTap += async () =>
                         {
-                            if (lastClickTime)
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+
+                            switch (correctTap)
                             {
-                                string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+                                case RoundControl.CorrectTapState.UncorrectDestroy:
+                                    {
+                                        // shake it
+                                        ResetBaseSubscriptions(additionalE, boarView);
 
-                                switch (correctTap)
-                                {
-                                    case RoundControl.CorrectTapState.UncorrectDestroy:
-                                        {
-                                            // shake it
-                                            ResetBaseSubscriptions(additionalE, boarView);
+                                        await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
 
-                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectDestroy:
+                                    {
+                                        ResetBaseSubscriptions(additionalE, boarView);
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectDestroy:
-                                        {
-                                            ResetBaseSubscriptions(additionalE, boarView);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                    {
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
-                                        {
-
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectUndestroy:
-                                        {
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectUndestroy:
+                                    {
                  
-                                        }
-                                        break;
-                                }
-
-                                roundControl.rule.DecriseTimeCount();
+                                    }
+                                    break;
                             }
-                            lastClickTime = false;
                         };
                     }
                     else Debug.Log("Incorrect Dynamic Cast Boar");
@@ -217,44 +179,38 @@ public class RoundGeneration : MonoBehaviour
 
                         hedgehogView.BaseTapHandel.isTap += async () =>
                         {
-                            if (lastClickTime)
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+
+                            switch (correctTap)
                             {
-                                string correctTap = roundControl.OnButtonTap(additionalE.animalType);
+                                case RoundControl.CorrectTapState.UncorrectDestroy:
+                                    {
+                                        // shake it
+                                        ResetBaseSubscriptions(additionalE, hedgehogView);
 
-                                switch (correctTap)
-                                {
-                                    case RoundControl.CorrectTapState.UncorrectDestroy:
-                                        {
-                                            // shake it
-                                            ResetBaseSubscriptions(additionalE, hedgehogView);
+                                        await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
 
-                                            await ShakeWithAnim(animalGroup.additionObjects[ind].animal);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectDestroy:
+                                    {
+                                        ResetBaseSubscriptions(additionalE, hedgehogView);
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectDestroy:
-                                        {
-                                            ResetBaseSubscriptions(additionalE, hedgehogView);
+                                        DestroyAdditionObject(animalGroup, ind);
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.UncorrectUndestroy:
+                                    {
 
-                                            DestroyAdditionObject(animalGroup, ind);
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.UncorrectUndestroy:
-                                        {
+                                    }
+                                    break;
+                                case RoundControl.CorrectTapState.CorrectUndestroy:
+                                    {
 
-                                        }
-                                        break;
-                                    case RoundControl.CorrectTapState.CorrectUndestroy:
-                                        {
-
-                                        }
-                                        break;
-                                }
-
-                                roundControl.rule.DecriseTimeCount();
+                                    }
+                                    break;
                             }
-                            lastClickTime = false;
                         };
                     }
                     else Debug.Log("Incorrect Dynamic Cast Hedgehog");
@@ -511,6 +467,7 @@ public class RoundGeneration : MonoBehaviour
     void ResetBaseSubscriptions(Element element, ButtonView view)
     {
         view.BaseTapHandel.ResetSubscriptions();
+        view.BaseTapHandel.gameObject.tag = "Untagged";// "UnClickable";
         element.ResetSubscriptions();
     }
 
