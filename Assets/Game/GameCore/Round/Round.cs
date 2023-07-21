@@ -30,7 +30,6 @@ public class RoundControl
         currentIndexElements = new List<BaseElement>();
 
         sun_moon_View = smView;
-
         rule = smView.ruleDay;
     }
 
@@ -80,7 +79,7 @@ public class RoundControl
 
         throw new NotImplementedException();
     }
-    public string OnButtonTap(string animalType, SignState signState)
+    public string OnButtonTap(string animalType, SignState signState, int index)
     {
         switch (animalType)
         {
@@ -92,6 +91,11 @@ public class RoundControl
                             {
                                 if (rule.dayTime == RuleDayTime.Time.Sun)
                                 {
+                                    if (index - 1 <= 0)
+                                    {
+                                        fearBar.DeerGood(rule.dayTime);
+                                        return CorrectTapState.CorrectDestroy;
+                                    }
                                     return CorrectTapState.CorrectUndestroy;
                                 }
                                 else
@@ -104,6 +108,11 @@ public class RoundControl
                             {
                                 if (rule.dayTime == RuleDayTime.Time.Moon)
                                 {
+                                    if (index - 1 <= 0)
+                                    {
+                                        fearBar.DeerGood(rule.dayTime);
+                                        return CorrectTapState.CorrectDestroy;
+                                    }
                                     return CorrectTapState.CorrectUndestroy;
                                 }
                                 else

@@ -86,7 +86,6 @@ public class RoundGeneration : MonoBehaviour
                     }
                     lastClickTime = false;
                 };
-
                 baseView.DrawCircle.radiusZero += () =>
                 {
                     checkTheCorrectTapState(roundControl.GoneButtonRadius(baseE.animalType));
@@ -115,7 +114,7 @@ public class RoundGeneration : MonoBehaviour
                         {
                             if (lastClickTime)
                             {
-                                string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign);
+                                string correctTap = roundControl.OnButtonTap(additionalE.animalType, deerView.AnimalSign.Sign, deerView.AnimalNumberIndex.Index);
 
                                 switch (correctTap)
                                 {
@@ -131,7 +130,9 @@ public class RoundGeneration : MonoBehaviour
                                         break;
                                     case RoundControl.CorrectTapState.CorrectDestroy:
                                         {
+                                            ResetBaseSubscriptions(additionalE, deerView);
 
+                                            DestroyAdditionObject(animalGroup, ind);
                                         }
                                         break;
                                     case RoundControl.CorrectTapState.UncorrectUndestroy:
@@ -142,13 +143,6 @@ public class RoundGeneration : MonoBehaviour
                                     case RoundControl.CorrectTapState.CorrectUndestroy:
                                         {
                                             deerView.AnimalNumberIndex.Index--;
-                                            if (deerView.AnimalNumberIndex.Index == 0)
-                                            {
-                                                ResetBaseSubscriptions(additionalE, deerView);
-
-                                                fearBarView.fearBar.DeerGood(roundControl.rule.dayTime);
-                                                DestroyAdditionObject(animalGroup, ind);
-                                            }
                                         }
                                         break;
                                 }
@@ -167,6 +161,7 @@ public class RoundGeneration : MonoBehaviour
                     if (boarView != null)
                     {
                         //deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+                        boarView.circleOfSubs.MakeSubs(Random.Range(3, 9));
 
                         boarView.BaseTapHandel.isTap += async () =>
                         {

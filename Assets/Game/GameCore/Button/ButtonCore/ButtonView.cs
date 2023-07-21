@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 
-public abstract class ButtonView : MonoBehaviour
+public abstract class TapView : MonoBehaviour
+{
+    public BaseTapHandel BaseTapHandel;
+}
+
+public abstract class ButtonView : TapView
 {
     public IAnimalType AnimalType;
-    public BaseTapHandel BaseTapHandel;
-
     public IAnimalOpenView AnimalOpenView;
 
     public virtual void SetOpen()

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    private Vector3 pos;
     private Ray ray;
     private RaycastHit hit;
 

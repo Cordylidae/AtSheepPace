@@ -105,7 +105,7 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
-            AnimalType.Deer, AnimalType.Hedgehog, AnimalType.Boar
+            AnimalType.Deer, AnimalType.Boar, AnimalType.Hedgehog
         };
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
