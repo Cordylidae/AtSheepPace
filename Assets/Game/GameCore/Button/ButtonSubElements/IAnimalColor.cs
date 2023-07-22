@@ -28,7 +28,7 @@ public class IAnimalColor : MonoBehaviour
     }
 
     [Button]
-    public void SetRandomForm()
+    public void SetRandomColor()
     {
         int rand = UnityEngine.Random.RandomRange(0, 100);
 

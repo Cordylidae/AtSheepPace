@@ -476,6 +476,8 @@ MonoBehaviour:
   BaseTapHandel: {fileID: 280286681782710030}
   SubChoose: {fileID: 6843201606690300673}
   lineRenderer: {fileID: 2371666232748880403}
+  animalColor: {fileID: 4260494322445541364}
+  animalForm: {fileID: 7716269714844861137}
 --- !u!1 &8989579158062173020
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,9 @@ using DG.Tweening;
 public class SubViewHedgehog : SubView
 {
     public LineRenderer lineRenderer;
+    public IAnimalColor animalColor;
+    public IAnimalForm animalForm;
+
     public override void Choose()
     {
         base.Choose();

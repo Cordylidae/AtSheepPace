@@ -105,4 +105,16 @@ public class FearBar
         if (dayTime == RuleDayTime.Time.Sun) _currentProgress += 10.0f;
         else _currentProgress += 32.0f;
     }
+
+    public void HedgehogGood(string dayTime)
+    {
+        if (dayTime == RuleDayTime.Time.Moon) _currentProgress -= 25.0f;
+        else _currentProgress -= 15.0f;
+    }
+
+    public void HedgehogBad(string dayTime)
+    {
+        if (dayTime == RuleDayTime.Time.Sun) _currentProgress += 22.0f;
+        else _currentProgress += 28.0f;
+    }
 };

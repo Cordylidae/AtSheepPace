@@ -642,6 +642,8 @@ MonoBehaviour:
   AnimalType: {fileID: 8907684339867659654}
   AnimalOpenView: {fileID: 8584525380825688055}
   AnimalSign: {fileID: 8785701904812633463}
+  AnimalForm: {fileID: 1335332400373464731}
+  AnimalColor: {fileID: 3263693078646318326}
   freeSpaceOfSubs: {fileID: 3391465285155950337}
 --- !u!4 &4757403464787998643 stripped
 Transform:

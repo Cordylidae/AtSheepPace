@@ -15,8 +15,7 @@ public class CircleOfSubs : MonoBehaviour
     public int RandCount;
 
     private SubSignCounter signCounter = new SubSignCounter();
-
-    private List<SubViewBoar> subViewsBoar = new List<SubViewBoar>();
+    private List<SubViewBoar> subViews = new List<SubViewBoar>();
 
     public void MakeSubsBoar(int count)
     {
@@ -51,24 +50,24 @@ public class CircleOfSubs : MonoBehaviour
                 };
             }
 
-            subViewsBoar.Add(subView);
+            subViews.Add(subView);
         }
 
         BoarRandomSetSign();
     }
     private void BoarRandomSetSign()
     {
-        subViewsBoar = subViewsBoar.OrderBy(a => Guid.NewGuid()).ToList();
+        subViews = subViews.OrderBy(a => Guid.NewGuid()).ToList();
 
         for (int i = 0; i < AnswerCount; i++)
         {
-            subViewsBoar[i].AnimalSign.Sign = SignState.True;
-            subViewsBoar[i + AnswerCount].AnimalSign.Sign = SignState.False;
+            subViews[i].AnimalSign.Sign = SignState.True;
+            subViews[i + AnswerCount].AnimalSign.Sign = SignState.False;
         }
 
         for (int i = 0; i < RandCount; i++)
         {
-            subViewsBoar[AnswerCount * 2 + i].AnimalSign.SetRandomSign();
+            subViews[AnswerCount * 2 + i].AnimalSign.SetRandomSign();
         }
     }
 
@@ -76,21 +75,10 @@ public class CircleOfSubs : MonoBehaviour
     {
         signCounter.SubSignCounterReset();
 
-        foreach (SubViewBoar subView in subViewsBoar) {
+        foreach (SubViewBoar subView in subViews) {
             if (subView.SubChoose.IsChoose)
             {
-                switch (subView.AnimalSign.Sign)
-                {
-                    case SignState.True:
-                        {
-                            signCounter.CountTrue++;
-                        } break;
-
-                    case SignState.False: 
-                        {
-                            signCounter.CountFalse++;
-                        } break;
-                }
+                signCounter.Count[(int)subView.AnimalSign.Sign]++;
             }
         }
 
@@ -109,9 +97,8 @@ public class CircleOfSubs : MonoBehaviour
 
 public class SubSignCounter
 {
-    public int CountTrue;
-    public int CountFalse;
-
+    public int[] Count = new int[2]; // True, False
+   
     public SubSignCounter()
     {
         SubSignCounterReset();
@@ -119,7 +106,7 @@ public class SubSignCounter
 
     public void SubSignCounterReset()
     {
-        CountTrue = 0;
-        CountFalse = 0;
+        Count[0] = 0;
+        Count[1] = 0;
     }
 };

@@ -82,7 +82,7 @@ public class RoundGeneration : MonoBehaviour
 
                     if (deerView != null)
                     {
-                        deerView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+                        deerView.AnimalSign.SetRandomSign(); 
 
                         deerView.BaseTapHandel.isTap += async () =>
                         {
@@ -174,16 +174,27 @@ public class RoundGeneration : MonoBehaviour
 
                     if (hedgehogView != null)
                     {
-                        hedgehogView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+                        hedgehogView.AnimalSign.SetRandomSign();
+                        hedgehogView.AnimalForm.SetRandomForm();
+                        hedgehogView.AnimalColor.SetRandomColor();
+                        
+                        hedgehogView.freeSpaceOfSubs.MakeSubsHedgehog(
+                            hedgehogView.AnimalForm.Form,
+                            hedgehogView.AnimalColor.myColor
+                            );
 
-                        hedgehogView.freeSpaceOfSubs.MakeSubsHedgehog(3);
                         activeZone.SetHedgehogSubsPosition(hedgehogView.freeSpaceOfSubs.subViews,
                             animalGroup.additionObjects[i].animal.transform.position
                             );
 
                         hedgehogView.BaseTapHandel.isTap += async () =>
                         {
-                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, new SubSignCounter());
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType,
+                                hedgehogView.freeSpaceOfSubs.GetAnswerHedgehog(),
+                                hedgehogView.AnimalSign.Sign,
+                                hedgehogView.AnimalForm.Form,
+                                hedgehogView.AnimalColor.myColor
+                                );
 
                             switch (correctTap)
                             {

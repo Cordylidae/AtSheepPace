@@ -137,7 +137,8 @@ public class RoundControl
                 {
                     if (rule.dayTime == RuleDayTime.Time.Sun)
                     {
-                        if (answer.CountFalse >= index && answer.CountTrue == 0)
+                        if (answer.Count[(int)SignState.False] >= index && 
+                            answer.Count[(int)SignState.True] == 0)
                         {
                             fearBar.BoarGood(rule.dayTime);
                             return CorrectTapState.CorrectDestroy;
@@ -150,7 +151,8 @@ public class RoundControl
                     }
                     else
                     {
-                        if (answer.CountTrue >= index && answer.CountFalse == 0)
+                        if (answer.Count[(int)SignState.True] >= index && 
+                            answer.Count[(int)SignState.False] == 0)
                         {
                             fearBar.BoarGood(rule.dayTime);
                             return CorrectTapState.CorrectDestroy;
@@ -162,16 +164,81 @@ public class RoundControl
                         }
                     }
                 }
+        }
+
+        throw new NotImplementedException();
+    }
+    public string OnButtonTap(string animalType, SubColorFormCounter answer, 
+        SignState signState, FormState formState, ColorState colorState)
+    {
+        switch (animalType)
+        {
             case AnimalType.Hedgehog:
                 {
+                    int form = answer.getFormCount(formState);
+                    int color = answer.getColorsCount(colorState);
+                    int form_color = answer.getFormAndColorCount(formState, colorState);
+                    int result = form + color - form_color;
+
                     if (rule.dayTime == RuleDayTime.Time.Sun)
                     {
-                        return CorrectTapState.CorrectDestroy;
+                        if (signState == SignState.True)
+                        {
+                            if (form_color >= 1 && form_color == answer.AllCount)
+                            {
+                                fearBar.HedgehogGood(rule.dayTime);
+                                return CorrectTapState.CorrectDestroy;
+                            }
+                            else
+                            {
+                                fearBar.HedgehogBad(rule.dayTime);
+                                return CorrectTapState.UncorrectDestroy;
+                            }
+                        }
+                        else 
+                        {
+                            if (result == 0 && answer.AllCount > 0)
+                            {
+                                fearBar.BoarGood(rule.dayTime);
+                                return CorrectTapState.CorrectDestroy;
+                            }
+                            else
+                            {
+                                fearBar.BoarBad(rule.dayTime);
+                                return CorrectTapState.UncorrectDestroy;
+                            }
+                        }
                     }
-                    else
+                    else if(rule.dayTime == RuleDayTime.Time.Moon)
                     {
-                        return CorrectTapState.UncorrectDestroy;
+                        if (signState == SignState.True)
+                        {
+                            if (result >= 1 && result == answer.AllCount)
+                            {
+                                fearBar.HedgehogGood(rule.dayTime);
+                                return CorrectTapState.CorrectDestroy;
+                            }
+                            else
+                            {
+                                fearBar.HedgehogBad(rule.dayTime);
+                                return CorrectTapState.UncorrectDestroy;
+                            }
+                        }
+                        else
+                        {
+                            if (form_color == 0 && result == answer.AllCount)
+                            {
+                                fearBar.HedgehogGood(rule.dayTime);
+                                return CorrectTapState.CorrectDestroy;
+                            }
+                            else
+                            {
+                                fearBar.HedgehogBad(rule.dayTime);
+                                return CorrectTapState.UncorrectDestroy;
+                            }
+                        }
                     }
+                    else throw new NotImplementedException();
                 }
         }
 
