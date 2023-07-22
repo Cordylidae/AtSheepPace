@@ -30,6 +30,17 @@ public class FreeSpaceMassive
         else throw new Exception();
     }
 
+    public void NewLayout(SquareArea squareArea)
+    {
+        freeSpace.Clear();
+
+        lastArea = squareArea;
+        CutAinB(lastArea, startArea);
+
+        Debug.Log("therer" + lastArea.center + lastArea.GlobalTL + lastArea.GlobalDR);
+
+    }
+
     private void RandomShuffle()
     {
         freeSpace = freeSpace.OrderBy(a => Guid.NewGuid()).ToList();
@@ -67,16 +78,20 @@ public class FreeSpaceMassive
     private void CutAinB(SquareArea temp, SquareArea curr)
     {
         SquareArea sq1 = new SquareArea(curr.GlobalTL, new Vector2(curr.GlobalDR.x, temp.GlobalTL.y));
-        if (CheckMoreMinRadius(sq1)) freeSpace.Add(sq1);
+        //if (CheckMoreMinRadius(sq1)) 
+            freeSpace.Add(sq1);
 
         SquareArea sq2 = new SquareArea(new Vector2(curr.GlobalTL.x, temp.GlobalDR.y), curr.GlobalDR);
-        if (CheckMoreMinRadius(sq2)) freeSpace.Add(sq2);
+        //if (CheckMoreMinRadius(sq2)) 
+            freeSpace.Add(sq2);
 
         SquareArea sq3 = new SquareArea(new Vector2(curr.GlobalTL.x, temp.GlobalTL.y), new Vector2(temp.GlobalTL.x, temp.GlobalDR.y));
-        if (CheckMoreMinRadius(sq3)) freeSpace.Add(sq3);
+        //if (CheckMoreMinRadius(sq3)) 
+            freeSpace.Add(sq3);
 
         SquareArea sq4 = new SquareArea(new Vector2(temp.GlobalDR.x, temp.GlobalTL.y), new Vector2(curr.GlobalDR.x, temp.GlobalDR.y));
-        if (CheckMoreMinRadius(sq4)) freeSpace.Add(sq4);
+        //if (CheckMoreMinRadius(sq4)) 
+            freeSpace.Add(sq4);
 
         freeSpace.Remove(curr);
     }
@@ -117,12 +132,12 @@ public class SquareArea
     public float height = 0;
 
 
-    public SquareArea(Vector2 _topLeft, Vector2 _downRight)
+    public SquareArea(Vector2 _topLeftG, Vector2 _downRightG)
     {
-        center = (_topLeft + _downRight) / 2.0f;
+        center = (_topLeftG + _downRightG) / 2.0f;
 
-        topLeft = _topLeft - center;
-        downRight = _downRight - center;
+        topLeft = _topLeftG - center;
+        downRight = _downRightG - center;
 
         AfterConstructor();
     }
@@ -134,8 +149,8 @@ public class SquareArea
         Vector2 posX = new Vector2(radius, 0);
         Vector2 posY = new Vector2(0, radius);
 
-        topLeft = -center - posX + posY;
-        downRight = -center + posX - posY;
+        topLeft = - posX + posY;
+        downRight = posX - posY;
 
         AfterConstructor();
     }

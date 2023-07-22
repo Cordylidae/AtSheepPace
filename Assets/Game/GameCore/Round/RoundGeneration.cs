@@ -58,7 +58,7 @@ public class RoundGeneration : MonoBehaviour
             {
                 baseView.BaseTapHandel.isTap += () =>
                 {
-                   checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
+                    checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
                 };
                 baseView.DrawCircle.radiusZero += () =>
                 {
@@ -175,6 +175,11 @@ public class RoundGeneration : MonoBehaviour
                     if (hedgehogView != null)
                     {
                         hedgehogView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
+
+                        hedgehogView.freeSpaceOfSubs.MakeSubs(3);
+                        activeZone.SetSubsElementPosition(hedgehogView.freeSpaceOfSubs.subViews,
+                            animalGroup.additionObjects[i].animal.transform.position
+                            );
 
                         hedgehogView.BaseTapHandel.isTap += async () =>
                         {

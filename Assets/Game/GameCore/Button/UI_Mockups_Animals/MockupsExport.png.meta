@@ -375,12 +375,12 @@ TextureImporter:
       name: Hedgehog_Corner_3
       rect:
         serializedVersion: 2
-        x: 1044
-        y: 1965
+        x: 1040
+        y: 1963
         width: 130
         height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45873928, y: 0.49174336}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

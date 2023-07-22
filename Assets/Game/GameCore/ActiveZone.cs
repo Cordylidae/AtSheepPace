@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,23 +39,34 @@ public class ActiveZone : MonoBehaviour
             index * (-4.0f / countBaseElement));
     }
 
+    public void SetSubsElementPosition(List<SubView> subViews, Vector3 position)
+    {
+        SquareArea area = new SquareArea(position * 0.8f, 1.7f);
+        Debug.Log("Start area" + area.center + area.topLeft + area.GlobalTL);
+
+        freeSpaceMassive.NewLayout(area);
+        Debug.Log(area.center);
+        
+        foreach (SubView subView in subViews)
+        {
+            Vector2 areaPos = SetArea(0.35f, position.z, Color.white);
+            subView.transform.position = new Vector3(areaPos.x , areaPos.y, position.z);
+            subView.transform.localPosition /= 0.8f;
+            subView.transform.localPosition -= Vector3.forward * 0.01f;
+        }
+        
+    }
+
     public Vector2 SetArea(float radius, float z, Color color)
     {
         SquareArea area = new SquareArea(Vector2.zero, radius);
 
-        if (freeSpaceMassive.AddInFreeSpace(area)) { Debug.Log("All good " + area.topLeft + area.downRight + area.center); }
+        if (freeSpaceMassive.AddInFreeSpace(area));
         else
         {
-            Debug.Log(area.topLeft + " " + area.downRight + " " + area.center);
-
-            foreach (SquareArea square in freeSpaceMassive.freeSpace)
-            {
-                Debug.Log(square.topLeft + " " + square.downRight + " " + square.center);
-            }
-
             freeSpaceMassive.NewLayout();
 
-            if (freeSpaceMassive.AddInFreeSpace(area)) Debug.Log("Make new layout and All good");
+            if (freeSpaceMassive.AddInFreeSpace(area));
             else Debug.Log("Something went wrong");
         }
       

@@ -2,7 +2,6 @@ public class BoarView : ButtonView
 {
     public IAnimalUniqIndex AnimalNumberIndex;
     public CircleOfSubs circleOfSubs;
-
     public override void SetOpen()
     {
         base.SetOpen();
