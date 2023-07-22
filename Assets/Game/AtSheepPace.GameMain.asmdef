@@ -5,7 +5,9 @@
         "Zenject",
         "AtSheepPace.External",
         "DOTweenPlug",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "NaughtyAttributes.Core",
+        "NaughtyAttributes.Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

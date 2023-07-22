@@ -30,7 +30,7 @@ public class IAnimalForm : MonoBehaviour
         int rand = UnityEngine.Random.RandomRange(0, 100);
 
         if (rand < 33) Form = FormState.Circle;
-        if (rand >= 33 && rand <= 66) Form = FormState.Triangle;
+        else if (rand >= 33 && rand <= 66) Form = FormState.Triangle;
         else Form = FormState.Hex;
     }
     private void ChangeForm()

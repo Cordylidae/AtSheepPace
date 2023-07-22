@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6856335427852889312}
   - component: {fileID: 7716269714844861137}
+  - component: {fileID: 4260494322445541364}
   m_Layer: 0
   m_Name: TapForm
   m_TagString: Untagged
@@ -79,6 +80,22 @@ MonoBehaviour:
   formSprites: {fileID: 11400000, guid: 628c1712ccab1804c9f48599654b0d38, type: 2}
   formView: {fileID: 6016080786739818019}
   form: 0
+--- !u!114 &4260494322445541364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885646848474328094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26d7d4e2b5f9e64fb2a2f32c014a8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromSprite: 0
+  colorSprites: {fileID: 0}
+  colorView: {fileID: 6016080786739818019}
+  color: 0
 --- !u!1 &3980747159957119214
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +254,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1506536575, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
-  m_Color: {r: 0.9433962, g: 0.36044857, b: 0.36044857, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
