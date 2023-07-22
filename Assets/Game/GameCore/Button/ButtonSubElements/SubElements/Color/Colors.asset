@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Colors
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 1553539564, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
-  - {fileID: -416293978, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
+  - {fileID: 921965685, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
+  - {fileID: -1277731532, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
+  - {fileID: -707498035, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
+  - {fileID: 1974635497, guid: 67b03c1a2a157a74eb5325a57fde2046, type: 3}
