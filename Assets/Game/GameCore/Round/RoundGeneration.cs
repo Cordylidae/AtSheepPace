@@ -128,11 +128,11 @@ public class RoundGeneration : MonoBehaviour
 
                     if (boarView != null)
                     {
-                        boarView.circleOfSubs.MakeSubs(boarView.AnimalNumberIndex.Index); // how much right answer
+                        boarView.circleOfSubs.MakeSubsBoar(boarView.AnimalNumberIndex.Index); // how much right answer
 
                         boarView.BaseTapHandel.isTap += async () =>
                         {
-                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, boarView.circleOfSubs.GetAnswer(), boarView.AnimalNumberIndex.Index);
+                            string correctTap = roundControl.OnButtonTap(additionalE.animalType, boarView.circleOfSubs.GetAnswerBoar(), boarView.AnimalNumberIndex.Index);
 
                             switch (correctTap)
                             {
@@ -176,8 +176,8 @@ public class RoundGeneration : MonoBehaviour
                     {
                         hedgehogView.AnimalSign.SetRandomSign();//if(additionalE.IsOpen) 
 
-                        hedgehogView.freeSpaceOfSubs.MakeSubs(3);
-                        activeZone.SetSubsElementPosition(hedgehogView.freeSpaceOfSubs.subViews,
+                        hedgehogView.freeSpaceOfSubs.MakeSubsHedgehog(3);
+                        activeZone.SetHedgehogSubsPosition(hedgehogView.freeSpaceOfSubs.subViews,
                             animalGroup.additionObjects[i].animal.transform.position
                             );
 
@@ -189,6 +189,7 @@ public class RoundGeneration : MonoBehaviour
                             {
                                 case RoundControl.CorrectTapState.UncorrectDestroy:
                                     {
+                                        hedgehogView.freeSpaceOfSubs.DisableLines();
                                         // shake it
                                         ResetBaseSubscriptions(additionalE, hedgehogView);
 
@@ -199,6 +200,8 @@ public class RoundGeneration : MonoBehaviour
                                     break;
                                 case RoundControl.CorrectTapState.CorrectDestroy:
                                     {
+                                        hedgehogView.freeSpaceOfSubs.DisableLines();
+                                        
                                         ResetBaseSubscriptions(additionalE, hedgehogView);
 
                                         DestroyAdditionObject(animalGroup, ind);
@@ -331,6 +334,11 @@ public class RoundGeneration : MonoBehaviour
             if (animalType == AnimalType.Hedgehog)
             {
                 HedgehogView hedgehogView = additionalE.view as HedgehogView;
+
+                if (hedgehogView != null)
+                {
+                    hedgehogView.freeSpaceOfSubs.ShowLines();
+                }
 
                 continue;
             }

@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class SubView : TapView
+public abstract class SubView : TapView
 {
-    public IAnimalSign AnimalSign;
     public ISubChoose SubChoose;
 
     public void Tapped()
@@ -15,14 +14,14 @@ public class SubView : TapView
         }else UnChoose();
     }
 
-    public void Choose()
+    public virtual void Choose()
     {
         SubChoose.IsChoose = true;
 
         this.gameObject.transform.localScale = Vector3.one * 1.2f;
     }
 
-    public void UnChoose()
+    public virtual void UnChoose()
     {
         SubChoose.IsChoose = false;
 

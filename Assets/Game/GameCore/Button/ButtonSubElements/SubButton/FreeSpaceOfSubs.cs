@@ -7,10 +7,10 @@ public class FreeSpaceOfSubs : MonoBehaviour
 {
     [SerializeField] private GameObject SubButton;
 
-    [NonSerialized] public List<SubView> subViews = new List<SubView>();
+    [NonSerialized] public List<SubViewHedgehog> subViews = new List<SubViewHedgehog>();
 
     private int MaxCount = 7;
-    public void MakeSubs(int count)
+    public void MakeSubsHedgehog(int count)
     {
         if (count > 7) { count = 7; Debug.LogError("Subs of Hedgehog > 7"); }
         if (count < 2) { count = 2; Debug.LogError("Subs of Hedgehog < 2"); }
@@ -32,7 +32,7 @@ public class FreeSpaceOfSubs : MonoBehaviour
 
             sub.transform.SetParent(subList.transform);
 
-            SubView subView = sub.GetComponent<SubView>();
+            SubViewHedgehog subView = sub.GetComponent<SubViewHedgehog>();
 
             if (subView != null)
             {
@@ -45,6 +45,34 @@ public class FreeSpaceOfSubs : MonoBehaviour
             subViews.Add(subView);
         }
 
+        HedgehogSetLineColor();
         //RandomSetSign();
+    }
+
+    private void HedgehogSetLineColor()
+    {
+        foreach (SubViewHedgehog view in subViews)
+        {
+            Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+            view.lineRenderer.startColor = color;
+            view.lineRenderer.endColor = color;
+        }
+    }
+
+    public void ShowLines()
+    {
+        foreach (SubViewHedgehog view in subViews)
+        {
+            view.ShowLine();
+        }
+    }
+
+    public void DisableLines()
+    {
+        foreach (SubViewHedgehog view in subViews)
+        {
+            view.DisableLine();
+        }
     }
 }

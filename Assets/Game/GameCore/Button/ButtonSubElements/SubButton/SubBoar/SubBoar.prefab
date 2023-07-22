@@ -298,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2984075326077023472}
-  - component: {fileID: 6578390245033372996}
+  - component: {fileID: 7983974606960575184}
   m_Layer: 0
   m_Name: SubBoar
   m_TagString: Untagged
@@ -327,7 +327,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6578390245033372996
+--- !u!114 &7983974606960575184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,12 +336,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6731528841726856870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ed0c5b16ce3114883e7fc2b78b60aa, type: 3}
+  m_Script: {fileID: 11500000, guid: bda65ef15483c2443b5c07c0386063ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BaseTapHandel: {fileID: 2761558932927009093}
-  AnimalSign: {fileID: 4545705688598419792}
   SubChoose: {fileID: 8883121488936164682}
+  AnimalSign: {fileID: 4545705688598419792}
 --- !u!1 &7007166067303477208
 GameObject:
   m_ObjectHideFlags: 0

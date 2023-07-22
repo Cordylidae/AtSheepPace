@@ -15,9 +15,10 @@ public class CircleOfSubs : MonoBehaviour
     public int RandCount;
 
     private SubSignCounter signCounter = new SubSignCounter();
-    private List<SubView> subViews = new List<SubView>();
 
-    public void MakeSubs(int count)
+    private List<SubViewBoar> subViewsBoar = new List<SubViewBoar>();
+
+    public void MakeSubsBoar(int count)
     {
         if (count > 4) { count = 4; Debug.LogError("Subs of Boar > 4"); }
         if (count < 1) { count = 1; Debug.LogError("Subs of Boar < 1"); }
@@ -40,7 +41,7 @@ public class CircleOfSubs : MonoBehaviour
             sub.transform.SetParent(subList.transform);
             sub.transform.localPosition = PositionByAngle(360 / AllCount * i);
 
-            SubView subView = sub.GetComponent<SubView>();
+            SubViewBoar subView = sub.GetComponent<SubViewBoar>();
 
             if (subView != null)
             {
@@ -50,32 +51,32 @@ public class CircleOfSubs : MonoBehaviour
                 };
             }
 
-            subViews.Add(subView);
+            subViewsBoar.Add(subView);
         }
 
-        RandomSetSign();
+        BoarRandomSetSign();
     }
-    private void RandomSetSign()
+    private void BoarRandomSetSign()
     {
-        subViews = subViews.OrderBy(a => Guid.NewGuid()).ToList();
+        subViewsBoar = subViewsBoar.OrderBy(a => Guid.NewGuid()).ToList();
 
         for (int i = 0; i < AnswerCount; i++)
         {
-            subViews[i].AnimalSign.Sign = SignState.True;
-            subViews[i + AnswerCount].AnimalSign.Sign = SignState.False;
+            subViewsBoar[i].AnimalSign.Sign = SignState.True;
+            subViewsBoar[i + AnswerCount].AnimalSign.Sign = SignState.False;
         }
 
         for (int i = 0; i < RandCount; i++)
         {
-            subViews[AnswerCount * 2 + i].AnimalSign.SetRandomSign();
+            subViewsBoar[AnswerCount * 2 + i].AnimalSign.SetRandomSign();
         }
     }
 
-    public SubSignCounter GetAnswer()
+    public SubSignCounter GetAnswerBoar()
     {
         signCounter.SubSignCounterReset();
 
-        foreach (SubView subView in subViews) {
+        foreach (SubViewBoar subView in subViewsBoar) {
             if (subView.SubChoose.IsChoose)
             {
                 switch (subView.AnimalSign.Sign)
