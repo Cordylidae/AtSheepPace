@@ -37,6 +37,12 @@ public class IAnimalColor : MonoBehaviour
         else if (rand >= 50 && rand < 75) myColor = ColorState.Green;
         else myColor = ColorState.Blue;
     }
+
+    public Color getColor()
+    {
+        return colorView.color;
+    }
+
     private void ChangeColor()
     {
         switch (color)

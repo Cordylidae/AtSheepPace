@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -106,10 +107,7 @@ public class FreeSpaceOfSubs : MonoBehaviour
     {
         foreach (SubViewHedgehog view in subViews)
         {
-            Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-
-            view.lineRenderer.startColor = color;
-            view.lineRenderer.endColor = color;
+            view.lineRenderer.startColor = view.lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }
     }
 
@@ -129,6 +127,7 @@ public class FreeSpaceOfSubs : MonoBehaviour
         }
     }
 
+    [Button]
     public SubColorFormCounter GetAnswerHedgehog()
     {
         subColorFormCounter.SubSignCounterReset();
@@ -144,6 +143,9 @@ public class FreeSpaceOfSubs : MonoBehaviour
                 subColorFormCounter.AllCount++;
             }
         }
+
+        // # Have unreproduced bug with complite wiout right answer
+        // Debug.Log(subColorFormCounter.AllCount + " All count");
 
         return subColorFormCounter;
     }

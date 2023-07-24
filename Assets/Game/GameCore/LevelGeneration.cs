@@ -34,7 +34,7 @@ public class LevelGeneration : MonoBehaviour
 
     void SetHardProperties()
     {
-        hardProperties.CountOfBaseElements = 14;
+        hardProperties.CountOfBaseElements = 12;
 
         hardProperties.baseElementsAtLevel = new List<string> { AnimalType.Sheep, AnimalType.Wolf };
         hardProperties.additionElementsAtLevel = new List<string> { AnimalType.Deer, AnimalType.Boar, AnimalType.Hedgehog };
@@ -60,12 +60,24 @@ public class LevelGeneration : MonoBehaviour
         // Genereate sequence
         List<string> elements = new List<string>
         {
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+            
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+            //AnimalType.Sheep,
+            //AnimalType.Sheep
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf, 
-            AnimalType.Wolf,  AnimalType.Sheep, 
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Wolf,  AnimalType.Sheep,
             AnimalType.Sheep, AnimalType.Sheep,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
@@ -73,12 +85,15 @@ public class LevelGeneration : MonoBehaviour
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Wolf,  AnimalType.Sheep,
-            AnimalType.Sheep, AnimalType.Sheep
+            AnimalType.Sheep, AnimalType.Sheep,
+            AnimalType.Wolf,  AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
+            AnimalType.Sheep, AnimalType.Wolf,
         };
 
         List<int> closeElementIndex = new List<int>
         {
-            0, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, 21, 23, 24, 25,
+            0, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, //21, 23, 24, 25,
         };
 
         GamburgerElement gamburgerElement;
@@ -89,12 +104,12 @@ public class LevelGeneration : MonoBehaviour
             if (elements[i] == AnimalType.Sheep) { j++;}
             gamburgerElement = new GamburgerElement(new BaseElement(elements[i], j));
 
-            if (closeElementIndex[z] == i)
+            if (closeElementIndex.Count > 0 && closeElementIndex[z] == i)
             {
                 gamburgerElement.baseE.IsOpen = false;
 
                 gamburgerElement.additionE = SetAdditionalElements();
-                z = z + 1 < closeElementIndex.Count ? z+1 : z;
+                z = z + 1 < closeElementIndex.Count ? z + 1 : z;
             }
 
             gamburgerElements.Add(gamburgerElement);
@@ -127,11 +142,14 @@ public class LevelGeneration : MonoBehaviour
     {
         rounds = new List<Round>
         {
+            //new Round(gamburgerElements.GetRange(0,2))
+
             new Round(gamburgerElements.GetRange(0,4)),
             new Round(gamburgerElements.GetRange(4,2)),
             new Round(gamburgerElements.GetRange(6,2)),
-            new Round(gamburgerElements.GetRange(8,4)),
-            new Round(gamburgerElements.GetRange(12,2))
+            new Round(gamburgerElements.GetRange(8,3)),
+            new Round(gamburgerElements.GetRange(11,5)),
+            new Round(gamburgerElements.GetRange(16,5))
         };
 
         foreach (Round round in rounds)

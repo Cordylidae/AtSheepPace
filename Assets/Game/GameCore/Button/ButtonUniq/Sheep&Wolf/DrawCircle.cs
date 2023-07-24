@@ -15,12 +15,16 @@ public class DrawCircle : MonoBehaviour
     [SerializeField] private Transform badRange;
 
 
-    private Color myColor = new Color(1.0f, 1.0f, 1.0f, 0.0f); 
+    private Color myColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     private Tween tween;
 
     public Action radiusZero;
-    public void ResetSubscriptions() => radiusZero = null;
+    public void ResetSubscriptions(){
+        radiusZero = null;
 
+        tween.Kill();
+        tween = null;
+    }
     // ## Need to make its gloanbal
     private float globalScale = 0.8f;
 
@@ -38,6 +42,7 @@ public class DrawCircle : MonoBehaviour
 
             if (Radius < goodRange.localPosition.x * globalScale && Radius >= badRange.localPosition.x * globalScale) myColor = new Color(0.6f, 1.0f, 0.8f, 1.0f);
             if (Radius < badRange.localPosition.x * globalScale) myColor = new Color(1.0f, 0.84f, 0.0f, 1.0f);
+            if (Radius < badRange.localPosition.x * globalScale * 0.625f) myColor = new Color(1.0f, 0.14f, 0.14f, 1.0f);
 
             if (Radius <= badRange.localPosition.x * globalScale * 0.6f) radiusZero?.Invoke();
         }
@@ -51,13 +56,7 @@ public class DrawCircle : MonoBehaviour
     public void StartDrawing(float timeChange)
     {
         myColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-
         tween = DOTween.To(x => Radius = x, radius, 0, timeChange);
-    }
-
-    public void StopDrawing()
-    {
-        tween.Kill();
     }
 
     void DrawPolygon(int vertexNumber, float radius, Vector3 centerPos, float startWidth, float endWidth)

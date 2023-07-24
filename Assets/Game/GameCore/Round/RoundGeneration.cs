@@ -62,6 +62,7 @@ public class RoundGeneration : MonoBehaviour
                 };
                 baseView.DrawCircle.radiusZero += () =>
                 {
+                    baseView.DrawCircle.ResetSubscriptions();
                     checkTheCorrectTapState(roundControl.GoneButtonRadius(baseE.animalType));
                 };
             }
@@ -241,7 +242,6 @@ public class RoundGeneration : MonoBehaviour
                 {
                     case RoundControl.CorrectTapState.UncorrectDestroy:
                         {
-                            baseView.DrawCircle.ResetSubscriptions();
                             ResetBaseSubscriptions(animalGroup.gamburgerElement.baseE, animalGroup.baseObject.view);
 
                             await ShakeWithAnim(animalGroup.baseObject.animal);
@@ -250,7 +250,6 @@ public class RoundGeneration : MonoBehaviour
                         break;
                     case RoundControl.CorrectTapState.CorrectDestroy:
                         {
-                            baseView.DrawCircle.ResetSubscriptions();
                             ResetBaseSubscriptions(animalGroup.gamburgerElement.baseE, animalGroup.baseObject.view);
                             
                             DestroyBaseObject(animalGroup);
@@ -317,6 +316,7 @@ public class RoundGeneration : MonoBehaviour
         }
     }
 
+    // #NEED TODO to Recheck hpw it works
     void StartOpenAdditionalElements()
     {
         foreach (var element in animalsGroupDictionary)
@@ -506,7 +506,7 @@ public class RoundGeneration : MonoBehaviour
 
     private async Task DestroyWithAnimBase(GameObject go, GameObject baseObject)
     {
-        go.GetComponentInChildren<DrawCircle>().StopDrawing();
+        //go.GetComponentInChildren<DrawCircle>().StopDrawing();
         
         await DestroyWithAnim(go);
 

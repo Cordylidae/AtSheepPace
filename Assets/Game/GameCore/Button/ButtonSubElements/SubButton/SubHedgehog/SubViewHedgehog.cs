@@ -7,6 +7,8 @@ public class SubViewHedgehog : SubView
     public IAnimalColor animalColor;
     public IAnimalForm animalForm;
 
+    private Tween tween;
+
     public override void Choose()
     {
         base.Choose();
@@ -24,17 +26,23 @@ public class SubViewHedgehog : SubView
         if (lineRenderer != null)
         {
             Color colorStart, colorEnd;
-            colorStart = colorEnd = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+            Color color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+            colorStart = colorEnd = color;
             //lineRenderer.startColor;
+
             colorStart.a = 1.0f;
             colorEnd.a = 0.0f;
 
-            lineRenderer.DOColor(new Color2(colorStart, colorStart), new Color2(colorEnd, colorEnd), 2.0f);
+            tween = lineRenderer.DOColor(new Color2(colorStart, colorStart), new Color2(colorEnd, colorEnd), 0.5f).SetLoops(2,LoopType.Restart);
         }
     }
 
     public void DisableLine()
     {
+        tween.Kill();
+        tween = null;
+
         lineRenderer.gameObject.SetActive(false);
     }
 }

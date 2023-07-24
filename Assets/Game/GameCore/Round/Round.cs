@@ -39,13 +39,13 @@ public class RoundControl
         {
             case AnimalType.Sheep:
                 {
-                    fearBar.SheepBad();
+                    fearBar.Bad(animalType, rule.dayTime);
 
                     return CorrectTapState.UncorrectDestroy;
                 }
             case AnimalType.Wolf:
                 {
-                    fearBar.WolfGood();
+                    fearBar.Good(animalType, rule.dayTime);
 
                     return CorrectTapState.CorrectDestroy;
                 }
@@ -59,20 +59,25 @@ public class RoundControl
         {
             case AnimalType.Sheep:
                 {
-                    if (index - 1 <= indexOfCurrentButtons)
+                    if (index == indexOfCurrentButtons)
                     {
-                        fearBar.SheepGood();
+                        fearBar.Good(animalType, rule.dayTime);
                         return CorrectTapState.CorrectDestroy;
+                    }
+                    else if (index - 1 == indexOfCurrentButtons)
+                    {
+                        fearBar.Bad(animalType, rule.dayTime);
+                        return CorrectTapState.UncorrectDestroy;
                     }
                     else
                     {
-                        fearBar.SheepBad();
+                        fearBar.Bad(animalType, rule.dayTime);
                         return CorrectTapState.UncorrectUndestroy;
                     }
                 }
             case AnimalType.Wolf:
                 {
-                    fearBar.WolfBad();
+                    fearBar.Bad(animalType, rule.dayTime);
                     return CorrectTapState.UncorrectDestroy;
                 }
         }
@@ -93,14 +98,14 @@ public class RoundControl
                                 {
                                     if (index - 1 <= 0)
                                     {
-                                        fearBar.DeerGood(rule.dayTime);
+                                        fearBar.Good(animalType, rule.dayTime);
                                         return CorrectTapState.CorrectDestroy;
                                     }
                                     return CorrectTapState.CorrectUndestroy;
                                 }
                                 else
                                 {
-                                    fearBar.DeerBad(rule.dayTime);
+                                    fearBar.Bad(animalType, rule.dayTime);
                                     return CorrectTapState.UncorrectDestroy;
                                 }
                             }
@@ -110,14 +115,14 @@ public class RoundControl
                                 {
                                     if (index - 1 <= 0)
                                     {
-                                        fearBar.DeerGood(rule.dayTime);
+                                        fearBar.Good(animalType, rule.dayTime);
                                         return CorrectTapState.CorrectDestroy;
                                     }
                                     return CorrectTapState.CorrectUndestroy;
                                 }
                                 else
                                 {
-                                    fearBar.DeerBad(rule.dayTime);
+                                    fearBar.Bad(animalType, rule.dayTime);
                                     return CorrectTapState.UncorrectDestroy;
                                 }
                             }
@@ -140,12 +145,12 @@ public class RoundControl
                         if (answer.Count[(int)SignState.False] >= index && 
                             answer.Count[(int)SignState.True] == 0)
                         {
-                            fearBar.BoarGood(rule.dayTime);
+                            fearBar.Good(animalType, rule.dayTime);
                             return CorrectTapState.CorrectDestroy;
                         }
                         else
                         {
-                            fearBar.BoarBad(rule.dayTime);
+                            fearBar.Bad(animalType, rule.dayTime);
                             return CorrectTapState.UncorrectDestroy;
                         }
                     }
@@ -154,12 +159,12 @@ public class RoundControl
                         if (answer.Count[(int)SignState.True] >= index && 
                             answer.Count[(int)SignState.False] == 0)
                         {
-                            fearBar.BoarGood(rule.dayTime);
+                            fearBar.Good(animalType, rule.dayTime);
                             return CorrectTapState.CorrectDestroy;
                         }
                         else
                         {
-                            fearBar.BoarBad(rule.dayTime);
+                            fearBar.Bad(animalType, rule.dayTime);
                             return CorrectTapState.UncorrectDestroy;
                         }
                     }
@@ -184,14 +189,14 @@ public class RoundControl
                     {
                         if (signState == SignState.True)
                         {
-                            if (form_color >= 1 && form_color == answer.AllCount)
+                            if (form_color > 0 && form_color == answer.AllCount)
                             {
-                                fearBar.HedgehogGood(rule.dayTime);
+                                fearBar.Good(animalType, rule.dayTime);
                                 return CorrectTapState.CorrectDestroy;
                             }
                             else
                             {
-                                fearBar.HedgehogBad(rule.dayTime);
+                                fearBar.Bad(animalType, rule.dayTime);
                                 return CorrectTapState.UncorrectDestroy;
                             }
                         }
@@ -199,12 +204,12 @@ public class RoundControl
                         {
                             if (result == 0 && answer.AllCount > 0)
                             {
-                                fearBar.BoarGood(rule.dayTime);
+                                fearBar.Good(animalType, rule.dayTime);
                                 return CorrectTapState.CorrectDestroy;
                             }
                             else
                             {
-                                fearBar.BoarBad(rule.dayTime);
+                                fearBar.Bad(animalType, rule.dayTime);
                                 return CorrectTapState.UncorrectDestroy;
                             }
                         }
@@ -213,14 +218,14 @@ public class RoundControl
                     {
                         if (signState == SignState.True)
                         {
-                            if (result >= 1 && result == answer.AllCount)
+                            if (result > 0 && result == answer.AllCount)
                             {
-                                fearBar.HedgehogGood(rule.dayTime);
+                                fearBar.Good(animalType, rule.dayTime);
                                 return CorrectTapState.CorrectDestroy;
                             }
                             else
                             {
-                                fearBar.HedgehogBad(rule.dayTime);
+                                fearBar.Bad(animalType, rule.dayTime);
                                 return CorrectTapState.UncorrectDestroy;
                             }
                         }
@@ -228,12 +233,12 @@ public class RoundControl
                         {
                             if (form_color == 0 && result == answer.AllCount)
                             {
-                                fearBar.HedgehogGood(rule.dayTime);
+                                fearBar.Good(animalType, rule.dayTime);
                                 return CorrectTapState.CorrectDestroy;
                             }
                             else
                             {
-                                fearBar.HedgehogBad(rule.dayTime);
+                                fearBar.Bad(animalType, rule.dayTime);
                                 return CorrectTapState.UncorrectDestroy;
                             }
                         }

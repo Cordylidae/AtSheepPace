@@ -36,9 +36,6 @@ public class FreeSpaceMassive
 
         lastArea = squareArea;
         CutAinB(lastArea, startArea);
-
-        Debug.Log("therer" + lastArea.center + lastArea.GlobalTL + lastArea.GlobalDR);
-
     }
 
     private void RandomShuffle()

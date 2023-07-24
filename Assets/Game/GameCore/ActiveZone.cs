@@ -43,11 +43,9 @@ public class ActiveZone : MonoBehaviour
     public void SetHedgehogSubsPosition(List<SubViewHedgehog> subViews, Vector3 position)
     {
         SquareArea area = new SquareArea(position * 0.8f, 1.7f);
-        Debug.Log("Start area" + area.center + area.topLeft + area.GlobalTL);
-
+        
         freeSpaceMassive.NewLayout(area);
-        Debug.Log(area.center);
-
+        
         foreach (SubViewHedgehog subView in subViews)
         {
             Vector2 areaPos = SetArea(0.35f, position.z, Color.white);
