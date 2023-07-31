@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class Statistics : MonoBehaviour
@@ -14,14 +13,15 @@ public class Statistics : MonoBehaviour
     private bool show = false;
 
 
-    PlayerInstance playerInstance;
+    //PlayerInstance playerInstance;
 
     [Inject]
-    public void Constructor(PlayerInstance _playerInstance)
-    {
-        playerInstance = _playerInstance;
-        Debug.Log(SceneManager.GetActiveScene().name);
-    }
+    PlayerInstance playerInstance;
+    //public void Constructor(PlayerInstance _playerInstance)
+    //{
+    //    playerInstance = _playerInstance;
+    //    Debug.Log(SceneManager.GetActiveScene().name);
+    //}
 
 
     public void OnClick()

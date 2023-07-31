@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class PlayerInput : MonoBehaviour
         {
             ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
 
-            CheckTapThis();
+            if (SceneManager.GetActiveScene().name == GameSceneName.CoreGame) CheckCoreGame();
+            if (SceneManager.GetActiveScene().name == GameSceneName.LevelsMap) CheckLevelMap();
             
             lastClickTime = false;
         }
@@ -28,8 +30,9 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && lastClickTime)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            CheckTapThis();
+            
+            if (SceneManager.GetActiveScene().name == GameSceneName.CoreGame) CheckCoreGame();
+            if (SceneManager.GetActiveScene().name == GameSceneName.LevelsMap) CheckLevelMap();
 
             lastClickTime = false;
         }
@@ -42,6 +45,12 @@ public class PlayerInput : MonoBehaviour
         {
             lastClickTime = true;
         }
+    }
+
+    #region Scene_CoreGame
+
+    void CheckCoreGame() { 
+        CheckTapThis();
     }
 
     void CheckTapThis()
@@ -61,4 +70,15 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Scene_LevelMap
+
+    void CheckLevelMap()
+    {
+        Debug.Log("fsdf");
+    }
+
+    #endregion
 }
