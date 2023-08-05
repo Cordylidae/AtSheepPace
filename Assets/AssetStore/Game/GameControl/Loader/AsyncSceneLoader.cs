@@ -46,4 +46,6 @@ public struct GameSceneName
     public const string MainMenu = "Scene_MainMenu";
     public const string LevelsMap = "Scene_LevelMap";
     public const string CoreGame = "Scene_CoreGame";
+    public const string TutorialGame = "Scene_TutorialGame";
+    public const string UnlimitedGame = "Scene_UnlimitedGame";
 }
