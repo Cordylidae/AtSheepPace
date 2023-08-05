@@ -8,7 +8,7 @@ public class PlayerInputLevelMap : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
 
-    public Action baseTap;
+    public Action<BaseTapHandel> baseTap;
 
     private float timerClick = 0.1f;
     private bool lastClickTime = true;
@@ -70,7 +70,7 @@ public class PlayerInputLevelMap : MonoBehaviour
                 BaseTapHandel baseTapHandel = hit.transform.GetComponent<BaseTapHandel>();
                 baseTapHandel.Tapped();
 
-                baseTap?.Invoke();
+                baseTap?.Invoke(baseTapHandel);
             }
         }
     }

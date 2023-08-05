@@ -5,12 +5,6 @@ namespace GameInstance
 {
     public class LevelInstance
     {
-        public struct LevelType
-        {
-            public const string Simple = "Simple";
-            public const string Tutorial = "Tutorial";
-        };
-
         private int index;
         private string type;
         private bool status; // open = 1, close = 0
@@ -38,5 +32,4 @@ namespace GameInstance
         public string name;
         public string count;
     }
-
 }
