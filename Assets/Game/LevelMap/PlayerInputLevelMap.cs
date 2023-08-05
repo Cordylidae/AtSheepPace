@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInputLevelMap : MonoBehaviour
 {
+    public bool inFocus = true;
+
     private Ray ray;
     private RaycastHit hit;
 
@@ -11,7 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     private float timerClick = 0.1f;
     private bool lastClickTime = true;
-   
+
     void Update()
     {
         CountDownTimer();
@@ -30,8 +31,9 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && lastClickTime)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
-            CheckCoreGame();
+
+            if(inFocus) 
+                CheckLevelMap();
 
             lastClickTime = false;
         }
@@ -46,21 +48,24 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    #region Scene_CoreGame
+    #region Scene_LevelMap
 
-    void CheckCoreGame() { 
-        CheckTapThis();
+    void CheckLevelMap()
+    {
+        CheckTapOnLevel();
     }
 
-    void CheckTapThis()
+    void CheckTapOnLevel()
     {
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.white, 100f);
+        Debug.DrawRay(ray.origin, ray.direction * 40, Color.white, 100f);
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.tag == "AnimalButton")
+            if (hit.transform.tag == "LevelButton")
             {
-                Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 100f);
+                Debug.Log("Click on Level");
+
+                Debug.DrawRay(ray.origin, ray.direction * 40, Color.red, 100f);
 
                 BaseTapHandel baseTapHandel = hit.transform.GetComponent<BaseTapHandel>();
                 baseTapHandel.Tapped();

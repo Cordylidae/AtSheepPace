@@ -43,7 +43,7 @@ public class IsTapHandel : MonoBehaviour
         if (GetComponent<CircleCollider2D>().OverlapPoint(pos))
         {
             if (animalUniqIndex != null) isTapWithIndex.Invoke(animalUniqIndex.Index);
-            else isTap.Invoke();
+            else isTap?.Invoke();
         }
     }
 }

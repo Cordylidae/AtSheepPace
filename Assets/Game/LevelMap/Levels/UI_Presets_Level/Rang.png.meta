@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b465770b0b4e8e47a69fcd3e71d9c2f
+guid: 8b523a21daae2b04886ea1918e322f15
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -141,253 +141,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MiniNumbers_2
+      name: Rang_D
       rect:
         serializedVersion: 2
-        x: 280
-        y: 35
-        width: 114
-        height: 114
+        x: 7
+        y: 7
+        width: 20
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e784de40f5783c45a6d6a2250764d38
-      internalID: 488090588
+      spriteID: 40999702b2c278840bdf716ec53a7162
+      internalID: -2054571621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_0
+      name: Rang_C
       rect:
         serializedVersion: 2
-        x: 18
-        y: 34
-        width: 114
-        height: 114
+        x: 34
+        y: 7
+        width: 18
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79ce4af6d236566449af640b114cec8c
-      internalID: 287016451
+      spriteID: 45fc3db0e60af014e8ddd5ed49c37d74
+      internalID: 299745576
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_1
+      name: Rang_B
       rect:
         serializedVersion: 2
-        x: 153
-        y: 31
-        width: 114
-        height: 114
+        x: 63
+        y: 7
+        width: 17
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db0045ee0d86cf4398cd49fe1031239
-      internalID: 1421085711
+      spriteID: 5f2050639463b364bbd46f1498409e6e
+      internalID: -1217302130
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_3
+      name: Rang_A
       rect:
         serializedVersion: 2
-        x: 403
-        y: 45
-        width: 114
-        height: 114
+        x: 89
+        y: 7
+        width: 20
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c4a0d71843ee3b418ac586c657e8b54
-      internalID: -815351237
+      spriteID: fbf81a17e052d5f4caaf315580144040
+      internalID: -2114328263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_4
+      name: Rang_4
       rect:
         serializedVersion: 2
-        x: 523
-        y: 44
-        width: 114
-        height: 114
+        x: 119
+        y: 7
+        width: 16
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f77fee6d653922344b229bbd23259413
-      internalID: 965913315
+      spriteID: 9b2c81551bffc6d4882f3b2eaf4f6325
+      internalID: 1116826534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_5
+      name: Rang_5
       rect:
         serializedVersion: 2
-        x: 640
-        y: 44
-        width: 114
-        height: 114
+        x: 145
+        y: 7
+        width: 27
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3da9e8b5c98e4494f8e115d6989ca64e
-      internalID: 1259747753
+      spriteID: 1eec19263a11aaa4abf7972ba2b0e13b
+      internalID: -1670996234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_6
+      name: Rang_SSS
       rect:
         serializedVersion: 2
-        x: 759
-        y: 41
-        width: 114
-        height: 114
+        x: 176
+        y: 7
+        width: 31
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d64f07e29aaef24da5ea1b5cfa6ada9
-      internalID: 1803731255
+      spriteID: 5e8325b390bf4764f9ca79864daad483
+      internalID: -927088897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_7
+      name: Rang_7
       rect:
         serializedVersion: 2
-        x: 879
-        y: 46
-        width: 114
-        height: 114
+        x: 217
+        y: 7
+        width: 20
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8d19e616fdcad646a967e4a7e3e3af1
-      internalID: 827024957
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_8
-      rect:
-        serializedVersion: 2
-        x: 1002
-        y: 48
-        width: 114
-        height: 114
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e3e32c952bd07a84781b08113a2150f6
-      internalID: -11823356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_9
-      rect:
-        serializedVersion: 2
-        x: 1117
-        y: 51
-        width: 114
-        height: 114
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a1cface7279d2d4687d9dbff31ed921
-      internalID: -1248312290
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_T
-      rect:
-        serializedVersion: 2
-        x: 1272
-        y: 50
-        width: 123
-        height: 121
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4b5576d9636a944eb4f06141d0ee977
-      internalID: -1956562164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_Endless
-      rect:
-        serializedVersion: 2
-        x: 1432
-        y: 57
-        width: 157
-        height: 103
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6452f92fe3d7258439ac869af7086c34
-      internalID: -97559560
+      spriteID: fd28d391f09e2bc4483c26c25413ff25
+      internalID: 177154509
       vertices: []
       indices: 
       edges: []
@@ -403,24 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MiniNumbers_2: 488090588
-      MiniNumbers_16: -646786298
-      MiniNumbers_Endless: 1189718537
-      MiniNumbers_4: 965913315
-      MiniNumbers_0: 287016451
-      MiniNumbers_15: 2060940885
-      MiniNumbers_12: 1261699380
-      MiniNumbers_8: -11823356
-      MiniNumbers_6: 1803731255
-      MiniNumbers_13: 1503333349
-      MiniNumbers_17: -92904187
-      MiniNumbers_14: -1772629258
-      MiniNumbers_T: -1956562164
-      MiniNumbers_7: 827024957
-      MiniNumbers_9: -1248312290
-      MiniNumbers_3: -815351237
-      MiniNumbers_1: 1421085711
-      MiniNumbers_5: 1259747753
+      Rang_4: 1116826534
+      Rang_A: -2114328263
+      Rang_5: -1670996234
+      Rang_D: -2054571621
+      Rang_C: 299745576
+      Rang_7: 177154509
+      Rang_B: -1217302130
+      Rang_SSS: -927088897
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

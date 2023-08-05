@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b465770b0b4e8e47a69fcd3e71d9c2f
+guid: 7090d85b7d37e4e49acf8edcae75fc1c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MiniNumbers_2
+      name: MainButton_Reset
       rect:
         serializedVersion: 2
-        x: 280
-        y: 35
-        width: 114
-        height: 114
+        x: 22
+        y: 377
+        width: 154
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e784de40f5783c45a6d6a2250764d38
-      internalID: 488090588
+      spriteID: 15e3124b126022144b631fad7ab9e145
+      internalID: 524319615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_0
+      name: MainButton_Menu
       rect:
         serializedVersion: 2
-        x: 18
-        y: 34
-        width: 114
-        height: 114
+        x: 204
+        y: 377
+        width: 155
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79ce4af6d236566449af640b114cec8c
-      internalID: 287016451
+      spriteID: b5ff939c0bad19642a8bc705d66956af
+      internalID: -350951904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_1
+      name: MainButton_Setting
       rect:
         serializedVersion: 2
-        x: 153
-        y: 31
-        width: 114
-        height: 114
+        x: 387
+        y: 377
+        width: 154
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db0045ee0d86cf4398cd49fe1031239
-      internalID: 1421085711
+      spriteID: affc58685e687a7408cb22f455d8bea6
+      internalID: -1590486342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_3
+      name: MainButton_Prev
       rect:
         serializedVersion: 2
-        x: 403
-        y: 45
-        width: 114
-        height: 114
+        x: 22
+        y: 203
+        width: 154
+        height: 159
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c4a0d71843ee3b418ac586c657e8b54
-      internalID: -815351237
+      spriteID: 2256faa9a3cf4c64aa27cc67ecda802d
+      internalID: -2137097236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_4
+      name: MainButton_Play
       rect:
         serializedVersion: 2
-        x: 523
-        y: 44
-        width: 114
-        height: 114
+        x: 204
+        y: 203
+        width: 156
+        height: 159
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,20 +239,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f77fee6d653922344b229bbd23259413
-      internalID: 965913315
+      spriteID: 7aeecae830ade2241b824779f7d1f9a7
+      internalID: 1356600554
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_5
+      name: MainButton_Next
       rect:
         serializedVersion: 2
-        x: 640
-        y: 44
-        width: 114
-        height: 114
+        x: 387
+        y: 203
+        width: 154
+        height: 159
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,20 +260,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3da9e8b5c98e4494f8e115d6989ca64e
-      internalID: 1259747753
+      spriteID: 84e9029b284263e458a5ef762e4f32ab
+      internalID: 2015117849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_6
+      name: MainButton_Close
       rect:
         serializedVersion: 2
-        x: 759
-        y: 41
-        width: 114
-        height: 114
+        x: 22
+        y: 28
+        width: 154
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,20 +281,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d64f07e29aaef24da5ea1b5cfa6ada9
-      internalID: 1803731255
+      spriteID: 1998dc8812bc1e141b49f712895bc037
+      internalID: -1695593407
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_7
+      name: MainButton_Pause
       rect:
         serializedVersion: 2
-        x: 879
-        y: 46
-        width: 114
-        height: 114
+        x: 204
+        y: 28
+        width: 156
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,20 +302,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8d19e616fdcad646a967e4a7e3e3af1
-      internalID: 827024957
+      spriteID: 65c1dd954056fda47b0f8e3d823dde87
+      internalID: 1188659017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniNumbers_8
+      name: MainButton_Okey
       rect:
         serializedVersion: 2
-        x: 1002
-        y: 48
-        width: 114
-        height: 114
+        x: 387
+        y: 28
+        width: 155
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,71 +323,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3e32c952bd07a84781b08113a2150f6
-      internalID: -11823356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_9
-      rect:
-        serializedVersion: 2
-        x: 1117
-        y: 51
-        width: 114
-        height: 114
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a1cface7279d2d4687d9dbff31ed921
-      internalID: -1248312290
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_T
-      rect:
-        serializedVersion: 2
-        x: 1272
-        y: 50
-        width: 123
-        height: 121
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4b5576d9636a944eb4f06141d0ee977
-      internalID: -1956562164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniNumbers_Endless
-      rect:
-        serializedVersion: 2
-        x: 1432
-        y: 57
-        width: 157
-        height: 103
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6452f92fe3d7258439ac869af7086c34
-      internalID: -97559560
+      spriteID: bbf29ce92dfcee146ae96e47600e93bc
+      internalID: -268087771
       vertices: []
       indices: 
       edges: []
@@ -403,24 +340,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MiniNumbers_2: 488090588
-      MiniNumbers_16: -646786298
-      MiniNumbers_Endless: 1189718537
-      MiniNumbers_4: 965913315
-      MiniNumbers_0: 287016451
-      MiniNumbers_15: 2060940885
-      MiniNumbers_12: 1261699380
-      MiniNumbers_8: -11823356
-      MiniNumbers_6: 1803731255
-      MiniNumbers_13: 1503333349
-      MiniNumbers_17: -92904187
-      MiniNumbers_14: -1772629258
-      MiniNumbers_T: -1956562164
-      MiniNumbers_7: 827024957
-      MiniNumbers_9: -1248312290
-      MiniNumbers_3: -815351237
-      MiniNumbers_1: 1421085711
-      MiniNumbers_5: 1259747753
+      MainButton_Close: -1695593407
+      MainButton_Menu: -350951904
+      MainButton_Okey: -268087771
+      MainButton_Prev: -2137097236
+      MainButton_Next: 2015117849
+      MainButton_Pause: 1188659017
+      MainButton_Reset: 524319615
+      MainButton_Play: 1356600554
+      MainButton_Setting: -1590486342
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
