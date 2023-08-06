@@ -1,45 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using GameInstance;
 using UnityEngine;
+using Zenject;
 
 // # TODO Splite UI and Contrpled things
 
 public class GameCoreGameplay : MonoBehaviour
 {
     // Control
-    [SerializeField] private SpawnControlAnimals spawnControlAnimals;
+    [SerializeField] private LevelGeneration levelGeneration;
 
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
 
+    [Inject]
+    MapInstance mapInstance;
+
     public void Awake()
     {
-        spawnControlAnimals.Win += Win;
-        spawnControlAnimals.Lose += Lose;
+        levelGeneration.Win += Win;
+        levelGeneration.Lose += Lose;
+
+        if (mapInstance.levels[mapInstance.currentUniqIndex].type == LevelType.Simple) levelGeneration.myAwake();
+        else Win();
     }
 
     public void Start()
     {
-        spawnControlAnimals.PreStartGenerate();
-        spawnControlAnimals.StartGenerate();
-    }
-
-    void Update()
-    {
-        
+        if (mapInstance.levels[mapInstance.currentUniqIndex].type == LevelType.Simple) levelGeneration.myStart();
     }
 
     void Win()
     { 
-        spawnControlAnimals.ClearAllShots();
-
+        mapInstance.CompleteLevel();
         winPanel.SetActive(true);
     }
 
     void Lose()
     {
-        spawnControlAnimals.ClearAllShots();
-
         losePanel.SetActive(true);
     }
 }

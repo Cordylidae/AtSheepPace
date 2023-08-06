@@ -20,8 +20,7 @@ public class PlayerInput : MonoBehaviour
         {
             ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
 
-            if (SceneManager.GetActiveScene().name == GameSceneName.CoreGame) CheckCoreGame();
-            if (SceneManager.GetActiveScene().name == GameSceneName.LevelsMap) CheckLevelMap();
+            CheckCoreGame();
             
             lastClickTime = false;
         }

@@ -5,6 +5,7 @@ public class LevelView : MonoBehaviour
 {
     public ILevelState levelState;
     public ILevelType levelType;
+    public IUniqIndex uniqIndex;
   
     void Awake()
     {

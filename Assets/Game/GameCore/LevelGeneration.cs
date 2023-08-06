@@ -1,7 +1,9 @@
+using GameInstance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -17,16 +19,25 @@ public class LevelGeneration : MonoBehaviour
     };
 
     SpawnHardProperties hardProperties = new SpawnHardProperties();
-
     List<GamburgerElement> gamburgerElements = new List<GamburgerElement>();
-
     List<Round> rounds = new List<Round>();
 
     [SerializeField] private RoundGeneration roundGeneration;
     [SerializeField] private PlayerInput playerInput;
 
-    void Awake()
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private Sun_Moon_View sun_moon_View;
+
+    // ### NEED Initialaize like INJECT
+    [SerializeField] private FearBarView fearBarView;
+
+    public Action Win;
+    public Action Lose;
+
+    public void myAwake()
     {
+        fearBarView.fearBar.fullFearBar += LoseLevel;
+
         SetHardProperties();
 
         PreStartLevel();
@@ -74,26 +85,26 @@ public class LevelGeneration : MonoBehaviour
             //AnimalType.Sheep
             AnimalType.Sheep, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Wolf,  AnimalType.Sheep,
+            AnimalType.Wolf, AnimalType.Wolf,
             AnimalType.Sheep, AnimalType.Sheep,
             AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Wolf,  AnimalType.Sheep,
-            AnimalType.Sheep, AnimalType.Sheep,
-            AnimalType.Wolf,  AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
-            AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Wolf,  AnimalType.Sheep,
+            //AnimalType.Sheep, AnimalType.Sheep,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Wolf,  AnimalType.Sheep,
+            //AnimalType.Sheep, AnimalType.Sheep,
+            //AnimalType.Wolf,  AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
+            //AnimalType.Sheep, AnimalType.Wolf,
         };
 
         List<int> closeElementIndex = new List<int>
         {
-            0, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, //21, 23, 24, 25,
+            0, 4, 6, 8, 9, 12, 13, 14, 16, 19, 20, //21, 23, 24, 25,
         };
 
         GamburgerElement gamburgerElement;
@@ -126,7 +137,7 @@ public class LevelGeneration : MonoBehaviour
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
 
-        int randCount = 3;// UnityEngine.Random.RandomRange(1, elements.Count);
+        int randCount = UnityEngine.Random.RandomRange(1, elements.Count);
 
         // Initialize additionalElements
         for (int i = 0; i < randCount; i++)
@@ -146,10 +157,10 @@ public class LevelGeneration : MonoBehaviour
 
             new Round(gamburgerElements.GetRange(0,4)),
             new Round(gamburgerElements.GetRange(4,2)),
-            new Round(gamburgerElements.GetRange(6,2)),
-            new Round(gamburgerElements.GetRange(8,3)),
-            new Round(gamburgerElements.GetRange(11,5)),
-            new Round(gamburgerElements.GetRange(16,5))
+            new Round(gamburgerElements.GetRange(6,4)),
+            //new Round(gamburgerElements.GetRange(8,3)),
+            //new Round(gamburgerElements.GetRange(11,5)),
+            //new Round(gamburgerElements.GetRange(16,5))
         };
 
         foreach (Round round in rounds)
@@ -157,13 +168,6 @@ public class LevelGeneration : MonoBehaviour
             round.zeroElements += NextRound;
         }
     }
-
-    // ### NEED Initialaize like INJECT
-    [SerializeField] private Sun_Moon_View sun_moon_View;
-
-    // ### NEED Initialaize like INJECT
-    [SerializeField] private FearBarView fearBarView;
-
     private RoundControl roundControl;
 
     private void SetUpAnimalRules()
@@ -181,7 +185,7 @@ public class LevelGeneration : MonoBehaviour
         roundControl.indexOfCurrentButtons = index;
     }
 
-    void Start()
+    public void myStart()
     {
         StartLevel();
     }
@@ -194,12 +198,17 @@ public class LevelGeneration : MonoBehaviour
 
         ShowRound();
     }
-
+    void LoseLevel()
+    {
+        Lose?.Invoke();
+    }
     void EndLevel()
     {
         Debug.Log("-------Finish level-------");
 
         roundControl.UnSubscribeBaseTap(playerInput);
+
+        Win?.Invoke();
     }
 
     void ShowRound()
@@ -224,5 +233,10 @@ public class LevelGeneration : MonoBehaviour
 
         if (rounds.Count == 0) EndLevel(); // finish level
         else ShowRound();
+    }
+
+    private void OnDestroy()
+    {
+        fearBarView.fearBar.fullFearBar -= LoseLevel;
     }
 }

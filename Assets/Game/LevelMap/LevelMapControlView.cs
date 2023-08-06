@@ -2,12 +2,18 @@ using GameInstance;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class LevelMapControlView : MonoBehaviour
 {
     [SerializeField] private PlayerInputLevelMap playerInputLevelMap;
     [SerializeField] private List<GameObject> panels;
     [SerializeField] private AsyncSceneLoader asyncLoader;
+    [Header("Levels GameObject")]
+    [SerializeField] private List<GameObject> levelsObject;
+
+    [Inject]
+    MapInstance mapInstance;
 
     private string currentLevelSceneName;
     void Awake()
@@ -19,21 +25,37 @@ public class LevelMapControlView : MonoBehaviour
             panel.GetComponent<PanelView>().CloseTapped += ClosePanel;
             panel.GetComponent<PanelView>().StartLevelTapped += StartCurrentLevel;
         }
+
+        LoadLevelSetting();
+    }
+
+    private void LoadLevelSetting()
+    {
+        for (int i = 0; i < mapInstance.levels.Count; i++)
+        {
+            LevelView levelView = levelsObject[i].GetComponent<LevelView>();
+
+            levelView.uniqIndex.Index = mapInstance.levels[i].uniqIndex;
+            levelView.levelState.State = mapInstance.levels[i].state;
+            levelView.levelType.myLevelType = mapInstance.levels[i].type;
+        }
     }
 
     void TappedOnLevel(BaseTapHandel tapHandel)
     {
         playerInputLevelMap.inFocus = false;
 
-        LevelView levelTapped = tapHandel.GetComponentInParent<LevelView>();
+        LevelView levelView = tapHandel.GetComponentInParent<LevelView>();
 
-        if(levelTapped.levelState.State == LevelState.Lock)
+        if(levelView.levelState.State == LevelState.Lock)
         {
             panels[0].gameObject.SetActive(true);
             return;
         }
 
-        switch (levelTapped.levelType.myLevelType)
+        mapInstance.currentUniqIndex = levelView.uniqIndex.Index;
+
+        switch (levelView.levelType.myLevelType)
         {
             case LevelType.Simple:
                 {

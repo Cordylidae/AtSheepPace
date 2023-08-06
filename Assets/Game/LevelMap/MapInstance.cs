@@ -4,16 +4,22 @@ namespace GameInstance
 {
     public class MapInstance
     {
-        private List<LevelInstance> levels;
-        private int tokensReceived;
+        public List<LevelInstance> levels;
+        public int currentUniqIndex;
 
-        private List<Gate> gates;
-    }
+        public MapInstance(List<LevelInstance> _levels)
+        {
+            levels = _levels;
+            currentUniqIndex = 0;
+        }
 
-    public class Gate
-    {
-        private int index;
-        private bool status; // open = 1, close = 0
-        private int needForOpen;
+        public void CompleteLevel() 
+        {
+            if (levels[currentUniqIndex].state == LevelState.New)
+            {
+                if(currentUniqIndex + 1 < levels.Count) levels[currentUniqIndex + 1].state = LevelState.New;
+                levels[currentUniqIndex].state = LevelState.Open;
+            }
+        }
     }
 }
