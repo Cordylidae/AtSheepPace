@@ -7,9 +7,9 @@ using Zenject;
 public class LevelMapControlView : MonoBehaviour
 {
     [SerializeField] private PlayerInputLevelMap playerInputLevelMap;
-    [SerializeField] private List<GameObject> panels;
+    [SerializeField] private List<PanelView> panels;
     [SerializeField] private AsyncSceneLoader asyncLoader;
-    [Header("Levels GameObject")]
+    [Header("\"Levels GameObject\"")]
     [SerializeField] private List<GameObject> levelsObject;
 
     [Inject]
@@ -20,10 +20,10 @@ public class LevelMapControlView : MonoBehaviour
     {
         playerInputLevelMap.baseTap += TappedOnLevel;
 
-        foreach (GameObject panel in panels)
+        foreach (PanelView panel in panels)
         {
-            panel.GetComponent<PanelView>().CloseTapped += ClosePanel;
-            panel.GetComponent<PanelView>().StartLevelTapped += StartCurrentLevel;
+            panel.CloseTapped += ClosePanel;
+            panel.StartLevelTapped += StartCurrentLevel;
         }
 
         LoadLevelSetting();
@@ -60,7 +60,17 @@ public class LevelMapControlView : MonoBehaviour
             case LevelType.Simple:
                 {
                     panels[1].gameObject.SetActive(true);
+                    PanelView_Simple view_Simple = panels[1] as PanelView_Simple;
+
+                    if (view_Simple != null)
+                    {
+                        if (levelView.levelType.myLevelType == LevelType.Simple) Debug.Log("Mysituation");// view_Simple.ShowLevelNumber(levelView.l)
+                    }
+                    else Debug.Log("Wrong cast");
+
+                    Debug.Log("&&");
                     currentLevelSceneName = GameSceneName.CoreGame;
+
                 }
                 return;
             case LevelType.Unlimited:
@@ -82,9 +92,9 @@ public class LevelMapControlView : MonoBehaviour
 
     void ClosePanel()
     {
-        foreach (GameObject panel in panels)
+        foreach (PanelView panel in panels)
         {
-            panel.SetActive(false);
+            panel.gameObject.SetActive(false);
         }
 
         playerInputLevelMap.inFocus = true;
@@ -102,10 +112,10 @@ public class LevelMapControlView : MonoBehaviour
     {
         playerInputLevelMap.baseTap -= TappedOnLevel;
 
-        foreach (GameObject panel in panels)
+        foreach (PanelView panel in panels)
         {
-            panel.GetComponent<PanelView>().CloseTapped -= ClosePanel;
-            panel.GetComponent<PanelView>().StartLevelTapped -= StartCurrentLevel;
+            panel.CloseTapped -= ClosePanel;
+            panel.StartLevelTapped -= StartCurrentLevel;
         }
     }
     private void OnDestroy()

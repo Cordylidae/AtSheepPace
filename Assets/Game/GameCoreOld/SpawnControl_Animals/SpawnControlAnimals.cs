@@ -32,7 +32,7 @@ public class SpawnControlAnimals : MonoBehaviour
     private int DeerCatched = 0;
 
 
-    [SerializeField] private AnimalEntities animalsEntities;
+    [SerializeField] private Entities animalsEntities;
     [SerializeField] private int Count = 12;
     [SerializeField] private float SpeedSpawn = 1.05f;
 
@@ -134,14 +134,14 @@ public class SpawnControlAnimals : MonoBehaviour
 
         if (index < 50) // Sheep
         {
-            go = Instantiate(animalsEntities.animal[0], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.animal[0].transform.rotation);
+            go = Instantiate(animalsEntities.entities[0], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.entities[0].transform.rotation);
             go.GetComponent<IAnimalType>().buttonType = AnimalType.Sheep;
 
             SheepCount++;
         }
         else if (index >= 50 && index < 80) // Wolf
         {
-            go = Instantiate(animalsEntities.animal[1], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.animal[1].transform.rotation);
+            go = Instantiate(animalsEntities.entities[1], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.entities[1].transform.rotation);
             go.GetComponent<IAnimalType>().buttonType = AnimalType.Wolf;
 
             WolvesCount++;
@@ -169,7 +169,7 @@ public class SpawnControlAnimals : MonoBehaviour
         }
         else // Deer
         {
-            go = Instantiate(animalsEntities.animal[2], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.animal[2].transform.rotation);
+            go = Instantiate(animalsEntities.entities[2], new Vector3(0.0f, 0.0f, 0.0f), animalsEntities.entities[2].transform.rotation);
             go.GetComponent<IAnimalType>().buttonType = AnimalType.Deer;
 
             DeerCount++;

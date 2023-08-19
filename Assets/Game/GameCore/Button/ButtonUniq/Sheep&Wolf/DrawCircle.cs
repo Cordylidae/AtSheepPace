@@ -20,6 +20,7 @@ public class DrawCircle : MonoBehaviour
 
     public Action radiusZero;
     public void ResetSubscriptions(){
+        Debug.Log("Im kill");
         radiusZero = null;
 
         tween.Kill();

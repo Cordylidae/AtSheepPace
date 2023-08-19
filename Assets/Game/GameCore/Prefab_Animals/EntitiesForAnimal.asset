@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a27476c31331d64ca7c608e10c213d3, type: 3}
   m_Name: EntitiesForAnimal
   m_EditorClassIdentifier: 
-  animal:
+  entities:
   - {fileID: 4757403464787998642, guid: c09a49cab6d9eb148baf8292df2f53a2, type: 3}
   - {fileID: 4757403464787998642, guid: 5032257997b7f5a43958c88a4904d276, type: 3}
   - {fileID: 4757403464787998642, guid: 1c706e15dbdf4374093ce14e752a98da, type: 3}

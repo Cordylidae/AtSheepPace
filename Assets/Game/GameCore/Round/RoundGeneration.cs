@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public class RoundGeneration : MonoBehaviour
 {
-    [SerializeField] private AnimalEntities animalsEntities;
+    [SerializeField] private Entities animalsEntities;
 
     // ### NEED Initialaize like INJECT
     [SerializeField] private ActiveZone activeZone;
@@ -58,6 +58,7 @@ public class RoundGeneration : MonoBehaviour
             {
                 baseView.BaseTapHandel.isTap += () =>
                 {
+                    baseView.DrawCircle.ResetSubscriptions();
                     checkTheCorrectTapState(roundControl.OnButtonTap(baseE.animalType, baseE.number));
                 };
                 baseView.DrawCircle.radiusZero += () =>
@@ -367,9 +368,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Sheep:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[0],
+                        animalsEntities.entities[0],
                         startVector,
-                        animalsEntities.animal[0].transform.rotation);
+                        animalsEntities.entities[0].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Sheep;
                 }
@@ -377,9 +378,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Wolf:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[1],
-                        startVector,
-                        animalsEntities.animal[1].transform.rotation);
+                        animalsEntities.entities[1],
+                        startVector,    
+                        animalsEntities.entities[1].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Wolf;
                 }
@@ -387,9 +388,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Deer:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[2],
+                        animalsEntities.entities[2],
                         startVector,
-                        animalsEntities.animal[2].transform.rotation);
+                        animalsEntities.entities[2].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Deer;
                 }
@@ -397,9 +398,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Boar:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[3],
+                        animalsEntities.entities[3],
                         startVector,
-                        animalsEntities.animal[3].transform.rotation);
+                        animalsEntities.entities[3].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Boar;
                 }
@@ -407,9 +408,9 @@ public class RoundGeneration : MonoBehaviour
             case AnimalType.Hedgehog:
                 {
                     entity = Instantiate(
-                        animalsEntities.animal[4],
+                        animalsEntities.entities[4],
                         startVector,
-                        animalsEntities.animal[4].transform.rotation);
+                        animalsEntities.entities[4].transform.rotation);
 
                     entity.GetComponent<IAnimalType>().buttonType = AnimalType.Hedgehog;
                 }
