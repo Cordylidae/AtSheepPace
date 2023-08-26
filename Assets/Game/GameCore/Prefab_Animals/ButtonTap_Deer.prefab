@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -815351237, guid: 1b465770b0b4e8e47a69fcd3e71d9c2f, type: 3}
+  m_Sprite: {fileID: 287016451, guid: 1b465770b0b4e8e47a69fcd3e71d9c2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -617,8 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b931dbb1ce8f2443b97d90e4e27e5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimalType: {fileID: 8907684339867659654}
   BaseTapHandel: {fileID: 3708790393388941214}
+  AnimalType: {fileID: 8907684339867659654}
   AnimalOpenView: {fileID: 8584525380825688055}
   AnimalNumberIndex: {fileID: 6385966563410201384}
   AnimalSign: {fileID: 388484030600806986}

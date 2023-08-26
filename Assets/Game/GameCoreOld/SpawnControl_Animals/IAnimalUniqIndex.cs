@@ -50,4 +50,9 @@ public class IAnimalUniqIndex : MonoBehaviour
             numeric[2].sprite = numbers.sprites[index % 10];
         }
     }
+
+    private void OnValidate()
+    {
+        ChangeSprites();
+    }
 }

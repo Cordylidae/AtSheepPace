@@ -137,7 +137,7 @@ public class LevelGeneration : MonoBehaviour
 
         List<AdditionalElement> additionalElements = new List<AdditionalElement>();
 
-        int randCount = UnityEngine.Random.RandomRange(1, elements.Count);
+        int randCount = 3;// UnityEngine.Random.RandomRange(1, elements.Count);
 
         // Initialize additionalElements
         for (int i = 0; i < randCount; i++)
