@@ -76,13 +76,13 @@ public class LevelMapControlView : MonoBehaviour
             case LevelType.Unlimited:
                 {
                     panels[2].gameObject.SetActive(true);
-                    currentLevelSceneName = GameSceneName.UnlimitedGame;
+                    currentLevelSceneName = GameSceneName.CoreGame;
                 }
                 return;
             case LevelType.Tutorial:
                 {
                     panels[3].gameObject.SetActive(true);
-                    currentLevelSceneName = GameSceneName.TutorialGame;
+                    currentLevelSceneName = GameSceneName.CoreGame;
                 }
                 return;
         }

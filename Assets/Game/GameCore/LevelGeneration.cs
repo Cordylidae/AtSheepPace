@@ -239,4 +239,13 @@ public class LevelGeneration : MonoBehaviour
     {
         fearBarView.fearBar.fullFearBar -= LoseLevel;
     }
+
+    public void ClearRounds()
+    {
+        Debug.Log("-------Clear level-------");
+
+        roundControl.UnSubscribeBaseTap(playerInput);
+
+        rounds.Clear();
+    }
 }

@@ -16,6 +16,9 @@ public class MenuInstaller : MonoInstaller
 
         MapInstance levelMapInstance = AfterLoadLevelMap();
         Container.Bind<MapInstance>().FromInstance(levelMapInstance).AsSingle().NonLazy();
+
+        LevelResultInctance levelResultInctance = new LevelResultInctance();
+        Container.Bind<LevelResultInctance>().FromInstance(levelResultInctance).AsSingle().NonLazy();
     }
 
     private PlayerInstance AfterLoadPlayer()
@@ -41,12 +44,12 @@ public class MenuInstaller : MonoInstaller
     {
         List<LevelInstance> levels = new List<LevelInstance>
         {
-            new TutorialLevel(0, LevelType.Tutorial, LevelState.New),
+            new TutorialLevel(0, LevelType.Simple, LevelState.New),
             new SimpleLevel(1, LevelType.Simple, LevelState.Lock),
             new SimpleLevel(2, LevelType.Simple, LevelState.Lock),
-            new TutorialLevel(3, LevelType.Tutorial, LevelState.Lock),
+            new TutorialLevel(3, LevelType.Simple, LevelState.Lock),
             new SimpleLevel(4, LevelType.Simple, LevelState.Lock),
-            new UnlimitedLevel(5, LevelType.Unlimited, LevelState.Lock)
+            new UnlimitedLevel(5, LevelType.Simple, LevelState.Lock)
         };
 
         return new MapInstance(levels);

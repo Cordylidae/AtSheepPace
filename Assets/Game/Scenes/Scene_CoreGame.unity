@@ -2994,8 +2994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelGeneration: {fileID: 1580753178}
-  winPanel: {fileID: 1775535950}
-  losePanel: {fileID: 85605004}
+  loader: {fileID: 123179242}
 --- !u!4 &1597920111
 Transform:
   m_ObjectHideFlags: 0

@@ -9,11 +9,13 @@ public class GameCoreGameplay : MonoBehaviour
     // Control
     [SerializeField] private LevelGeneration levelGeneration;
 
-    [SerializeField] private GameObject winPanel;
-    [SerializeField] private GameObject losePanel;
+    [SerializeField] private AsyncSceneLoader loader;
 
     [Inject]
     MapInstance mapInstance;
+
+    [Inject]
+    LevelResultInctance levelResultInctance;
 
     public void Awake()
     {
@@ -32,11 +34,19 @@ public class GameCoreGameplay : MonoBehaviour
     void Win()
     { 
         mapInstance.CompleteLevel();
-        winPanel.SetActive(true);
+
+        levelGeneration.ClearRounds();
+
+        levelResultInctance.status = LevelResultInctance.Status.Win;
+        loader.LoadAsync("Scene_CoreGamePost");
     }
 
     void Lose()
     {
-        losePanel.SetActive(true);
+        levelGeneration.ClearRounds();
+
+        levelResultInctance.status = LevelResultInctance.Status.Lose;
+
+        loader.LoadAsync("Scene_CoreGamePost");
     }
 }
