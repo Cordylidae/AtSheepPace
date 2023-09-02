@@ -6,25 +6,25 @@ public class LevelView : MonoBehaviour
     public ILevelState levelState;
     public ILevelType levelType;
     public IUniqIndex uniqIndex;
-  
-    void Awake()
-    {
-       ChangeView();
-    }
-    
-    void ChangeView()
-    {
-        ChangeState();
-        ChangeType();
-    }
 
-    void ChangeState()
-    {
-        levelState.SetState();
-    }
+    //void Awake()
+    //{
+    //   ChangeView();
+    //}
 
-    void ChangeType()
-    {
-        levelType.SetState();
-    }
+    //void ChangeView()
+    //{
+    //    ChangeState();
+    //    ChangeType();
+    //}
+
+    //void ChangeState()
+    //{
+    //    levelState.SetState();
+    //}
+
+    //void ChangeType()
+    //{
+    //    levelType.SetState();
+    //}
 }

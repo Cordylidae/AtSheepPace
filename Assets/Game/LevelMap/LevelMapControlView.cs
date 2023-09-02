@@ -9,8 +9,8 @@ public class LevelMapControlView : MonoBehaviour
     [SerializeField] private PlayerInputLevelMap playerInputLevelMap;
     [SerializeField] private List<PanelView> panels;
     [SerializeField] private AsyncSceneLoader asyncLoader;
-    [Header("\"Levels GameObject\"")]
-    [SerializeField] private List<GameObject> levelsObject;
+
+    [SerializeField] private LevelCreator levelCreator;
 
     [Inject]
     MapInstance mapInstance;
@@ -24,20 +24,6 @@ public class LevelMapControlView : MonoBehaviour
         {
             panel.CloseTapped += ClosePanel;
             panel.StartLevelTapped += StartCurrentLevel;
-        }
-
-        LoadLevelSetting();
-    }
-
-    private void LoadLevelSetting()
-    {
-        for (int i = 0; i < mapInstance.levels.Count; i++)
-        {
-            LevelView levelView = levelsObject[i].GetComponent<LevelView>();
-
-            levelView.uniqIndex.Index = mapInstance.levels[i].uniqIndex;
-            levelView.levelState.State = mapInstance.levels[i].state;
-            levelView.levelType.myLevelType = mapInstance.levels[i].type;
         }
     }
 
@@ -122,9 +108,4 @@ public class LevelMapControlView : MonoBehaviour
     {
         ResetSubscribtion();
     }
-}
-
-public class LevelMapControl
-{
-    List<LevelInstance> levelsList = new List<LevelInstance>();
 }
