@@ -1,4 +1,5 @@
 using GameInstance;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,8 +7,6 @@ using Zenject;
 
 public class LevelCreator : MonoBehaviour
 {
-    [SerializeField] private LevelButtonPrototype prototype;
-
     [Space, Header("Level Positions")]
     [SerializeField] private GameObject AllLevelPosition;
     private List<LevelView> levelViews;
@@ -15,49 +14,55 @@ public class LevelCreator : MonoBehaviour
     [Inject]
     MapInstance mapInstance;
 
+    [SerializeField] LevelButtonPrototype prototype;
+
     private void Awake()
     {
         levelViews = AllLevelPosition.GetComponentsInChildren<LevelView>().ToList();
 
         LoadLevelSetting();
-        SettupLevelView();
     }
 
     private void LoadLevelSetting()
     {
-        for (int i = 0; i < mapInstance.levels.Count && i < levelViews.Count; i++)
+        if (mapInstance.levels.Count < levelViews.Count) Debug.Log("Not all MapInctace fulled");
+        else if (mapInstance.levels.Count > levelViews.Count) Debug.Log("MapInstance More than data");
+
+        for (int i = 0, simpleCount = 0; i < mapInstance.levels.Count && i < levelViews.Count; i++)
         {
             LevelView levelView = levelViews[i];
+
+            SetPrototype(levelView);
 
             levelView.uniqIndex.Index = mapInstance.levels[i].uniqIndex;
             levelView.levelState.State = mapInstance.levels[i].state;
             levelView.levelType.myLevelType = mapInstance.levels[i].type;
+
+            levelView.ChangeView();
+
+            if (levelView.levelType.myLevelType == LevelType.Simple)
+            {
+                Debug.Log("There");
+
+                simpleCount++;
+                levelView.GetComponentInChildren<IAnimalUniqIndex>(true).Index = simpleCount;
+
+                SimpleLevel simpleLevel = mapInstance.levels[i] as SimpleLevel;
+                if (simpleLevel != null) { simpleLevel.index = simpleCount; }
+                else Debug.Log("Wrong cast");
+
+                Debug.Log("NoThere");
+            }
         }
     }
 
-    // Need Replace not delete object
-    private void SettupLevelView()
+    public void SetPrototype(LevelView levelView)
     {
-        foreach (LevelView levelView in levelViews)
+        if (levelView.levelButtonPrototype == null)
         {
-            if (levelView.levelState.State == LevelState.Lock)
-            {
-                GameObject defGenarat = Instantiate(prototype.lockView, levelView.transform);
-
-                GameObject addGenarat = new GameObject("AdditionView");
-                addGenarat.transform.SetParent(levelView.transform);
-            }
-            if (levelView.levelState.State == LevelState.New)
-            {
-                GameObject defGenarat = Instantiate(prototype.takeBaseView(levelView.levelType.myLevelType), levelView.transform);
-                GameObject addGenarat = Instantiate(prototype.newView, levelView.transform);
-
-            }
-            if (levelView.levelState.State == LevelState.Open)
-            {
-                GameObject defGenarat = Instantiate(prototype.takeBaseView(levelView.levelType.myLevelType), levelView.transform);
-                GameObject addGenarat = Instantiate(prototype.takeResultView(levelView.levelType.myLevelType), levelView.transform);
-            }
+            GameObject gameObject = Instantiate(prototype.gameObject, levelView.transform);
+            levelView.levelButtonPrototype = gameObject.transform.GetComponent<LevelButtonPrototype>();
+            gameObject.name = $"PrototypeView({levelView.name})";
         }
     }
 

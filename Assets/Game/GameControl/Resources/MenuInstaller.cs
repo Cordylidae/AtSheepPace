@@ -44,12 +44,12 @@ public class MenuInstaller : MonoInstaller
     {
         List<LevelInstance> levels = new List<LevelInstance>
         {
-            new TutorialLevel(0, LevelType.Simple, LevelState.New),
-            new SimpleLevel(1, LevelType.Simple, LevelState.Lock),
-            new SimpleLevel(2, LevelType.Simple, LevelState.Lock),
-            new TutorialLevel(3, LevelType.Simple, LevelState.Lock),
-            new SimpleLevel(4, LevelType.Simple, LevelState.Lock),
-            new UnlimitedLevel(5, LevelType.Simple, LevelState.Lock)
+            new TutorialLevel(0, LevelState.New),
+            new SimpleLevel(1),
+            new SimpleLevel(2),
+            new TutorialLevel(3),
+            new SimpleLevel(4),
+            new UnlimitedLevel(5)
         };
 
         return new MapInstance(levels);

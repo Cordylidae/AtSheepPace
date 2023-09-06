@@ -47,14 +47,14 @@ public class LevelMapControlView : MonoBehaviour
                 {
                     panels[1].gameObject.SetActive(true);
                     PanelView_Simple view_Simple = panels[1] as PanelView_Simple;
+                    SimpleLevel simpleLevel = mapInstance.levels[mapInstance.currentUniqIndex] as SimpleLevel;
 
-                    if (view_Simple != null)
+                    if (view_Simple != null && simpleLevel != null)
                     {
-                        if (levelView.levelType.myLevelType == LevelType.Simple) Debug.Log("Mysituation");// view_Simple.ShowLevelNumber(levelView.l)
+                        if (levelView.levelType.myLevelType == LevelType.Simple) view_Simple.ShowLevelNumber(simpleLevel.index);
                     }
                     else Debug.Log("Wrong cast");
 
-                    Debug.Log("&&");
                     currentLevelSceneName = GameSceneName.CoreGame;
 
                 }

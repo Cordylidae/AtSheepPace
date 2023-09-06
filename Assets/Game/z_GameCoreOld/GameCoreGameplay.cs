@@ -19,11 +19,11 @@ public class GameCoreGameplay : MonoBehaviour
 
     public void Awake()
     {
-        levelGeneration.Win += Win;
-        levelGeneration.Lose += Lose;
-
         if (mapInstance.levels[mapInstance.currentUniqIndex].type == LevelType.Simple) levelGeneration.myAwake();
         else Win();
+
+        levelGeneration.Win += Win_SimpleLevel;
+        levelGeneration.Lose += Lose_SimpleLevel;
     }
 
     public void Start()
@@ -32,6 +32,14 @@ public class GameCoreGameplay : MonoBehaviour
     }
 
     void Win()
+    {
+        mapInstance.CompleteLevel();
+
+        levelResultInctance.status = LevelResultInctance.Status.Win;
+        loader.LoadAsync("Scene_CoreGamePost");
+    }
+
+    void Win_SimpleLevel()
     { 
         mapInstance.CompleteLevel();
 
@@ -41,7 +49,7 @@ public class GameCoreGameplay : MonoBehaviour
         loader.LoadAsync("Scene_CoreGamePost");
     }
 
-    void Lose()
+    void Lose_SimpleLevel()
     {
         levelGeneration.ClearRounds();
 
