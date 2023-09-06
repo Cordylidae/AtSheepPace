@@ -57,9 +57,11 @@ public class LevelMapControlView : MonoBehaviour
                     if (view_Simple != null && simpleLevel != null)
                     {
                         view_Simple.ShowLevelNumber(simpleLevel.index);
-                        if (simpleLevel.setting) preloadLevelInstance.settings = view_Simple.GetComponent<LevelSettingsView>().LevelSettings;
                     }
                     else Debug.Log("Wrong cast");
+
+
+                    preloadLevelInstance.settings_simple = levelView.GetComponent<LevelSettingsView>().LevelSettings;
 
                     currentLevelSceneName = GameSceneName.CoreGame;
 
@@ -73,6 +75,9 @@ public class LevelMapControlView : MonoBehaviour
                 return;
             case LevelType.Tutorial:
                 {
+
+                    preloadLevelInstance.settings_tutorial = levelView.GetComponent<LevelSettingsView>().TutorialSettings;
+
                     panels[3].gameObject.SetActive(true);
                     currentLevelSceneName = GameSceneName.CoreGame;
                 }

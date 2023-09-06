@@ -29,12 +29,13 @@ public class MenuInstaller : MonoInstaller
     {
         List<LevelInstance> levels = new List<LevelInstance>
         {
-            new TutorialLevel(0, LevelState.New),
-            new SimpleLevel(1),
+            new TutorialLevel(0, LevelState.New), //Sheep
+            new TutorialLevel(1), //Fearbar
             new SimpleLevel(2),
-            new TutorialLevel(3),
+            new TutorialLevel(3), // Wolf
             new SimpleLevel(4),
-            new UnlimitedLevel(5)
+            new SimpleLevel(5),
+            new UnlimitedLevel(6),
         };
 
         return new MapInstance(levels);
@@ -65,12 +66,14 @@ namespace GameInstance
     public class PreloadLevelInstance
     {
         public LevelType LevelType;
-        public LevelSettingsModel settings;
+        public LevelSettingsModel settings_simple;
+        public TutorialSettingsModel settings_tutorial;
 
         public PreloadLevelInstance()
         {
             LevelType = LevelType.Simple;
-            settings = new LevelSettingsModel();
+            settings_simple = new LevelSettingsModel();
+            settings_tutorial = new TutorialSettingsModel();
         }
     }
  };

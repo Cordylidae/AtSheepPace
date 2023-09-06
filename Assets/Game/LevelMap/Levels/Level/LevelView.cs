@@ -1,3 +1,4 @@
+using LevelSettings;
 using System;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class LevelView : MonoBehaviour
     public void ChangeView()
     {
         if (levelButtonPrototype == null) { Debug.Log("Empty prottotype view " + this.name); return; }
-    
+
         SetByState();
     }
 

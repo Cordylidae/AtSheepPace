@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,8 +8,11 @@ namespace LevelSettings {
 
     public class LevelSettingsView : MonoBehaviour
     {
-        [SerializeField] private LevelSettingsModel levelSettingsModel;
+        public LevelType levelType;
+        [SerializeField, ShowIf("levelType", LevelType.Simple)] private LevelSettingsModel levelSettingsModel;
+        [SerializeField, ShowIf("levelType", LevelType.Tutorial)] private TutorialSettingsModel tutorialSettingsModel;
         public LevelSettingsModel LevelSettings => levelSettingsModel;
+        public TutorialSettingsModel TutorialSettings => tutorialSettingsModel;
 
         private void Awake()
         {
@@ -26,6 +30,16 @@ namespace LevelSettings {
             levelSettingsModel.SetUniqAnimals();
         }
     }
+
+    [System.Serializable]
+    public class TutorialSettingsModel
+    {
+        public bool stateEffect = true;
+
+        [ShowIf("stateEffect"), AllowNesting] public LevelEffects effect;
+        [HideIf("stateEffect"), AllowNesting] public LevelAnimal animal;
+    }
+
 
     [System.Serializable]
     public class LevelSettingsModel

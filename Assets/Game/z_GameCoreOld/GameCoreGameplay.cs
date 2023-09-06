@@ -6,8 +6,9 @@ using Zenject;
 
 public class GameCoreGameplay : MonoBehaviour
 {
-    // Control
+    [Header("Control")]
     [SerializeField] private SimpleLevelGeneration levelGeneration;
+    [SerializeField] private TutorialLevelGeneration tutorialGeneration;
 
     [SerializeField] private AsyncSceneLoader loader;
 
@@ -23,20 +24,30 @@ public class GameCoreGameplay : MonoBehaviour
 
     public void Awake()
     {
-        Debug.Log(preloadLevelInstance.LevelType);
-        if (preloadLevelInstance.LevelType == LevelType.Simple) levelGeneration.myAwake();
-        else Win();
+        if (preloadLevelInstance.LevelType == LevelType.Simple)
+        {
+            levelGeneration.myAwake();
 
-        levelGeneration.Win += Win_SimpleLevel;
-        levelGeneration.Lose += Lose_SimpleLevel;
+            levelGeneration.Win += Win;
+            levelGeneration.Lose += Lose;
+        }
+        else if (preloadLevelInstance.LevelType == LevelType.Tutorial) 
+        {
+            tutorialGeneration.myAwake();
+
+            tutorialGeneration.Win += Win;
+            tutorialGeneration.Lose += Lose;
+        }
+        else Win();
     }
 
     public void Start()
     {
         if(preloadLevelInstance.LevelType == LevelType.Simple) levelGeneration.myStart();
+        else if (preloadLevelInstance.LevelType == LevelType.Tutorial) tutorialGeneration.myStart();
     }
 
-    void Win()
+    public void Win()
     {
         mapInstance.CompleteLevel();
 
@@ -44,17 +55,7 @@ public class GameCoreGameplay : MonoBehaviour
         loader.LoadAsync("Scene_CoreGamePost");
     }
 
-    void Win_SimpleLevel()
-    { 
-        mapInstance.CompleteLevel();
-
-        levelGeneration.ClearRounds();
-
-        levelResultInctance.status = LevelResultInctance.Status.Win;
-        loader.LoadAsync("Scene_CoreGamePost");
-    }
-
-    void Lose_SimpleLevel()
+    void Lose()
     {
         levelGeneration.ClearRounds();
 

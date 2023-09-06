@@ -1641,7 +1641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b77bb621108fbc43865ffb2288375ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelType: 0
+  levelType: 1
 --- !u!114 &144945469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1696,11 +1696,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelType: 2
   levelSettingsModel:
     fearParam:
       sizePoints: 1200
     effects: 000000000100000004000000
     animals: 000000000300000006000000
+  tutorialSettingsModel:
+    stateEffect: 1
+    effect: 0
+    animal: 0
 --- !u!1 &146245162
 GameObject:
   m_ObjectHideFlags: 0
@@ -5111,6 +5116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 473867072}
   - component: {fileID: 473867076}
+  - component: {fileID: 473867077}
   - component: {fileID: 473867075}
   - component: {fileID: 473867074}
   - component: {fileID: 473867073}
@@ -5195,6 +5201,28 @@ MonoBehaviour:
   levelType: {fileID: 473867073}
   uniqIndex: {fileID: 473867075}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &473867077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473867071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 0
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 0
+    effects: 
+    animals: 
+  tutorialSettingsModel:
+    stateEffect: 1
+    effect: 0
+    animal: 0
 --- !u!1 &474695585
 GameObject:
   m_ObjectHideFlags: 0
@@ -8250,6 +8278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 767899599}
   - component: {fileID: 767899603}
+  - component: {fileID: 767899604}
   - component: {fileID: 767899602}
   - component: {fileID: 767899601}
   - component: {fileID: 767899600}
@@ -8334,6 +8363,28 @@ MonoBehaviour:
   levelType: {fileID: 767899600}
   uniqIndex: {fileID: 767899602}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &767899604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767899598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 2
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 0
+    effects: 
+    animals: 
+  tutorialSettingsModel:
+    stateEffect: 0
+    effect: 0
+    animal: 3
 --- !u!1 &772713494
 GameObject:
   m_ObjectHideFlags: 0
@@ -12874,6 +12925,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1273948682}
   - component: {fileID: 1273948686}
+  - component: {fileID: 1273948687}
   - component: {fileID: 1273948683}
   - component: {fileID: 1273948685}
   - component: {fileID: 1273948684}
@@ -12958,6 +13010,28 @@ MonoBehaviour:
   levelType: {fileID: 1273948684}
   uniqIndex: {fileID: 1273948683}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &1273948687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273948681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 2
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 1200
+    effects: 000000000100000004000000
+    animals: 000000000300000006000000
+  tutorialSettingsModel:
+    stateEffect: 0
+    effect: 0
+    animal: 0
 --- !u!1 &1277564411
 GameObject:
   m_ObjectHideFlags: 0
@@ -18728,6 +18802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1832300085}
   - component: {fileID: 1832300089}
+  - component: {fileID: 1832300090}
   - component: {fileID: 1832300088}
   - component: {fileID: 1832300087}
   - component: {fileID: 1832300086}
@@ -18812,6 +18887,28 @@ MonoBehaviour:
   levelType: {fileID: 1832300086}
   uniqIndex: {fileID: 1832300088}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &1832300090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832300084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 0
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 0
+    effects: 
+    animals: 
+  tutorialSettingsModel:
+    stateEffect: 1
+    effect: 0
+    animal: 0
 --- !u!1 &1836188286
 GameObject:
   m_ObjectHideFlags: 0
@@ -19545,6 +19642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968135259}
   - component: {fileID: 1968135263}
+  - component: {fileID: 1968135264}
   - component: {fileID: 1968135262}
   - component: {fileID: 1968135261}
   - component: {fileID: 1968135260}
@@ -19629,6 +19727,28 @@ MonoBehaviour:
   levelType: {fileID: 1968135260}
   uniqIndex: {fileID: 1968135262}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &1968135264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968135258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 0
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 0
+    effects: 
+    animals: 
+  tutorialSettingsModel:
+    stateEffect: 1
+    effect: 0
+    animal: 0
 --- !u!1 &1968855565
 GameObject:
   m_ObjectHideFlags: 0
@@ -20379,6 +20499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2053638741}
   - component: {fileID: 2053638745}
+  - component: {fileID: 2053638746}
   - component: {fileID: 2053638744}
   - component: {fileID: 2053638743}
   - component: {fileID: 2053638742}
@@ -20464,6 +20585,28 @@ MonoBehaviour:
   levelType: {fileID: 2053638742}
   uniqIndex: {fileID: 2053638744}
   levelButtonPrototype: {fileID: 794078749}
+--- !u!114 &2053638746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053638740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelType: 0
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 0
+    effects: 
+    animals: 
+  tutorialSettingsModel:
+    stateEffect: 1
+    effect: 0
+    animal: 0
 --- !u!1 &2060377216
 GameObject:
   m_ObjectHideFlags: 0

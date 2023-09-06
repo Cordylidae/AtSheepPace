@@ -22,8 +22,10 @@ public class SimpleLevelGeneration : MonoBehaviour
     List<GamburgerElement> gamburgerElements = new List<GamburgerElement>();
     List<Round> rounds = new List<Round>();
 
-    [SerializeField] private RoundGeneration roundGeneration;
+    [SerializeField] private GameObject CoreGameCanvas;
     [SerializeField] private PlayerInput playerInput;
+    
+    [SerializeField, Space] private RoundGeneration roundGeneration;
 
     // ### NEED Initialaize like INJECT
     [SerializeField] private Sun_Moon_View sun_moon_View;
@@ -36,6 +38,8 @@ public class SimpleLevelGeneration : MonoBehaviour
 
     public void myAwake()
     {
+        CoreGameCanvas.SetActive(true);
+
         fearBarView.fearBar.fullFearBar += LoseLevel;
 
         SetHardProperties();
@@ -207,6 +211,7 @@ public class SimpleLevelGeneration : MonoBehaviour
         Debug.Log("-------Finish level-------");
 
         roundControl.UnSubscribeBaseTap(playerInput);
+        ClearRounds();
 
         Win?.Invoke();
     }
