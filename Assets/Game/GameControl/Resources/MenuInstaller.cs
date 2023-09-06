@@ -1,6 +1,7 @@
 using GameInstance;
 using System.Collections.Generic;
 using Zenject;
+using LevelSettings;
 
 public class MenuInstaller : MonoInstaller
 {
@@ -19,6 +20,24 @@ public class MenuInstaller : MonoInstaller
 
         LevelResultInctance levelResultInctance = new LevelResultInctance();
         Container.Bind<LevelResultInctance>().FromInstance(levelResultInctance).AsSingle().NonLazy();
+
+        PreloadLevelInstance preLoadLevelInstance = new PreloadLevelInstance();
+        Container.Bind<PreloadLevelInstance>().FromInstance(preLoadLevelInstance).AsSingle().NonLazy();
+    }
+
+    private MapInstance AfterLoadLevelMap()
+    {
+        List<LevelInstance> levels = new List<LevelInstance>
+        {
+            new TutorialLevel(0, LevelState.New),
+            new SimpleLevel(1),
+            new SimpleLevel(2),
+            new TutorialLevel(3),
+            new SimpleLevel(4),
+            new UnlimitedLevel(5)
+        };
+
+        return new MapInstance(levels);
     }
 
     private PlayerInstance AfterLoadPlayer()
@@ -39,19 +58,19 @@ public class MenuInstaller : MonoInstaller
 
         return new PlayerInstance(2, 2, 0, allStatistics, allLevelResults);
     }
-
-    private MapInstance AfterLoadLevelMap()
-    {
-        List<LevelInstance> levels = new List<LevelInstance>
-        {
-            new TutorialLevel(0, LevelState.New),
-            new SimpleLevel(1),
-            new SimpleLevel(2),
-            new TutorialLevel(3),
-            new SimpleLevel(4),
-            new UnlimitedLevel(5)
-        };
-
-        return new MapInstance(levels);
-    }
 }
+
+namespace GameInstance
+{
+    public class PreloadLevelInstance
+    {
+        public LevelType LevelType;
+        public LevelSettingsModel settings;
+
+        public PreloadLevelInstance()
+        {
+            LevelType = LevelType.Simple;
+            settings = new LevelSettingsModel();
+        }
+    }
+ };

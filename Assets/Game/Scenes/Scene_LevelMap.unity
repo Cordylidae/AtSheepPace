@@ -1599,6 +1599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 144945467}
   - component: {fileID: 144945471}
+  - component: {fileID: 144945472}
   - component: {fileID: 144945470}
   - component: {fileID: 144945469}
   - component: {fileID: 144945468}
@@ -1683,6 +1684,23 @@ MonoBehaviour:
   levelType: {fileID: 144945468}
   uniqIndex: {fileID: 144945470}
   levelButtonPrototype: {fileID: 0}
+--- !u!114 &144945472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144945466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5aa97e7a25c4f808a7942acbdf9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSettingsModel:
+    fearParam:
+      sizePoints: 1200
+    effects: 000000000100000004000000
+    animals: 000000000300000006000000
 --- !u!1 &146245162
 GameObject:
   m_ObjectHideFlags: 0

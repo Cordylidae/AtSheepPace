@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace GameInstance
 {
     public abstract class LevelInstance
@@ -21,10 +18,12 @@ namespace GameInstance
         //private LevelGenerateSettings levelGenerateSettings;
 
         public int index { get; set; }
+        public bool setting { get; set; }
 
-        public SimpleLevel(int uniqIndex, LevelState state = LevelState.Lock) : base (uniqIndex, state)
+        public SimpleLevel(int uniqIndex, LevelState state = LevelState.Lock, bool withSetting = false) : base (uniqIndex, state)
         {
             type = LevelType.Simple;
+            setting = withSetting;
         }
     }
 

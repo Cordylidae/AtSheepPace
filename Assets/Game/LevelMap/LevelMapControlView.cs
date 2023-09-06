@@ -1,4 +1,5 @@
 using GameInstance;
+using LevelSettings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class LevelMapControlView : MonoBehaviour
 
     [Inject]
     MapInstance mapInstance;
+
+    [Inject]
+    PreloadLevelInstance preloadLevelInstance;
 
     private string currentLevelSceneName;
     void Awake()
@@ -40,6 +44,7 @@ public class LevelMapControlView : MonoBehaviour
         }
 
         mapInstance.currentUniqIndex = levelView.uniqIndex.Index;
+        preloadLevelInstance.LevelType = levelView.levelType.myLevelType;
 
         switch (levelView.levelType.myLevelType)
         {
@@ -51,7 +56,8 @@ public class LevelMapControlView : MonoBehaviour
 
                     if (view_Simple != null && simpleLevel != null)
                     {
-                        if (levelView.levelType.myLevelType == LevelType.Simple) view_Simple.ShowLevelNumber(simpleLevel.index);
+                        view_Simple.ShowLevelNumber(simpleLevel.index);
+                        if (simpleLevel.setting) preloadLevelInstance.settings = view_Simple.GetComponent<LevelSettingsView>().LevelSettings;
                     }
                     else Debug.Log("Wrong cast");
 

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class LevelGeneration : MonoBehaviour
+public class SimpleLevelGeneration : MonoBehaviour
 {
     struct SpawnHardProperties
     {

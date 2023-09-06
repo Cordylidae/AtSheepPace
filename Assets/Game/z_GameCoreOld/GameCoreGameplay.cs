@@ -7,19 +7,24 @@ using Zenject;
 public class GameCoreGameplay : MonoBehaviour
 {
     // Control
-    [SerializeField] private LevelGeneration levelGeneration;
+    [SerializeField] private SimpleLevelGeneration levelGeneration;
 
     [SerializeField] private AsyncSceneLoader loader;
 
+    //Need remove from there
     [Inject]
     MapInstance mapInstance;
 
     [Inject]
     LevelResultInctance levelResultInctance;
 
+    [Inject]
+    PreloadLevelInstance preloadLevelInstance;
+
     public void Awake()
     {
-        if (mapInstance.levels[mapInstance.currentUniqIndex].type == LevelType.Simple) levelGeneration.myAwake();
+        Debug.Log(preloadLevelInstance.LevelType);
+        if (preloadLevelInstance.LevelType == LevelType.Simple) levelGeneration.myAwake();
         else Win();
 
         levelGeneration.Win += Win_SimpleLevel;
@@ -28,7 +33,7 @@ public class GameCoreGameplay : MonoBehaviour
 
     public void Start()
     {
-        if (mapInstance.levels[mapInstance.currentUniqIndex].type == LevelType.Simple) levelGeneration.myStart();
+        if(preloadLevelInstance.LevelType == LevelType.Simple) levelGeneration.myStart();
     }
 
     void Win()
