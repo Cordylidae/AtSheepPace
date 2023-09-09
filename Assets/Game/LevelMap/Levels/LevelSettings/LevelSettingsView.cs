@@ -34,10 +34,7 @@ namespace LevelSettings {
     [System.Serializable]
     public class TutorialSettingsModel
     {
-        public bool stateEffect = true;
-
-        [ShowIf("stateEffect"), AllowNesting] public LevelEffects effect;
-        [HideIf("stateEffect"), AllowNesting] public LevelAnimal animal;
+        public TutorialObject tutorialObject;
     }
 
 
@@ -66,6 +63,36 @@ namespace LevelSettings {
         public float sizePoints;
     }
 
+    public enum TutorialObject
+    {
+        Sheep, // (SheepExtra)
+        FEAR_BAR, 
+
+        Wolf, // (WolfInSheep)
+        DAY_NIGHT, // (WOLF_TIME)
+
+        WolfAlfa,
+
+        Deer,
+        Boar,
+        Hedgehog,
+
+        Crow, WIND, RAIN, FOG,
+
+        Fox,
+        Bear,
+
+        THORN,
+
+        Dragon, //(FIRE_EMBER)
+        RamGolden, //(Sheep golden)
+
+        Hare,
+        Squirrel,
+        Beaver,
+        Badger
+    }
+
     public enum LevelEffects 
     {
         FEAR_BAR, DAY_NIGHT, WOLF_TIME, WIND, RAIN, FOG, THORN, FIRE_EMBER
@@ -86,7 +113,7 @@ namespace LevelSettings {
      Hedgehog ,
 
      Crow ,
-     Fox,
+     Fox ,
      Bear ,
 
      Dragon ,

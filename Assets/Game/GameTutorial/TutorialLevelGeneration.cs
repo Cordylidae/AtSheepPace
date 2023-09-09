@@ -3,12 +3,17 @@ using LevelSettings;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class TutorialLevelGeneration : MonoBehaviour
 {
     [SerializeField] private GameObject TutorialGameCanvas;
     [SerializeField] private TextMeshProUGUI nameObject;
+    [SerializeField] private Image iconImage;
+
+    [SerializeField] private SubElements tutorialIcon;
+
 
     [Inject] PreloadLevelInstance preloadLevelInstance;
 
@@ -24,35 +29,45 @@ public class TutorialLevelGeneration : MonoBehaviour
     {
         TutorialSettingsModel model = preloadLevelInstance.settings_tutorial;
 
-        if (model != null)
-        {
-            if (model.stateEffect) nameObject.text = settingName(model.effect);
-            else nameObject.text = settingName(model.animal);
-        }
-        else Debug.Log("Null settings");
+        settingDescription(model.tutorialObject);
     }
 
-    private string settingName(LevelEffects levelEffect)
+    private void settingDescription(TutorialObject tutorialObject)
     {
-        switch (levelEffect)
+        iconImage.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        switch (tutorialObject)
         {
-            case LevelEffects.FEAR_BAR:
-                return "Fear Bar";
+            case TutorialObject.Sheep:
+                {
+                    nameObject.text = "Sheep";
+                    iconImage.sprite = tutorialIcon.sprites[0];
+                    iconImage.SetNativeSize();
+                    iconImage.transform.localScale = new Vector3(2.5f, 2.5f, 1.0f);
+                }
+                break;
+            case TutorialObject.FEAR_BAR:
+                {
+                    nameObject.text = "Fear Bar";
+                    iconImage.sprite = tutorialIcon.sprites[1];
+                    iconImage.SetNativeSize();
+                    iconImage.transform.localScale = new Vector3(0.65f, 1.0f, 1.0f);
+                }
+                break;
+            case TutorialObject.Wolf:
+                {
+                    nameObject.text = "Wolf";
+                    iconImage.sprite = tutorialIcon.sprites[2];
+                    iconImage.SetNativeSize();
+                    iconImage.transform.localScale = new Vector3(2.5f, 2.5f, 1.0f);
+                }
+                break;
+            default:
+                {
+                    nameObject.text = "Without settings";
+                    iconImage.sprite = null;
+                }
+                break;
         }
-
-        throw new NotImplementedException();
-    }
-
-    private string settingName(LevelAnimal levelAnimal)
-    {
-        switch (levelAnimal)
-        {
-            case LevelAnimal.Sheep:
-                return "Sheep";
-            case LevelAnimal.Wolf:
-                return "Wolf";
-        }
-
-        throw new NotImplementedException();
     }
 }

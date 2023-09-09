@@ -22,7 +22,9 @@ public class LevelMapControlView : MonoBehaviour
     private string currentLevelSceneName;
     void Awake()
     {
-        playerInputLevelMap.baseTap += TappedOnLevel;
+        levelCreator.myAwake();
+
+        playerInputLevelMap.baseTap += ShowDescriptionPanel;
 
         foreach (PanelView panel in panels)
         {
@@ -31,7 +33,7 @@ public class LevelMapControlView : MonoBehaviour
         }
     }
 
-    void TappedOnLevel(BaseTapHandel tapHandel)
+    void ShowDescriptionPanel(BaseTapHandel tapHandel)
     {
         playerInputLevelMap.inFocus = false;
 
@@ -46,11 +48,14 @@ public class LevelMapControlView : MonoBehaviour
         mapInstance.currentUniqIndex = levelView.uniqIndex.Index;
         preloadLevelInstance.LevelType = levelView.levelType.myLevelType;
 
+        currentLevelSceneName = GameSceneName.CoreGame;
+
         switch (levelView.levelType.myLevelType)
         {
             case LevelType.Simple:
                 {
                     panels[1].gameObject.SetActive(true);
+
                     PanelView_Simple view_Simple = panels[1] as PanelView_Simple;
                     SimpleLevel simpleLevel = mapInstance.levels[mapInstance.currentUniqIndex] as SimpleLevel;
 
@@ -60,26 +65,28 @@ public class LevelMapControlView : MonoBehaviour
                     }
                     else Debug.Log("Wrong cast");
 
-
                     preloadLevelInstance.settings_simple = levelView.GetComponent<LevelSettingsView>().LevelSettings;
-
-                    currentLevelSceneName = GameSceneName.CoreGame;
-
                 }
                 return;
             case LevelType.Unlimited:
                 {
                     panels[2].gameObject.SetActive(true);
-                    currentLevelSceneName = GameSceneName.CoreGame;
                 }
                 return;
             case LevelType.Tutorial:
                 {
+                    panels[3].gameObject.SetActive(true);
+
+                    PanelView_Tutorial view_Tutorial = panels[3] as PanelView_Tutorial;
+                    TutorialLevel tutorialLevel = mapInstance.levels[mapInstance.currentUniqIndex] as TutorialLevel;
+
+                    if (view_Tutorial != null && tutorialLevel != null)
+                    {
+                        view_Tutorial.SetTutorialDescription(tutorialLevel.tutorialObject);
+                    }
+                    else Debug.Log("Wrong cast");
 
                     preloadLevelInstance.settings_tutorial = levelView.GetComponent<LevelSettingsView>().TutorialSettings;
-
-                    panels[3].gameObject.SetActive(true);
-                    currentLevelSceneName = GameSceneName.CoreGame;
                 }
                 return;
         }
@@ -107,7 +114,7 @@ public class LevelMapControlView : MonoBehaviour
 
     public void ResetSubscribtion()
     {
-        playerInputLevelMap.baseTap -= TappedOnLevel;
+        playerInputLevelMap.baseTap -= ShowDescriptionPanel;
 
         foreach (PanelView panel in panels)
         {

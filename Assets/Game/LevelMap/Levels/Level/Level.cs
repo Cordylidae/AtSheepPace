@@ -1,3 +1,5 @@
+using LevelSettings;
+
 namespace GameInstance
 {
     public abstract class LevelInstance
@@ -18,26 +20,27 @@ namespace GameInstance
         //private LevelGenerateSettings levelGenerateSettings;
 
         public int index { get; set; }
-        public bool setting { get; set; }
 
-        public SimpleLevel(int uniqIndex, LevelState state = LevelState.Lock, bool withSetting = false) : base (uniqIndex, state)
+        public SimpleLevel(int myIndex, LevelState state = LevelState.Lock, int uniqIndex = 0) : base (uniqIndex, state)
         {
             type = LevelType.Simple;
-            setting = withSetting;
+            index = myIndex;
         }
     }
 
     public class TutorialLevel : LevelInstance
     {
-        public TutorialLevel(int uniqIndex, LevelState state = LevelState.Lock) : base(uniqIndex, state)
+        public TutorialObject tutorialObject { get; set; }
+        public TutorialLevel(TutorialObject obj, LevelState state = LevelState.Lock, int uniqIndex = 0) : base(uniqIndex, state)
         {
             type = LevelType.Tutorial;
+            tutorialObject = obj;
         }
     }
 
     public class UnlimitedLevel : LevelInstance
     {
-        public UnlimitedLevel(int uniqIndex, LevelState state = LevelState.Lock) : base(uniqIndex, state) 
+        public UnlimitedLevel(LevelState state = LevelState.Lock, int uniqIndex = 0) : base(uniqIndex, state) 
         { 
             type = LevelType.Unlimited; 
         }

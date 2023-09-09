@@ -1,5 +1,5 @@
 using GameInstance;
-using System;
+using LevelSettings;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +16,7 @@ public class LevelCreator : MonoBehaviour
 
     [SerializeField] LevelButtonPrototype prototype;
 
-    private void Awake()
+    public void myAwake()
     {
         levelViews = AllLevelPosition.GetComponentsInChildren<LevelView>().ToList();
 
@@ -42,7 +42,7 @@ public class LevelCreator : MonoBehaviour
 
             if (levelView.levelType.myLevelType == LevelType.Simple)
             {
-                Debug.Log("There");
+                Debug.Log("There Simple");
 
                 simpleCount++;
                 levelView.GetComponentInChildren<IAnimalUniqIndex>(true).Index = simpleCount;
@@ -51,7 +51,19 @@ public class LevelCreator : MonoBehaviour
                 if (simpleLevel != null) { simpleLevel.index = simpleCount; }
                 else Debug.Log("Wrong cast");
 
-                Debug.Log("NoThere");
+                Debug.Log("NoThere Simple");
+            }
+
+
+            if (levelView.levelType.myLevelType == LevelType.Tutorial)
+            {
+                Debug.Log("There Tutorial");
+
+                TutorialLevel tutorialLevel = mapInstance.levels[i] as TutorialLevel;
+                if (tutorialLevel != null) levelView.GetComponent<LevelSettingsView>().TutorialSettings.tutorialObject = tutorialLevel.tutorialObject;
+                else Debug.Log("Wrong cast");
+
+                Debug.Log("NoThere Tutorial");
             }
         }
     }

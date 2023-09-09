@@ -29,14 +29,21 @@ public class MenuInstaller : MonoInstaller
     {
         List<LevelInstance> levels = new List<LevelInstance>
         {
-            new TutorialLevel(0, LevelState.New), //Sheep
-            new TutorialLevel(1), //Fearbar
+            new TutorialLevel(TutorialObject.Sheep, LevelState.New),
+            new TutorialLevel(TutorialObject.FEAR_BAR),
+            new SimpleLevel(1),
+            new TutorialLevel(TutorialObject.Wolf),
             new SimpleLevel(2),
-            new TutorialLevel(3), // Wolf
-            new SimpleLevel(4),
-            new SimpleLevel(5),
-            new UnlimitedLevel(6),
+            new SimpleLevel(3),
+            new UnlimitedLevel(),
         };
+
+        int i = 0;
+        foreach (LevelInstance level in levels)
+        { 
+            level.uniqIndex = i; i++;
+            if (level.state == LevelState.Lock) level.state = LevelState.Open;
+        }
 
         return new MapInstance(levels);
     }
